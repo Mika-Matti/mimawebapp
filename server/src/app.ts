@@ -1,24 +1,10 @@
-import express, { Application } from "express";
-import cors from "cors";
-import dotenv from "dotenv";
+import { createServer } from "./server";
+import { config } from "./config";
 
-dotenv.config(); // Load environment variables from .env file
+const server = createServer();
 
-const app: Application = express();
-
-// Enable CORS
-app.use(cors());
-
-// Parse JSON requests
-app.use(express.json());
-
-// Define API routes
-app.get("/", (req, res) => {
-  res.send("Hello world");
-});
-
-// Start server
-const PORT = process.env.port || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`);
+server.listen(config.port, () => {
+  console.log(
+    `Server listening on port ${config.port}. Running enviroment set to "${config.envMode}"`
+  );
 });
