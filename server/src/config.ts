@@ -1,11 +1,12 @@
-import dotenv from "dotenv";
-import path from "path";
+import * as dotenv from "dotenv";
+
+const path = require("path");
 
 // Check enviroment server is running in
 if (process.env.NODE_ENV === "test") {
-  dotenv.config({ path: path.join(__dirname, "../../.env.test") });
+  dotenv.config({ path: path.resolve(__dirname, "../../.env.test") });
 } else if (process.env.NODE_ENV === "production") {
-  dotenv.config({ path: path.join(__dirname, "../../.env.production") });
+  dotenv.config({ path: path.resolve(__dirname, "../../.env.production") });
 } else {
   throw new Error("Invalid NODE_ENV");
 }

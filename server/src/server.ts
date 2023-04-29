@@ -1,5 +1,6 @@
-import express from "express";
+import express = require("express");
 import { config } from "./config";
+import mysql = require("mysql");
 
 export function createServer() {
   const app = express();
@@ -9,11 +10,13 @@ export function createServer() {
 
   // Route setup
   app.get("/", (req, res) => {
-    res.send("Hello world");
+    res.send("Hello");
   });
 
-  // Database setup
-  const mysql = require("mysql");
+  return app;
+}
+
+export function createDatabaseConnection() {
   const connection = mysql.createConnection(config.database);
 
   connection.connect((err: any) => {
@@ -23,6 +26,5 @@ export function createServer() {
     }
     console.log("Connected to database as id " + connection.threadId);
   });
-
-  return app;
+  return connection;
 }
