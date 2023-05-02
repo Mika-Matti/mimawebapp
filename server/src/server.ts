@@ -1,6 +1,5 @@
 import express = require("express");
-import { config } from "./config";
-import mysql = require("mysql");
+import projectRouter from "./routes/project.routes";
 
 export function createServer() {
   const app = express();
@@ -13,18 +12,8 @@ export function createServer() {
     res.send("Hello");
   });
 
+  // use the project router for all routes starting with '/projects'
+  app.use("/projects", projectRouter);
+
   return app;
-}
-
-export function createDatabaseConnection() {
-  const connection = mysql.createConnection(config.database);
-
-  connection.connect((err: any) => {
-    if (err) {
-      console.error("Error connecting to database: " + err.stack);
-      return;
-    }
-    console.log("Connected to database as id " + connection.threadId);
-  });
-  return connection;
 }
