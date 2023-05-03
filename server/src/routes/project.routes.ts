@@ -10,6 +10,7 @@ import {
 const router = Router();
 
 router.post("/", createProject);
+// appends of all routes starting with '/projects'
 router.get("/", getProjects);
 router.get("/:id", getProjectById);
 router.put("/:id", updateProject);

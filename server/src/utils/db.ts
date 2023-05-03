@@ -2,11 +2,16 @@ import mysql = require("mysql2");
 import { config } from "../config";
 
 // create a connection pool to the database
-const pool = mysql.createPool({
+const pool: mysql.Pool = mysql.createPool({
   host: config.database.host,
   user: config.database.user,
   password: config.database.password,
   database: config.database.database,
+});
+
+pool.getConnection((err, connection) => {
+  if (err) throw err;
+  console.log(`Connected to database '${connection.config.database}'`);
 });
 
 // define a function for executing SQL queries

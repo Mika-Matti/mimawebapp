@@ -2,7 +2,7 @@ import express = require("express");
 import projectRouter from "./routes/project.routes";
 
 export function createServer() {
-  const app = express();
+  const app: express.Express = express();
 
   // Middleware setup
   app.use(express.json());

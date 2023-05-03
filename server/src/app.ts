@@ -1,7 +1,8 @@
+import { Express } from "express";
 import { createServer } from "./server";
 import { config } from "./config";
 
-const server = createServer();
+const server: Express = createServer();
 
 server.listen(config.port, () => {
   console.log(
