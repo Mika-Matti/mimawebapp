@@ -9,10 +9,17 @@ const pool: mysql.Pool = mysql.createPool({
   database: config.database.database,
 });
 
-pool.getConnection((err, connection) => {
-  if (err) throw err;
-  console.log(`Connected to database '${connection.config.database}'`);
+// log a message when the pool gets connected
+pool.on("connect", () => {
+  console.log(`Connected to database '${config.database.database}'`);
 });
+
+export const closeConnection = (): void => {
+  pool.end((err) => {
+    if (err) throw err;
+    console.log("Database connection closed");
+  });
+};
 
 // define a function for executing SQL queries
 export const query = (sql: string, values?: any[]) => {
@@ -29,5 +36,6 @@ export const query = (sql: string, values?: any[]) => {
 
 // define an object for exporting database-related functions
 export const db = {
+  closeConnection,
   query,
 };

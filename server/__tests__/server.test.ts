@@ -1,12 +1,17 @@
 import { Express } from "express";
 import { createServer } from "../src/server";
+import { db } from "../src/utils/db";
 const request = require("supertest");
 
 describe("Test createServer", () => {
   let server: Express;
 
-  beforeAll(() => {
-    server = createServer();
+  beforeAll(async () => {
+    server = await createServer();
+  });
+
+  afterAll(async () => {
+    await db.closeConnection();
   });
 
   it('should return "Hello" when GET /', async () => {
