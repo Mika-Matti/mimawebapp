@@ -1,13 +1,14 @@
 import { Request, Response } from "express";
+import { OkPacket } from "mysql2";
 import { Project } from "../models/project.model";
 import { db } from "../utils/db";
 
-// route '/projects/'
+// route POST '/projects/'
 export const createProject = async (req: Request, res: Response) => {
   console.log("TODO: implement createProject-method");
 };
 
-// route '/projects/'
+// route GET '/projects/'
 export const getProjects = async (req: Request, res: Response) => {
   try {
     const results: Project[] = await db.query("SELECT * FROM projects");
@@ -18,17 +19,37 @@ export const getProjects = async (req: Request, res: Response) => {
   }
 };
 
-// route '/projects/:id'
+// route GET '/projects/:id'
 export const getProjectById = async (req: Request, res: Response) => {
   console.log("TODO: implement getProjectById-method");
 };
 
-// route '/projects/:id'
+// route PUT '/projects/:id'
 export const updateProject = async (req: Request, res: Response) => {
-  console.log("TODO: implement updateProject-method");
+  console.log(req.body);
+  const projectId: string = req.params.id;
+  const updatedProject: Project = req.body;
+  try {
+    const results: OkPacket = await db.query(
+      "UPDATE projects SET ? WHERE project_id = ?",
+      [updatedProject, projectId]
+    );
+    if (results.affectedRows === 0) {
+      res.status(404).json({ message: "Project not found or no changes made" });
+    } else {
+      const project: Project = {
+        ...updatedProject,
+        project_id: parseInt(projectId),
+      };
+      res.status(200).json(project);
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
 
-// route '/projects/:id'
+// route DELETE '/projects/:id'
 export const deleteProject = async (req: Request, res: Response) => {
   console.log("TODO: implement deleteProject-method");
 };
