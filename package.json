@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage",
     "buildserver": "npx tsc --project server/tsconfig.json",
     "runserver": "node server/dist/app.js",
     "start": "npm run-script buildserver && npm run-script runserver"

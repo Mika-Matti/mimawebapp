@@ -26,7 +26,6 @@ export const getProjectById = async (req: Request, res: Response) => {
 
 // route PUT '/projects/:id'
 export const updateProject = async (req: Request, res: Response) => {
-  console.log(req.body);
   const projectId: string = req.params.id;
   const updatedProject: Project = req.body;
   try {
