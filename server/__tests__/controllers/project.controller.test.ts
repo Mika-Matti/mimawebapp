@@ -92,6 +92,60 @@ describe("GET /projects", () => {
   });
 }); // End of GET /projects
 
+describe("GET /projects/:id", () => {
+  beforeAll(() => {
+    mockQuery.mockImplementation((sql: string, values?: any[]) => {
+      return new Promise<any>((resolve, reject) => {
+        console.log("Calling mocked GET /projects:id");
+        const expectedId: string = "1";
+        const expectedQuery = "SELECT * FROM projects WHERE project_id = ?";
+        const testId: string = values && values.length > 0 ? values[0] : "-1";
+
+        if (sql === expectedQuery && testId === expectedId) {
+          resolve([
+            {
+              project_id: 1,
+              project_title: "Project A",
+              project_description: "A website redesign for Company A",
+              project_content: "Lorem ipsum dolor sit amet...",
+              project_link: "https://www.exampleA.com",
+            },
+          ]);
+        } else {
+          reject("Error: Mock function got wrong query");
+        }
+      });
+    });
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("should return a Project-object of the same id as was given (1)", async () => {
+    const req: Request = {
+      params: {
+        id: "1",
+      },
+    } as unknown as Request;
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    } as unknown as Response;
+
+    await getProjectById(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      project_id: 1,
+      project_title: "Project A",
+      project_description: "A website redesign for Company A",
+      project_content: "Lorem ipsum dolor sit amet...",
+      project_link: "https://www.exampleA.com",
+    });
+  });
+}); // End of GET /projects/:id
+
 describe("PUT /projects/id", () => {
   beforeAll(() => {
     mockQuery.mockImplementation((sql: string, values?: any[]) => {

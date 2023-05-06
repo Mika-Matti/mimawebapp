@@ -21,7 +21,17 @@ export const getProjects = async (req: Request, res: Response) => {
 
 // route GET '/projects/:id'
 export const getProjectById = async (req: Request, res: Response) => {
-  console.log("TODO: implement getProjectById-method");
+  const projectId: string = req.params.id;
+  try {
+    const result: Project[] = await db.query(
+      "SELECT * FROM projects WHERE project_id = ?",
+      [projectId]
+    );
+    res.status(200).json(result[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
 
 // route PUT '/projects/:id'
