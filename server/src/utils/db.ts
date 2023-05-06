@@ -9,11 +9,6 @@ const pool: mysql.Pool = mysql.createPool({
   database: config.database.database,
 });
 
-// log a message when the pool gets connected
-pool.on("connect", () => {
-  console.log(`Connected to database '${config.database.database}'`);
-});
-
 export const closeConnection = (): void => {
   pool.end((err) => {
     if (err) throw err;
