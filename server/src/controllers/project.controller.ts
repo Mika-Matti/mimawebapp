@@ -5,7 +5,20 @@ import { db } from "../utils/db";
 
 // route POST '/projects/'
 export const createProject = async (req: Request, res: Response) => {
-  console.log("TODO: implement createProject-method");
+  const newProject: Project = req.body;
+  try {
+    const result: OkPacket = await db.query("INSERT INTO projects SET ?", [
+      newProject,
+    ]);
+    const insertedProject: Project = {
+      project_id: result.insertId,
+      ...newProject,
+    };
+    res.status(201).json(insertedProject);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
 
 // route GET '/projects/'

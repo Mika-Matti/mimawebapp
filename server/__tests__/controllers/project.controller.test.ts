@@ -16,6 +16,69 @@ jest.mock("../../src/utils/db", () => ({
   },
 }));
 
+describe("POST /projects", () => {
+  beforeAll(() => {
+    mockQuery.mockImplementation((sql: string, values?: any[]) => {
+      return new Promise<any>((resolve, reject) => {
+        console.log("Calling mocked POST /projects");
+        const expectedQuery: string = "INSERT INTO projects SET ?";
+        const expectedProject: Project = {
+          project_title: "test_title",
+          project_description: "test_desc",
+          project_content: "test_content",
+          project_link: "test_link",
+        };
+        const testProject: Project =
+          values && values.length > 0 ? values[0] : null;
+
+        for (const [key, value] of Object.entries(expectedProject)) {
+          if (testProject[key] != value) {
+            reject(
+              `Error: Given test value: ${key}:${testProject[key]} for insert doesn't match expected: ${key}:${value}`
+            );
+          }
+        }
+
+        if (sql === expectedQuery) {
+          resolve({ insertId: 1 });
+        } else {
+          reject("Error: Mock function got wrong query");
+        }
+      });
+    });
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("should return the inserted Project-object", async () => {
+    const req: Request = {
+      body: {
+        project_title: "test_title",
+        project_description: "test_desc",
+        project_content: "test_content",
+        project_link: "test_link",
+      },
+    } as unknown as Request;
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    } as unknown as Response;
+
+    await createProject(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(201);
+    expect(res.json).toHaveBeenCalledWith({
+      project_id: 1,
+      project_title: "test_title",
+      project_description: "test_desc",
+      project_content: "test_content",
+      project_link: "test_link",
+    });
+  });
+}); // End of POST /projects
+
 describe("GET /projects", () => {
   beforeAll(() => {
     mockQuery.mockImplementation((sql: string, values?: any[]) => {
