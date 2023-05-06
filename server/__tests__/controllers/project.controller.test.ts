@@ -161,7 +161,8 @@ describe("GET /projects/:id", () => {
       return new Promise<any>((resolve, reject) => {
         console.log("Calling mocked GET /projects:id");
         const expectedId: string = "1";
-        const expectedQuery = "SELECT * FROM projects WHERE project_id = ?";
+        const expectedQuery: string =
+          "SELECT * FROM projects WHERE project_id = ?";
         const testId: string = values && values.length > 0 ? values[0] : "-1";
 
         if (sql === expectedQuery && testId === expectedId) {
@@ -209,7 +210,7 @@ describe("GET /projects/:id", () => {
   });
 }); // End of GET /projects/:id
 
-describe("PUT /projects/id", () => {
+describe("PUT /projects/:id", () => {
   beforeAll(() => {
     mockQuery.mockImplementation((sql: string, values?: any[]) => {
       return new Promise<any>((resolve, reject) => {
@@ -225,7 +226,8 @@ describe("PUT /projects/id", () => {
           project_link: "test_link",
         };
         const expectedId: string = "1";
-        const expectedQuery = "UPDATE projects SET ? WHERE project_id = ?";
+        const expectedQuery: string =
+          "UPDATE projects SET ? WHERE project_id = ?";
 
         if (values && values.length >= 2) {
           [testProject, testId] = values;
@@ -239,15 +241,7 @@ describe("PUT /projects/id", () => {
           }
 
           if (sql === expectedQuery && expectedId === testId) {
-            resolve([
-              {
-                project_id: 1,
-                project_title: "test_title",
-                project_description: "test_desc",
-                project_content: "test_content",
-                project_link: "test_link",
-              },
-            ]);
+            resolve({ affectedRows: 1 });
           } else {
             reject("Error: Mock function got wrong query");
           }
@@ -288,4 +282,45 @@ describe("PUT /projects/id", () => {
       project_link: "test_link",
     });
   });
-}); // End of PUT /projects/id
+}); // End of PUT /projects/:id
+
+describe("DELETE /projects/:id", () => {
+  beforeAll(() => {
+    mockQuery.mockImplementation((sql: string, values?: any[]) => {
+      return new Promise<any>((resolve, reject) => {
+        console.log("Calling mocked DELETE /projects:id");
+        const expectedId: string = "1";
+        const expectedQuery: string =
+          "DELETE FROM projects WHERE project_id = ?";
+        const testId: string = values && values.length > 0 ? values[0] : "-1";
+
+        if (sql === expectedQuery && testId === expectedId) {
+          resolve({ affectedRows: 1 });
+        } else {
+          reject("Error: Mock function got wrong query");
+        }
+      });
+    });
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("should delete the Project with given id and return 204 message", async () => {
+    const req: Request = {
+      params: {
+        id: "1",
+      },
+    } as unknown as Request;
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+      send: jest.fn(),
+    } as unknown as Response;
+
+    await deleteProject(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(204);
+  });
+}); // End of DELETE /projects

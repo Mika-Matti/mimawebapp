@@ -73,5 +73,21 @@ export const updateProject = async (req: Request, res: Response) => {
 
 // route DELETE '/projects/:id'
 export const deleteProject = async (req: Request, res: Response) => {
-  console.log("TODO: implement deleteProject-method");
+  const projectId: string = req.params.id;
+  try {
+    const result: OkPacket = await db.query(
+      "DELETE FROM projects WHERE project_id = ?",
+      [projectId]
+    );
+    if (result.affectedRows === 0) {
+      res
+        .status(404)
+        .json({ message: "Project not found or no rows were affected" });
+    } else {
+      res.status(204).send(); // Success
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
