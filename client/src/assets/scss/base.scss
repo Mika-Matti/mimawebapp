@@ -1,5 +1,12 @@
 @import "./theme.scss";
 
+@font-face {
+  font-family: "AcPlus IBM VGA 8x16";
+  src: url("./assets/fonts/AcPlus_IBM_VGA_8x16.ttf") format ("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 #app {
   font-family: $font-family;
   -webkit-font-smoothing: antialiased;
