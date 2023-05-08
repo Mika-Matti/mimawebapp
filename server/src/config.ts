@@ -4,7 +4,7 @@ const path = require("path");
 let envPath: string = "";
 
 // Check enviroment server is running in
-if (process.env.NODE_ENV === "test") {
+if (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "development") {
   envPath = path.resolve(__dirname, "../../.env.test");
   dotenv.config({ path: envPath });
 } else if (process.env.NODE_ENV === "production") {
