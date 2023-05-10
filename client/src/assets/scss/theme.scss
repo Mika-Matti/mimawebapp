@@ -1,3 +1,25 @@
-$font-family: "AcPlus IBM VGA 8x16";
-$primary-color: #2c3e50;
-$secondary-color: #42b983;
+$foreground-color: #c0c0c0;
+$background-color: #000000;
+$selection-background: #ffffff;
+$black: #000000;
+$brightBlack: #808080;
+$blue: #000080;
+$brightBlue: #0000ff;
+$cyan: #008080;
+$brightCyan: #00ffff;
+$green: #008000;
+$brightGreen: #00ff00;
+$purple: #800080;
+$brightPurple: #ff00ff;
+$red: #800000;
+$brightRed: #ff0000;
+$yellow: #808000;
+$brightYellow: #ffff00;
+$white: #c0c0c0;
+$brightWhite: #ffffff;
+
+$primary-color: $foreground-color;
+$secondary-color: $brightBlack;
+
+$primary-font: "IBMVGA8x16";
+$secondary-font: monospace;

@@ -1,16 +1,26 @@
 @import "./theme.scss";
 
 @font-face {
-  font-family: "AcPlus IBM VGA 8x16";
-  src: url("./assets/fonts/AcPlus_IBM_VGA_8x16.ttf") format ("truetype");
+  font-family: $primary-font;
+  src: url("~@/assets/fonts/WebPlus_IBM_VGA_8x16.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+  background-color: $background-color;
+}
+
 #app {
-  font-family: $font-family;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: $primary-font, $secondary-font;
+  font-size: 16px;
+  line-height: 16px;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: none;
   text-align: center;
   color: $primary-color;
 }
@@ -20,10 +30,39 @@ nav {
 }
 
 nav a {
+  text-transform: uppercase;
   font-weight: bold;
   color: $primary-color;
+  &:hover {
+    color: $selection-background;
+  }
 }
 
 nav a.router-link-exact-active {
   color: $secondary-color;
+  text-decoration: none;
+}
+
+a {
+  color: $secondary-color;
+  &:hover {
+    color: $selection-background;
+  }
+}
+
+h1,
+h2,
+h3 {
+  margin: 40px 0 0;
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+h1 {
+  transform: scale(2);
+}
+
+h2 {
+  transform: scale(1.5);
 }
