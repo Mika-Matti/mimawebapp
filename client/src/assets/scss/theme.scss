@@ -1,6 +1,3 @@
-$foreground-color: #c0c0c0;
-$background-color: #000000;
-$selection-background: #ffffff;
 $black: #000000;
 $brightBlack: #808080;
 $blue: #000080;
@@ -18,6 +15,9 @@ $brightYellow: #ffff00;
 $white: #c0c0c0;
 $brightWhite: #ffffff;
 
+$foreground-color: $white;
+$background-color: $black;
+$selection-background: $brightWhite;
 $primary-color: $foreground-color;
 $secondary-color: $brightBlack;
 
