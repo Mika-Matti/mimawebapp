@@ -1,8 +1,12 @@
 <template>
-  <nav>
-    <router-link class="router-link" to="/">Home</router-link>
-    <router-link class="router-link" to="/projects">Portfolio</router-link>
-    <router-link class="router-link" to="/about">About</router-link>
+  <nav class="container-fluid">
+    <div class="row">
+      <router-link class="router-link col" to="/">Home</router-link>
+      <router-link class="router-link col" to="/projects"
+        >Portfolio</router-link
+      >
+      <router-link class="router-link col" to="/about">About</router-link>
+    </div>
   </nav>
   <router-view />
 </template>

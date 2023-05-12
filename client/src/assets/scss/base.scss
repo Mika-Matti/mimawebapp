@@ -17,6 +17,8 @@ body {
 }
 
 #app {
+  max-width: 960px;
+  margin: 8px auto;
   font-family: $primary-font, $secondary-font;
   font-size: 16px;
   line-height: 16px;
@@ -24,10 +26,6 @@ body {
   -moz-osx-font-smoothing: none;
   text-align: center;
   color: $primary-color;
-}
-
-nav {
-  padding: 24px;
 }
 
 nav a {
@@ -39,9 +37,18 @@ nav a {
   }
 }
 
+.container {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.row {
+  padding: 4px;
+}
+
 nav a.router-link {
   padding: 8px;
-  margin: 8px;
+  margin: 4px;
   border: 2px solid $primary-color;
   background-color: $primary-color;
 }
