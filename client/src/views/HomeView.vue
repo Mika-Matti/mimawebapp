@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <img alt="mimanet logo" src="../assets/images/mimanetlogo128.png" />
     <HomePage msg="Welcome to Your Vue.js + TypeScript App" />
   </div>
 </template>

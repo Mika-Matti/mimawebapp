@@ -24,7 +24,6 @@ body {
   line-height: 16px;
   -webkit-font-smoothing: none;
   -moz-osx-font-smoothing: none;
-  text-align: center;
   color: $primary-color;
 }
 
@@ -37,13 +36,11 @@ nav a {
   }
 }
 
-.container {
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.row {
-  padding: 4px;
+a {
+  color: $secondary-color;
+  &:hover {
+    color: $selection-color;
+  }
 }
 
 nav a.router-link {
@@ -51,6 +48,7 @@ nav a.router-link {
   margin: 4px;
   border: 2px solid $primary-color;
   background-color: $primary-color;
+  text-align: center;
 }
 
 nav a.router-link-exact-active {
@@ -59,26 +57,44 @@ nav a.router-link-exact-active {
   background-color: $secondary-color;
 }
 
-a {
-  color: $secondary-color;
-  &:hover {
-    color: $selection-color;
-  }
+.header {
+  margin: 8px;
+  padding: 8px;
+  border-left: 4px solid $primary-color;
+  border-bottom: 4px solid $primary-color;
+  text-align: center;
+}
+
+.container {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.row {
+  padding: 0 4px 0 4px;
+}
+
+.content {
+  margin: 8px;
+  padding: 8px;
+  text-align: left;
+  border-top: 4px solid $primary-color;
+  border-right: 4px solid $primary-color;
 }
 
 h1,
 h2,
 h3 {
-  margin: 40px 0 0;
+  margin: 0 0 16px 0;
   text-transform: uppercase;
   font-size: 16px;
   font-weight: 400;
 }
 
 h1 {
-  transform: scale(2);
+  font-size: 32px;
 }
 
 h2 {
-  transform: scale(1.5);
+  font-size: 24px;
 }
