@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <HomePage msg="Welcome to Your Vue.js + TypeScript App" />
+    <HomePage pageHeader="/home" />
   </div>
 </template>
 

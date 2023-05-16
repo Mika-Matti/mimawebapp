@@ -2,11 +2,11 @@ import { shallowMount } from "@vue/test-utils";
 import HomePage from "@/components/HomePage.vue";
 
 describe("HomePage.vue", () => {
-  it("renders props.msg when passed", () => {
-    const msg = "new message";
+  it("renders props.pageHeader when passed", () => {
+    const pageHeader = "new pageHeader";
     const wrapper = shallowMount(HomePage, {
-      props: { msg },
+      props: { pageHeader },
     });
-    expect(wrapper.text()).toMatch(msg);
+    expect(wrapper.text()).toMatch(pageHeader);
   });
 });
