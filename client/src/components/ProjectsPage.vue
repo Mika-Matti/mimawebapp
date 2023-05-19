@@ -3,7 +3,7 @@
     <h1>{{ pageHeader }}</h1>
     <ul>
       <li v-for="project in projects" :key="project.project_id">
-        {{ project.project_title }}
+        <ProjectNode :project="project" />
       </li>
     </ul>
   </div>
@@ -11,16 +11,13 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-
-interface Project {
-  project_id?: number;
-  project_title: string;
-  project_description: string;
-  project_content: string;
-  project_link: string;
-}
+import { Project } from "@/types";
+import ProjectNode from "@/components/ProjectNode.vue";
 
 @Options({
+  components: {
+    ProjectNode,
+  },
   props: {
     pageHeader: String,
     projects: Array as () => Project[],
