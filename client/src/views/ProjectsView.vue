@@ -1,6 +1,6 @@
 <template>
   <div class="projects">
-    <ProjectsPage pageHeader="/projects" :projects="projects" />
+    <ProjectsPage :pageHeader="pageHeader" :projects="projects" />
   </div>
 </template>
 
@@ -15,8 +15,8 @@ import ProjectsPage from "@/components/ProjectsPage.vue";
   },
 })
 export default class ProjectsView extends Vue {
+  pageHeader = "/";
   projects = [];
-
   store = useStore();
 
   // Fetch projects from server
@@ -32,6 +32,7 @@ export default class ProjectsView extends Vue {
   // Call fetch once component is mounted
   mounted() {
     this.fetchProjects();
+    this.pageHeader = this.$router.currentRoute.value.path;
   }
 }
 </script>

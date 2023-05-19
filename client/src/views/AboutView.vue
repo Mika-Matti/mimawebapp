@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <AboutPage pageHeader="/about" />
+    <AboutPage :pageHeader="pageHeader" />
   </div>
 </template>
 
@@ -13,5 +13,11 @@ import AboutPage from "@/components/AboutPage.vue"; // @ is an alias to /src
     AboutPage,
   },
 })
-export default class AboutView extends Vue {}
+export default class AboutView extends Vue {
+  pageHeader = "/";
+
+  mounted() {
+    this.pageHeader = this.$router.currentRoute.value.path;
+  }
+}
 </script>
