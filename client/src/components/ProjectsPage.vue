@@ -1,6 +1,5 @@
 <template>
   <div class="projects">
-    <h1>{{ pageHeader }}</h1>
     <ul>
       <li v-for="project in projects" :key="project.project_id">
         <ProjectNode :project="project" />
@@ -19,12 +18,10 @@ import ProjectNode from "@/components/ProjectNode.vue";
     ProjectNode,
   },
   props: {
-    pageHeader: String,
     projects: Array as () => Project[],
   },
 })
 export default class ProjectsPage extends Vue {
-  pageHeader!: string;
   projects!: Project[];
 }
 </script>

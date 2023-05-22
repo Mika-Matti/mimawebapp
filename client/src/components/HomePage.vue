@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <h1>{{ pageHeader }}</h1>
     <h3>Welcome to my website</h3>
     <p>
       This is my little project website with primary purpose to showcase my
@@ -35,16 +34,9 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
+import { Vue } from "vue-class-component";
 
-@Options({
-  props: {
-    pageHeader: String,
-  },
-})
-export default class HomePage extends Vue {
-  pageHeader!: string;
-}
+export default class HomePage extends Vue {}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

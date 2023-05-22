@@ -1,23 +1,18 @@
 <template>
-  <div class="about">
-    <AboutPage :pageHeader="pageHeader" />
-  </div>
+  <PageHeader />
+  <AboutPage />
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
+import PageHeader from "@/components/PageHeader.vue";
 import AboutPage from "@/components/AboutPage.vue"; // @ is an alias to /src
 
 @Options({
   components: {
+    PageHeader,
     AboutPage,
   },
 })
-export default class AboutView extends Vue {
-  pageHeader = "/";
-
-  mounted() {
-    this.pageHeader = this.$router.currentRoute.value.path;
-  }
-}
+export default class AboutView extends Vue {}
 </script>
