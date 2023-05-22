@@ -1,16 +1,28 @@
 <template>
-  <div class="project-item">
-    <div class="project-info">
-      <h2>{{ project.project_title }}</h2>
-      <p>{{ project.project_description }}</p>
-    </div>
-    <div class="project-id">
-      <p>Project ID: {{ project.project_id }}</p>
+  <div class="project-item container-fluid mx-0 px-0">
+    <div class="row mx-0 px-0">
+      <div class="col-10 mx-0 px-0">
+        <div class="row mx-0 px-0 project-title">
+          <h2>{{ project.project_title }}</h2>
+        </div>
+        <div class="row mx-0 px-0 project-summary">
+          <p>{{ project.project_description }}</p>
+        </div>
+      </div>
+      <div
+        class="col-2 mx-0 px-0 d-flex align-items-center justify-content-end"
+      >
+        <div class="project-button w-100 mx-0 my-0">
+          <router-link
+            :to="`/projects/${project.project_id}`"
+            class="project-link"
+          >
+            View Project
+          </router-link>
+        </div>
+      </div>
     </div>
   </div>
-  <router-link :to="`/projects/${project.project_id}`" class="project-link">
-    View Project
-  </router-link>
 </template>
 
 <script lang="ts">
