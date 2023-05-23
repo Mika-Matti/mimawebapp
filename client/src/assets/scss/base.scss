@@ -32,7 +32,8 @@ nav.container-fluid {
 }
 
 nav a,
-a.project-link {
+a.project-link,
+.button {
   text-decoration: none;
   text-transform: uppercase;
   color: $background-color;
@@ -49,9 +50,11 @@ a {
 }
 
 nav a.router-link,
-.project-button {
+.project-button,
+.button {
   padding: 10px;
   margin: 4px;
+  border: none;
   background-color: $primary-color;
   text-align: center;
 }
