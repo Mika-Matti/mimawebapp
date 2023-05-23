@@ -1,5 +1,5 @@
 import express = require("express");
-import cors from "cors";
+import cors = require("cors");
 import projectRouter from "./routes/project.routes";
 import { config } from "./config";
 
