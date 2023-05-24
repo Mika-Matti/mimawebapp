@@ -26,7 +26,7 @@ export default class ProjectsView extends Vue {
       await this.store.dispatch("fetchProjects");
       this.projects = this.store.getters.getProjects;
     } catch (error) {
-      console.error("Failed to fetch projecs", error);
+      console.error("Failed to fetch projects", error);
     }
   }
 

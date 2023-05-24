@@ -1,7 +1,7 @@
 <template>
   <div class="project">
     <PageHeader />
-    <ProjectPage />
+    <ProjectPage :project="project" />
   </div>
 </template>
 
