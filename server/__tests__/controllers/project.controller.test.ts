@@ -84,14 +84,14 @@ describe("GET /projects", () => {
     mockQuery.mockImplementation((sql: string, values?: any[]) => {
       return new Promise<any>((resolve, reject) => {
         console.log("Calling mocked GET /projects");
-        if (sql === "SELECT * FROM projects") {
+        if (sql === "SELECT * FROM projects ORDER BY project_id DESC") {
           resolve([
             {
-              project_id: 1,
-              project_title: "Project A",
-              project_description: "A website redesign for Company A",
+              project_id: 3,
+              project_title: "Project C",
+              project_description: "A website redesign for Company C",
               project_content: "Lorem ipsum dolor sit amet...",
-              project_link: "https://www.exampleA.com",
+              project_link: "https://www.exampleC.com",
             },
             {
               project_id: 2,
@@ -101,11 +101,11 @@ describe("GET /projects", () => {
               project_link: "https://www.exampleB.com",
             },
             {
-              project_id: 3,
-              project_title: "Project C",
-              project_description: "A website redesign for Company C",
+              project_id: 1,
+              project_title: "Project A",
+              project_description: "A website redesign for Company A",
               project_content: "Lorem ipsum dolor sit amet...",
-              project_link: "https://www.exampleC.com",
+              project_link: "https://www.exampleA.com",
             },
           ]);
         } else {
@@ -131,11 +131,11 @@ describe("GET /projects", () => {
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith([
       {
-        project_id: 1,
-        project_title: "Project A",
-        project_description: "A website redesign for Company A",
+        project_id: 3,
+        project_title: "Project C",
+        project_description: "A website redesign for Company C",
         project_content: "Lorem ipsum dolor sit amet...",
-        project_link: "https://www.exampleA.com",
+        project_link: "https://www.exampleC.com",
       },
       {
         project_id: 2,
@@ -145,11 +145,11 @@ describe("GET /projects", () => {
         project_link: "https://www.exampleB.com",
       },
       {
-        project_id: 3,
-        project_title: "Project C",
-        project_description: "A website redesign for Company C",
+        project_id: 1,
+        project_title: "Project A",
+        project_description: "A website redesign for Company A",
         project_content: "Lorem ipsum dolor sit amet...",
-        project_link: "https://www.exampleC.com",
+        project_link: "https://www.exampleA.com",
       },
     ]);
   });

@@ -13,9 +13,7 @@
         </a>
       </p>
     </div>
-    <div class="project-page-content">
-      {{ project.project_content }}
-    </div>
+    <div class="project-page-content" v-html="project.project_content" />
   </div>
 </template>
 

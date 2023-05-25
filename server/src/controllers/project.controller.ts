@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { OkPacket } from "mysql2";
 import { Project } from "../models/project.model";
 import { db } from "../utils/db";
+import { sanitizeHTML } from "../utils/formatUtils";
 
 // route POST '/projects/'
 export const createProject = async (req: Request, res: Response) => {
@@ -24,7 +25,9 @@ export const createProject = async (req: Request, res: Response) => {
 // route GET '/projects/'
 export const getProjects = async (req: Request, res: Response) => {
   try {
-    const results: Project[] = await db.query("SELECT * FROM projects");
+    const results: Project[] = await db.query(
+      "SELECT * FROM projects ORDER BY project_id DESC"
+    );
     res.status(200).json(results);
   } catch (err) {
     console.error(err);
@@ -40,6 +43,15 @@ export const getProjectById = async (req: Request, res: Response) => {
       "SELECT * FROM projects WHERE project_id = ?",
       [projectId]
     );
+
+    if (result.length === 0) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    // Encode html in content text
+    const project: Project = result[0];
+    project.project_content = sanitizeHTML(project.project_content);
+
     res.status(200).json(result[0]);
   } catch (err) {
     console.error(err);
