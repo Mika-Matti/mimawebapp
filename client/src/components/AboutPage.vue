@@ -9,8 +9,8 @@
         </p>
         <p>
           To contact me, you can mail me at
-          <a href="mailto:mimanetmail@gmail.com" target="_blank" rel="noopener"
-            >mimanetmail@gmail.com</a
+          <a href="mailto:mima@mimanet.net" target="_blank" rel="noopener"
+            >mima@mimanet.net</a
           >
           or send me a message over at
           <a

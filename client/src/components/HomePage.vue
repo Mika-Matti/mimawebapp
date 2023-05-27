@@ -25,8 +25,8 @@
         >
       </li>
       <li>
-        <a href="mailto:mimanetmail@gmail.com" target="_blank" rel="noopener"
-          >mimanetmail@gmail.com</a
+        <a href="mailto:mima@mimanet.net" target="_blank" rel="noopener"
+          >mima@mimanet.net</a
         >
       </li>
     </ul>
