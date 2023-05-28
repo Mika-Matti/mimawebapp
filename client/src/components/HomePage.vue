@@ -8,7 +8,7 @@
       general programming and jest for unit testing.
     </p>
     <p>I hope you enjoy your stay.</p>
-    <p>-Mika-Matti</p>
+    <p>- Mika-Matti</p>
     <h3>Some essential links</h3>
     <ul>
       <li>

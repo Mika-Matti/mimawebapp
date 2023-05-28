@@ -50,3 +50,32 @@
     align-self: flex-start;
   }
 }
+
+.admin {
+  .text-container {
+    padding: 0;
+  }
+
+  @media (min-width: 576px) {
+    .text-container {
+      padding-right: 8px;
+    }
+  }
+}
+
+.login-form {
+  width: 100%;
+
+  .form-group {
+    margin-bottom: 16px;
+    .form-control {
+      border-radius: 0;
+      border: solid 4px $primary-color;
+      color: $primary-color;
+      background-color: $background-color;
+    }
+  }
+  .button {
+    width: 100%;
+  }
+}

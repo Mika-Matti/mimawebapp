@@ -3,6 +3,7 @@ import HomeView from "../views/HomeView.vue";
 import ProjectsView from "../views/ProjectsView.vue";
 import AboutView from "../views/AboutView.vue";
 import ProjectView from "../views/ProjectView.vue";
+import AdminView from "../views/AdminView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -25,6 +26,11 @@ const routes: Array<RouteRecordRaw> = [
     name: "project",
     component: ProjectView,
     props: true,
+  },
+  {
+    path: "/admin",
+    name: "admin",
+    component: AdminView,
   },
 ];
 
