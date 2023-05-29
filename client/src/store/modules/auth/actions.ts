@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { API_URLS } from "@/config";
 import { ActionContext } from "vuex";
 import { RootState, AuthState } from "@/types";
@@ -14,8 +14,14 @@ export default {
       const token = response.data.token;
       commit("setIsAuthenticated", true);
       commit("setToken", token);
-    } catch (error) {
-      console.error("Error authenticating user: ", error);
+      //TODO change the loginpage if logged in
+      console.log("Welcome, ", username);
+    } catch (error: unknown) {
+      if ((error as AxiosError)?.response?.status === 401) {
+        console.log("Invalid username or password");
+      } else {
+        console.log("An error occurred during login");
+      }
     }
   },
 };

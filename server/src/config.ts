@@ -19,6 +19,7 @@ export const config = {
   envMode: process.env.NODE_ENV,
   port: process.env.PORT,
   corsOrigin: process.env.CORS_ORIGIN,
+  jwtSecret: process.env.JWT_SECRET,
   database: {
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
