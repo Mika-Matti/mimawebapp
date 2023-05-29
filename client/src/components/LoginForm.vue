@@ -28,14 +28,18 @@
 
 <script lang="ts">
 import { Vue } from "vue-class-component";
+import { useStore } from "vuex";
 
 export default class LoginForm extends Vue {
   userName = "";
   passWord = "";
+  store = useStore();
 
   login() {
-    console.log("Username:", this.userName);
-    console.log("Password:", this.passWord);
+    this.store.dispatch(`login`, {
+      username: this.userName,
+      password: this.passWord,
+    });
   }
 }
 </script>

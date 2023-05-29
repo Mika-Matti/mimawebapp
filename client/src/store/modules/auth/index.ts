@@ -1,15 +1,15 @@
 import { Module } from "vuex";
-import { RootState, ProjectsState } from "@/types";
+import { RootState, AuthState } from "@/types";
 import state from "./state";
 import getters from "./getters";
 import mutations from "./mutations";
 import actions from "./actions";
 
-const projectsModule: Module<ProjectsState, RootState> = {
+const authModule: Module<AuthState, RootState> = {
   state,
   getters,
   mutations,
   actions,
 };
 
-export default projectsModule;
+export default authModule;

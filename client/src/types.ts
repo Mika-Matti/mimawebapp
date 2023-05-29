@@ -16,3 +16,8 @@ export interface ProjectsState {
   projects: Project[];
   project: Project | null;
 }
+
+export interface AuthState {
+  isAuthenticated: boolean;
+  token: string | null;
+}
