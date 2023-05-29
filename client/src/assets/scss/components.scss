@@ -27,27 +27,27 @@
 }
 
 .about {
-  .aboutcontent {
+  .about-content {
     display: flex;
     align-items: center;
-  }
 
-  .image-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    .image {
-      width: 128px;
+    .text {
+      align-self: flex-start;
     }
-    .image-caption {
-      color: $secondary-color;
-      text-align: center;
-    }
-  }
 
-  .text {
-    align-self: flex-start;
+    .image-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .image {
+        width: 128px;
+      }
+      .image-caption {
+        color: $secondary-color;
+        text-align: center;
+      }
+    }
   }
 }
 
