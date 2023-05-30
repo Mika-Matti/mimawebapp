@@ -5,6 +5,7 @@ import { User } from "../models/user.model";
 import { config } from "../config";
 import { db } from "../utils/db";
 import { validateInput } from "../utils/formatUtils";
+import { Cache } from "../utils/cache";
 
 // route POST '/auth/login'
 export const authenticateUser = async (req: Request, res: Response) => {
@@ -60,5 +61,18 @@ export const authenticateUser = async (req: Request, res: Response) => {
 
 // route POST '/auth/logout'
 export const logoutUser = async (req: Request, res: Response) => {
-  //TODO
+  try {
+    // Invalidate Token
+    const token: string = req.headers.authorization?.split(" ")[1] || "";
+
+    if (token.length > 0) {
+      Cache.addInvalidToken(token);
+      res.status(200).json({ message: "User logged out successfully" });
+    } else {
+      res.status(400).json({ message: "Invalid token" });
+    }
+  } catch (error) {
+    console.error("Error logging out user:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };

@@ -3,6 +3,7 @@ import cors = require("cors");
 import projectRouter from "./routes/project.routes";
 import authRouter from "./routes/auth.routes";
 import { config } from "./config";
+import { Cache } from "./utils/cache";
 
 export function createServer() {
   const app: express.Express = express();
@@ -27,6 +28,9 @@ export function createServer() {
 
   // use the auth router for all routes starting with '/auth'
   app.use("/auth", authRouter);
+
+  // initialize the token cache
+  Cache.initializeCache();
 
   return app;
 }
