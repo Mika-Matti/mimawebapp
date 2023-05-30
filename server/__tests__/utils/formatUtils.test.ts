@@ -1,4 +1,4 @@
-import { sanitizeHTML } from "../../src/utils/formatUtils";
+import { sanitizeHTML, validateInput } from "../../src/utils/formatUtils";
 
 describe("Test encodeHTML", () => {
   const expectedString: string =
@@ -17,5 +17,43 @@ describe("Test encodeHTML", () => {
   it("should return a sanitized html string that matches expectedString", () => {
     const testString = sanitizeHTML(testInput);
     expect(testString).toBe(expectedString);
+  });
+});
+
+describe("Test validateInput", () => {
+  it("should return true when validating an acceptable string", () => {
+    const testInput: string = "user-name@username.net";
+    const testOutput: boolean = validateInput(testInput);
+    const expectedOutput: boolean = true;
+    expect(testOutput).toBe(expectedOutput);
+  });
+
+  it("should return false, when validating a string with forbidden characters", () => {
+    const testInput: string = "username+%3Cscript%3Eevil_script()%3C/script%3E";
+    const testOutput: boolean = validateInput(testInput);
+    const expectedOutput: boolean = false;
+    expect(testOutput).toBe(expectedOutput);
+  });
+
+  it("should return false, when validating a string with forbidden characters", () => {
+    const testInput: string = "username'; DROP TABLE users; --";
+    const testOutput: boolean = validateInput(testInput);
+    const expectedOutput: boolean = false;
+    expect(testOutput).toBe(expectedOutput);
+  });
+
+  it("should return false, when validating a string with forbidden characters", () => {
+    const testInput: string = "password' OR '1'='1";
+    const testOutput: boolean = validateInput(testInput);
+    const expectedOutput: boolean = false;
+    expect(testOutput).toBe(expectedOutput);
+  });
+
+  it("should return false, when validating a string with forbidden characters", () => {
+    const testInput: string =
+      "password' UNION SELECT username, password FROM users --";
+    const testOutput: boolean = validateInput(testInput);
+    const expectedOutput: boolean = false;
+    expect(testOutput).toBe(expectedOutput);
   });
 });
