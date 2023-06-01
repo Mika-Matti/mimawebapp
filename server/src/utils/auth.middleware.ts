@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import { verify, JwtPayload } from "jsonwebtoken";
 import { config } from "../config";
 import { Cache } from "./cache";
 
@@ -22,7 +22,7 @@ export const verifyAuthentication = (
     // Verify token
     if (config.jwtSecret) {
       try {
-        const decoded: string | JwtPayload | undefined = jwt.verify(
+        const decoded: string | JwtPayload | undefined = verify(
           token,
           config.jwtSecret
         );
