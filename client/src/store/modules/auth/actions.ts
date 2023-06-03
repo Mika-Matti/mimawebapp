@@ -8,19 +8,18 @@ export default {
   async login(
     { commit }: ActionContext<AuthState, RootState>,
     { username, password }: { username: string; password: string }
-  ) {
+  ): Promise<string | null> {
     try {
       const response = await axios.post(API_URLS.login, { username, password });
       const token = response.data.token;
       commit("setIsAuthenticated", true);
       commit("setToken", token);
-      //TODO change the loginpage if logged in
-      console.log("Welcome, ", username);
+      return null;
     } catch (error: unknown) {
       if ((error as AxiosError)?.response?.status === 401) {
-        console.log("Invalid username or password");
+        return "Invalid username or password";
       } else {
-        console.log("An error occurred during login");
+        return "An error occurred during login";
       }
     }
   },

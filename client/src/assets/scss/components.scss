@@ -29,6 +29,22 @@
   .button {
     width: 100%;
   }
+  .text-error {
+    text-transform: uppercase;
+    color: $brightRed;
+    margin-top: 16px;
+    text-align: center;
+  }
+
+  .login-welcome {
+    text-align: center;
+  }
+
+  .text-loggedin {
+    text-transform: uppercase;
+    color: $green;
+    margin-bottom: 16px;
+  }
 }
 
 .home {
