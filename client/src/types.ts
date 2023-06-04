@@ -20,4 +20,6 @@ export interface ProjectsState {
 export interface AuthState {
   isAuthenticated: boolean;
   token: string | null;
+  username: string | null;
+  role: string | null;
 }
