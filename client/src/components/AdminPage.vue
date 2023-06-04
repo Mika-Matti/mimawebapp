@@ -5,8 +5,8 @@
       <div class="col-sm-6 text-container">
         <p>
           This is a secret page for admin stuff. If you have the credentials,
-          then go right ahead. If you don't have credentials, this page isn't
-          very useful for you.
+          then go right ahead. If you do not have credentials, then this page
+          isn't very useful for you.
         </p>
         <div class="image-container">
           <img

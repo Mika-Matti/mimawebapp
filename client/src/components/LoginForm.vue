@@ -32,9 +32,12 @@
     <!-- Otherwise show welcome message and logout button -->
     <div v-else>
       <div class="login-welcome">
-        <div class="text-loggedin"><h2>Success</h2></div>
+        <div class="text-loggedin"><h2>You are logged in</h2></div>
         <p>Welcome, {{ userName }}</p>
         <button @click="logout" class="button mx-0 my-0">Logout</button>
+        <div v-if="displayError" class="text-error">
+          {{ displayError }}
+        </div>
       </div>
     </div>
   </div>
@@ -51,6 +54,10 @@ export default class LoginForm extends Vue {
   displayError: string | null = null;
   store = useStore();
 
+  async mounted() {
+    this.isAuthenticated = this.store.getters.getIsAuthenticated;
+  }
+
   async login() {
     try {
       const errorMessage: string | null = await this.store.dispatch(`login`, {
@@ -62,21 +69,28 @@ export default class LoginForm extends Vue {
         this.displayError = errorMessage;
       } else {
         this.isAuthenticated = this.store.getters.getIsAuthenticated;
+        this.displayError = null;
       }
     } catch (error: unknown) {
       this.displayError = "An error occurred during login";
     }
   }
 
-  logout() {
-    console.log("clicked logout");
-    //TODO use store action to send logout request to server.
-    //If successful, do the following actions:
-    //this.store.commit("setIsAuthenticated", false); //Do this in actions.ts
-    //this.store.commit("setToken", null); //Do this in actions.ts
-    //this.userName = "";
-    //this.passWord = "";
-    //this.loginError = false;
+  async logout() {
+    try {
+      const errorMessage: string | null = await this.store.dispatch(`logout`);
+
+      if (errorMessage) {
+        this.displayError = errorMessage;
+      } else {
+        this.userName = "";
+        this.passWord = "";
+        this.isAuthenticated = this.store.getters.getIsAuthenticated;
+        this.displayError = null;
+      }
+    } catch (error: unknown) {
+      this.displayError = "An error occurred during logout";
+    }
   }
 }
 </script>
