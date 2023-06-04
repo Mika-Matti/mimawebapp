@@ -15,8 +15,12 @@ export default {
         password,
       });
       const token: string = response.data.token;
+      const user: string = response.data.username;
+      const role: string = response.data.role;
       commit("setIsAuthenticated", true);
       commit("setToken", token);
+      commit("setUsername", user);
+      commit("setRole", role);
       return null;
     } catch (error: unknown) {
       if ((error as AxiosError)?.response?.status === 401) {

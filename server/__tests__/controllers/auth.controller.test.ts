@@ -172,13 +172,17 @@ describe("POST /auth/login", () => {
 
     const expectedMessage: string = "User authentication successful";
     const expectedToken: string = "validToken";
+    const expectedUser: string = "validUsername";
+    const expectedRole: string = "validRole";
 
     await authenticateUser(req, res);
 
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({
       message: expectedMessage,
+      role: expectedRole,
       token: expectedToken,
+      username: expectedUser,
     });
   });
 });

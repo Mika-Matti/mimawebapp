@@ -48,7 +48,12 @@ export const authenticateUser = async (req: Request, res: Response) => {
       );
       res
         .status(200)
-        .json({ message: "User authentication successful", token });
+        .json({
+          message: "User authentication successful",
+          token,
+          username: user.user_name,
+          role: user.user_role,
+        });
     } else {
       // Authentication failed
       res.status(401).json({ message: "User authentication failed" });
