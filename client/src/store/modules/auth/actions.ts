@@ -27,6 +27,7 @@ export default {
         commit("setIsAuthenticated", true);
         commit("setUsername", decodedToken.username);
         commit("setRole", decodedToken.role);
+        commit("setExpiration", decodedToken.exp);
       } else {
         return "A client error occurred during login";
       }

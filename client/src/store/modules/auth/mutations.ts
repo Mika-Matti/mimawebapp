@@ -13,6 +13,10 @@ const mutations: MutationTree<AuthState> = {
   setRole: (state: AuthState, role: string) => {
     state.role = role;
   },
+
+  setExpiration: (state: AuthState, expiration: number) => {
+    state.expiration = expiration;
+  },
 };
 
 export default mutations;

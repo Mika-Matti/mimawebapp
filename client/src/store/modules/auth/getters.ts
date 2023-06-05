@@ -16,6 +16,7 @@ const getters: GetterTree<AuthState, RootState> = {
           state.isAuthenticated;
           state.username = decodedToken.username;
           state.role = decodedToken.role;
+          state.expiration = decodedToken.exp;
           return true;
         }
       } else {
@@ -25,6 +26,7 @@ const getters: GetterTree<AuthState, RootState> = {
   },
   getUsername: (state) => state.username,
   getRole: (state) => state.role,
+  getExpiration: (state) => state.expiration,
 };
 
 export default getters;

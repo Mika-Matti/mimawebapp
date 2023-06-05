@@ -28,4 +28,5 @@ export interface AuthState {
   isAuthenticated: boolean;
   username: string | null;
   role: string | null;
+  expiration: number | null;
 }
