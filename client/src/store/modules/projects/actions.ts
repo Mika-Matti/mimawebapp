@@ -3,6 +3,8 @@ import { API_URLS } from "@/config";
 import { ActionContext } from "vuex";
 import { RootState, ProjectsState } from "@/types";
 
+axios.defaults.withCredentials = true;
+
 export default {
   // Fetch projects
   async fetchProjects({ commit }: ActionContext<ProjectsState, RootState>) {

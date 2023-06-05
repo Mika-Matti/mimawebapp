@@ -1,4 +1,11 @@
 // Object types
+export interface DecodedToken {
+  userId: number;
+  username: string;
+  role: string;
+  exp: number;
+}
+
 export interface Project {
   project_id?: number;
   project_title: string;
@@ -19,7 +26,6 @@ export interface ProjectsState {
 
 export interface AuthState {
   isAuthenticated: boolean;
-  token: string | null;
   username: string | null;
   role: string | null;
 }

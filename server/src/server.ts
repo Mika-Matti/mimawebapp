@@ -12,6 +12,7 @@ export function createServer() {
   app.use(
     cors({
       origin: config.corsOrigin,
+      credentials: true,
     })
   );
 

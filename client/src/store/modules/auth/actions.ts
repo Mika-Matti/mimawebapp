@@ -1,7 +1,10 @@
-import axios, { AxiosError, AxiosResponse, AxiosRequestConfig } from "axios";
-import { API_URLS } from "@/config";
+import axios, { AxiosResponse } from "axios";
 import { ActionContext } from "vuex";
-import { RootState, AuthState } from "@/types";
+import { API_URLS } from "@/config";
+import { RootState, AuthState, DecodedToken } from "@/types";
+import { getCookieToken } from "./authHelpers";
+
+axios.defaults.withCredentials = true;
 
 export default {
   // Login
@@ -14,38 +17,30 @@ export default {
         username,
         password,
       });
-      const token: string = response.data.token;
-      const user: string = response.data.username;
-      const role: string = response.data.role;
-      commit("setIsAuthenticated", true);
-      commit("setToken", token);
-      commit("setUsername", user);
-      commit("setRole", role);
+
+      if (response.status === 401) {
+        return "Invalid username or password";
+      }
+
+      const decodedToken: DecodedToken | null = getCookieToken();
+      if (decodedToken) {
+        commit("setIsAuthenticated", true);
+        commit("setUsername", decodedToken.username);
+        commit("setRole", decodedToken.role);
+      } else {
+        return "A client error occurred during login";
+      }
       return null;
     } catch (error: unknown) {
-      if ((error as AxiosError)?.response?.status === 401) {
-        return "Invalid username or password";
-      } else {
-        return "An error occurred during login";
-      }
+      return "An error occurred during login";
     }
   },
   // Logout
   async logout({
     commit,
-    state,
   }: ActionContext<AuthState, RootState>): Promise<string | null> {
     try {
-      const config: AxiosRequestConfig = {
-        headers: {
-          Authorization: `Bearer ${state.token}`,
-        },
-      };
-      const response: AxiosResponse = await axios.post(
-        API_URLS.logout,
-        null,
-        config
-      );
+      const response: AxiosResponse = await axios.post(API_URLS.logout);
 
       if (response.status === 400) {
         return "Invalid Token Error";

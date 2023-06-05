@@ -54,7 +54,7 @@ export default class LoginForm extends Vue {
   displayError: string | null = null;
   store = useStore();
 
-  async mounted() {
+  mounted() {
     this.isAuthenticated = this.store.getters.getIsAuthenticated;
     if (this.isAuthenticated) {
       this.userName = this.store.getters.getUsername;
