@@ -29,6 +29,11 @@
   .button {
     width: 100%;
   }
+
+  .login-welcome {
+    text-align: center;
+  }
+
   .text-error {
     text-transform: uppercase;
     color: $brightRed;
@@ -36,8 +41,9 @@
     text-align: center;
   }
 
-  .login-welcome {
+  .text-message {
     text-align: center;
+    margin-top: 16px;
   }
 
   .text-loggedin {

@@ -2,9 +2,9 @@ import { AuthState } from "@/types";
 
 const state: AuthState = {
   isAuthenticated: false,
-  username: null,
-  role: null,
-  expiration: null,
+  username: "",
+  role: "guest",
+  expiration: 0,
 };
 
 export default state;

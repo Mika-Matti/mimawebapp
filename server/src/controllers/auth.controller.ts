@@ -75,15 +75,10 @@ export const authenticateUser = async (req: Request, res: Response) => {
 // route POST '/auth/logout'
 export const logoutUser = async (req: Request, res: Response) => {
   try {
-    // Invalidate Token
-    const token: string = req.headers.authorization?.split(" ")[1] || "";
-
-    if (token.length > 0) {
-      Cache.addInvalidToken(token);
-      res.status(200).json({ message: "User logged out successfully" });
-    } else {
-      res.status(400).json({ message: "Invalid token" });
-    }
+    res
+      .clearCookie("authToken")
+      .status(200)
+      .json({ message: "User logged out successfully" });
   } catch (error) {
     console.error("Error logging out user:", error);
     res.status(500).json({ message: "Internal server error" });

@@ -43,15 +43,16 @@ export default {
     try {
       const response: AxiosResponse = await axios.post(API_URLS.logout);
 
-      if (response.status === 400) {
-        return "Invalid Token Error";
+      if (response.status === 200) {
+        commit("setIsAuthenticated", false);
+        commit("setUsername", "");
+        commit("setRole", "guest");
+        commit("setExpiration", 0);
+        return null;
       }
-
-      commit("setIsAuthenticated", false);
-      commit("setToken", null);
-      return null;
+      return "Error: Logout failed";
     } catch (error: unknown) {
-      return "Internal Server Error";
+      return "An error occurred during logout";
     }
   },
 };

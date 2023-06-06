@@ -28,6 +28,7 @@
       <div v-if="displayError" class="text-error">
         {{ displayError }}
       </div>
+      <div v-if="displayMessage" class="text-message">{{ displayMessage }}</div>
     </div>
     <!-- Otherwise show welcome message and logout button -->
     <div v-else>
@@ -55,7 +56,8 @@ export default class LoginForm extends Vue {
   passWord = "";
   isAuthenticated = false;
   displayError: string | null = null;
-  sessionTime: number | null = null;
+  displayMessage: string | null = null;
+  sessionTime = 0;
   store = useStore();
 
   mounted() {
@@ -77,6 +79,7 @@ export default class LoginForm extends Vue {
 
       if (errorMessage) {
         this.displayError = errorMessage;
+        this.displayMessage = null;
       } else {
         this.isAuthenticated = this.store.getters.getIsAuthenticated;
         this.sessionTime = this.getSessionTimeLeft(
@@ -98,8 +101,10 @@ export default class LoginForm extends Vue {
       } else {
         this.userName = "";
         this.passWord = "";
-        this.isAuthenticated = this.store.getters.getIsAuthenticated;
+        this.isAuthenticated = false;
+        this.sessionTime = 0;
         this.displayError = null;
+        this.displayMessage = "You are now logged out";
       }
     } catch (error: unknown) {
       this.displayError = "An error occurred during logout";
