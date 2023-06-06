@@ -5,7 +5,6 @@ import { User } from "../models/user.model";
 import { config } from "../config";
 import { db } from "../utils/db";
 import { validateInput } from "../utils/formatUtils";
-import { Cache } from "../utils/cache";
 
 // route POST '/auth/login'
 export const authenticateUser = async (req: Request, res: Response) => {
@@ -52,16 +51,15 @@ export const authenticateUser = async (req: Request, res: Response) => {
         }
       );
 
-      res
-        .cookie("authToken", token, {
-          httpOnly: false,
-          secure: isSecure, // Using HTTPS
-          maxAge: 3600000, // 1 hour in milliseconds
-        })
-        .status(200)
-        .json({
-          message: "User authentication successful",
-        });
+      res.cookie("authToken", token, {
+        httpOnly: false,
+        secure: isSecure, // Using HTTPS
+        maxAge: 3600000, // 1 hour in milliseconds
+      });
+
+      res.status(200).json({
+        message: "User authentication successful",
+      });
     } else {
       // Authentication failed
       res.status(401).json({ message: "User authentication failed" });
@@ -75,10 +73,8 @@ export const authenticateUser = async (req: Request, res: Response) => {
 // route POST '/auth/logout'
 export const logoutUser = async (req: Request, res: Response) => {
   try {
-    res
-      .clearCookie("authToken")
-      .status(200)
-      .json({ message: "User logged out successfully" });
+    res.clearCookie("authToken");
+    res.status(200).json({ message: "User logged out successfully" });
   } catch (error) {
     console.error("Error logging out user:", error);
     res.status(500).json({ message: "Internal server error" });

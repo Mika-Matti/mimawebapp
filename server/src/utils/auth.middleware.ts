@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { verify, JwtPayload } from "jsonwebtoken";
 import { config } from "../config";
-import { Cache } from "./cache";
 
 export interface ExtendedRequest extends Request {
   decodedToken?: JwtPayload;
@@ -13,7 +12,7 @@ export const verifyAuthentication = (
   next: NextFunction
 ) => {
   try {
-    const token: string = req.headers.authorization?.split(" ")[1] || "";
+    const token: string | undefined = req.cookies.authToken;
 
     if (!token) {
       return res.status(401).json({ message: "No token provided" });
@@ -26,10 +25,6 @@ export const verifyAuthentication = (
           token,
           config.jwtSecret
         );
-
-        if (Cache.isTokenInvalid(token)) {
-          return res.status(401).json({ message: "Invalid token" });
-        }
 
         // Add decoded token to the request object for possible future use
         if (typeof decoded === "object") {

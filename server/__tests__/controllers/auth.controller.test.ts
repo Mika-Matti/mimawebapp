@@ -166,23 +166,24 @@ describe("POST /auth/login", () => {
       },
     } as unknown as Request;
     const res = {
+      cookie: jest.fn().mockReturnThis(),
       status: jest.fn().mockReturnThis(),
       json: jest.fn(),
     } as unknown as Response;
 
     const expectedMessage: string = "User authentication successful";
     const expectedToken: string = "validToken";
-    const expectedUser: string = "validUsername";
-    const expectedRole: string = "validRole";
 
     await authenticateUser(req, res);
 
+    expect(res.cookie).toHaveBeenCalledWith("authToken", expectedToken, {
+      httpOnly: false,
+      secure: false,
+      maxAge: 3600000,
+    });
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({
       message: expectedMessage,
-      role: expectedRole,
-      token: expectedToken,
-      username: expectedUser,
     });
   });
 });
@@ -193,13 +194,10 @@ describe("POST /auth/logout", () => {
     jest.clearAllMocks();
   });
 
-  it("should return code 200 with expected message if token exists", async () => {
-    const req: Request = {
-      headers: {
-        authorization: "bearer validToken",
-      },
-    } as unknown as Request;
+  it("should return code 200 with expected message", async () => {
+    const req: Request = {} as unknown as Request;
     const res = {
+      clearCookie: jest.fn(),
       status: jest.fn().mockReturnThis(),
       json: jest.fn(),
     } as unknown as Response;
@@ -208,52 +206,10 @@ describe("POST /auth/logout", () => {
 
     await logoutUser(req, res);
 
+    expect(res.clearCookie).toHaveBeenCalledWith("authToken");
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({
       message: expectedMessage,
     });
-  });
-
-  it("should return code 400 with expected message if token doesn't exist", async () => {
-    const req: Request = {
-      headers: {
-        authorization: "",
-      },
-    } as unknown as Request;
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    } as unknown as Response;
-    const expectedMessage: string = "Invalid token";
-
-    await logoutUser(req, res);
-
-    expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.json).toHaveBeenCalledWith({
-      message: expectedMessage,
-    });
-  });
-
-  it("should return code 500 with expected message if request has invalid arguments", async () => {
-    const req: Request = {} as unknown as Request;
-    const res = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn(),
-    } as unknown as Response;
-    const expectedMessage: string = "Internal server error";
-
-    // Mock console.error to prevent output
-    jest.spyOn(console, "error").mockImplementation(() => {});
-
-    await logoutUser(req, res);
-
-    expect(res.status).toHaveBeenCalledWith(500);
-    expect(res.json).toHaveBeenCalledWith({
-      message: expectedMessage,
-    });
-    expect(console.error).toHaveBeenCalledWith(
-      "Error logging out user:",
-      expect.any(Error)
-    );
   });
 });
