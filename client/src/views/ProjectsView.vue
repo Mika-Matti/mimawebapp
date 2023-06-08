@@ -1,23 +1,30 @@
 <template>
   <PageHeader />
-  <ProjectsPage :projects="projects" />
+  <div class="projects">
+    <ul>
+      <li v-for="project in projects" :key="project.project_id">
+        <ProjectNode :project="project" />
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import { useStore } from "vuex";
+import { Project } from "@/types";
 import PageHeader from "@/components/PageHeader.vue";
-import ProjectsPage from "@/components/ProjectsPage.vue";
+import ProjectNode from "@/components/ProjectNode.vue";
 
 @Options({
   components: {
     PageHeader,
-    ProjectsPage,
+    ProjectNode,
   },
 })
 export default class ProjectsView extends Vue {
   pageHeader = "/";
-  projects = [];
+  projects: Project[] = [];
   store = useStore();
 
   // Fetch projects from server
@@ -36,3 +43,8 @@ export default class ProjectsView extends Vue {
   }
 }
 </script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style lang="scss" scoped>
+@import "../assets/scss/components.scss";
+</style>
