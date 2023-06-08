@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { hashSync } from "bcrypt";
-import { sign } from "jsonwebtoken";
 import { User } from "../../src/models/user.model";
 import { db } from "../../src/utils/db";
 import {

@@ -13,7 +13,7 @@ jest.mock("jsonwebtoken", () => ({
 describe("verifyAuthentication middleware", () => {
   beforeAll(() => {
     mockVerify.mockImplementation((token: string, jwtSecret: string) => {
-      if (token === "validToken" || token === "validButBlacklistedToken") {
+      if (token === "validToken") {
         const decoded: JwtPayload = {
           userId: 1,
         };
@@ -30,7 +30,7 @@ describe("verifyAuthentication middleware", () => {
 
   it("should return 401 with expected message if token was not provided", async () => {
     const req: ExtendedRequest = {
-      headers: {},
+      cookies: {},
     } as unknown as ExtendedRequest;
     const res = {
       status: jest.fn().mockReturnThis(),
@@ -52,7 +52,7 @@ describe("verifyAuthentication middleware", () => {
   it("should return 401 with expected message if token isn't valid", async () => {
     const req: ExtendedRequest = {
       cookies: {
-        authToken: "bearer invalidToken",
+        authToken: "invalidToken",
       },
     } as unknown as ExtendedRequest;
     const res = {
@@ -75,7 +75,7 @@ describe("verifyAuthentication middleware", () => {
   it("should call next(); once if token is valid", async () => {
     const req: ExtendedRequest = {
       cookies: {
-        authToken: "bearer validToken",
+        authToken: "validToken",
       },
     } as unknown as ExtendedRequest;
     const res = {
@@ -87,5 +87,7 @@ describe("verifyAuthentication middleware", () => {
     await verifyAuthentication(req, res, next);
 
     expect(next).toHaveBeenCalledTimes(1);
+    expect(res.status).not.toHaveBeenCalled();
+    expect(res.json).not.toHaveBeenCalled();
   });
 });
