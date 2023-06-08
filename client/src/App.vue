@@ -1,7 +1,5 @@
 <template>
-  <div class="header">
-    <img alt="mimanet logo" src="./assets/images/mimanetlogo128.png" />
-  </div>
+  <AppHeader />
   <nav class="container-fluid mx-0">
     <div class="row mx-0 px-0">
       <router-link class="router-link col" to="/">Home</router-link>
@@ -13,6 +11,16 @@
     <router-view />
   </div>
 </template>
+
+<script lang="ts">
+import AppHeader from "@/components/AppHeader.vue";
+
+export default {
+  components: {
+    AppHeader,
+  },
+};
+</script>
 
 <style lang="scss">
 @import "./assets/scss/base.scss";

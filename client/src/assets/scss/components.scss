@@ -1,5 +1,13 @@
 @import "./theme.scss";
 
+.header {
+  margin: 8px;
+  padding: 8px;
+  border-left: 4px solid $primary-color;
+  border-bottom: 4px solid $primary-color;
+  text-align: center;
+}
+
 .image-container {
   display: flex;
   flex-direction: column;
