@@ -25,7 +25,6 @@ const routes: Array<RouteRecordRaw> = [
     path: "/projects/:id",
     name: "project",
     component: ProjectView,
-    props: true,
   },
   {
     path: "/admin",
