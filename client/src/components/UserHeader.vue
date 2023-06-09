@@ -26,6 +26,10 @@ export default defineComponent({
     const updateSessionTime = () => {
       const expiration = store.getters.getExpiration;
       sessionTime.value = getSessionTimeLeft(expiration);
+
+      if (sessionTime.value <= 0) {
+        logout();
+      }
     };
 
     const timer = setInterval(updateSessionTime, 60000); // Update every minute
