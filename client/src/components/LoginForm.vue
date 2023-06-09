@@ -38,10 +38,6 @@
         <div class="text-loggedin">
           Session time left: {{ sessionTime }} minutes
         </div>
-        <button @click="logout" class="button mx-0 my-0">Logout</button>
-        <div v-if="displayError" class="text-error">
-          {{ displayError }}
-        </div>
       </div>
     </div>
   </div>
@@ -89,25 +85,6 @@ export default class LoginForm extends Vue {
       }
     } catch (error: unknown) {
       this.displayError = "An error occurred during login";
-    }
-  }
-
-  async logout() {
-    try {
-      const errorMessage: string | null = await this.store.dispatch(`logout`);
-
-      if (errorMessage) {
-        this.displayError = errorMessage;
-      } else {
-        this.userName = "";
-        this.passWord = "";
-        this.isAuthenticated = false;
-        this.sessionTime = 0;
-        this.displayError = null;
-        this.displayMessage = "You are now logged out";
-      }
-    } catch (error: unknown) {
-      this.displayError = "An error occurred during logout";
     }
   }
 
