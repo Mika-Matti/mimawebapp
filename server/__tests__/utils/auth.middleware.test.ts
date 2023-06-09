@@ -13,11 +13,22 @@ jest.mock("jsonwebtoken", () => ({
 describe("verifyAuthentication middleware", () => {
   beforeAll(() => {
     mockVerify.mockImplementation((token: string, jwtSecret: string) => {
-      if (token === "validToken") {
-        const decoded: JwtPayload = {
-          userId: 1,
-        };
-        return decoded;
+      if (token === "validToken" || token === "validAdminToken") {
+        if (token === "validToken") {
+          const decoded: JwtPayload = {
+            userId: 1,
+            username: "validUsername",
+            role: "guest",
+          };
+          return decoded;
+        } else {
+          const decoded: JwtPayload = {
+            userId: 2,
+            username: "validAdmin",
+            role: "admin",
+          };
+          return decoded;
+        }
       } else {
         throw new Error("Token verification failed");
       }
@@ -72,10 +83,38 @@ describe("verifyAuthentication middleware", () => {
     expect(next).toHaveBeenCalledTimes(0);
   });
 
-  it("should call next(); once if token is valid", async () => {
+  it("should return 403 with expected message if user valid but role not", async () => {
     const req: ExtendedRequest = {
       cookies: {
         authToken: "validToken",
+      },
+    } as unknown as ExtendedRequest;
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    } as unknown as Response;
+    const next: NextFunction = jest.fn();
+
+    const expectedMessage: string = "Unauthorized user";
+
+    await verifyAuthentication(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(403);
+    expect(res.json).toHaveBeenCalledWith({
+      message: expectedMessage,
+    });
+    expect(next).toHaveBeenCalledTimes(0);
+    expect(req.decodedToken).toEqual({
+      userId: 1,
+      username: "validUsername",
+      role: "guest",
+    });
+  });
+
+  it("should call next(); once if token is valid and role is admin", async () => {
+    const req: ExtendedRequest = {
+      cookies: {
+        authToken: "validAdminToken",
       },
     } as unknown as ExtendedRequest;
     const res = {
@@ -89,5 +128,10 @@ describe("verifyAuthentication middleware", () => {
     expect(next).toHaveBeenCalledTimes(1);
     expect(res.status).not.toHaveBeenCalled();
     expect(res.json).not.toHaveBeenCalled();
+    expect(req.decodedToken).toEqual({
+      userId: 2,
+      username: "validAdmin",
+      role: "admin",
+    });
   });
 });

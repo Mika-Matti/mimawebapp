@@ -21,18 +21,19 @@ export const verifyAuthentication = (
     // Verify token
     if (config.jwtSecret) {
       try {
-        const decoded: string | JwtPayload | undefined = verify(
-          token,
-          config.jwtSecret
-        );
+        const decoded = verify(token, config.jwtSecret) as JwtPayload;
 
         // Add decoded token to the request object for possible future use
         if (typeof decoded === "object") {
           req.decodedToken = decoded;
         }
 
-        // Call next middleware or route handler
-        next();
+        // Call next middleware or route handler if user is authorized
+        if (decoded.role === "admin") {
+          next();
+        } else {
+          return res.status(403).json({ message: "Unauthorized user" });
+        }
       } catch (error) {
         return res.status(401).json({ message: "Invalid token" });
       }
