@@ -1,7 +1,7 @@
 <template>
   <div class="login-form">
     <!-- Show login form if not authenticated -->
-    <div v-if="!isAuthenticated">
+    <div v-if="!getIsAuthenticated">
       <form @submit.prevent="login">
         <div class="form-group">
           <label for="username">Username</label>
@@ -28,56 +28,60 @@
       <div v-if="displayError" class="text-error">
         {{ displayError }}
       </div>
-      <div v-if="displayMessage" class="text-message">{{ displayMessage }}</div>
     </div>
     <!-- Otherwise show welcome message and logout button -->
     <div v-else>
       <div class="login-welcome">
         <div class="text-loggedin"><h2>You are logged in</h2></div>
-        <p>Welcome, {{ userName }}</p>
+        <p>Welcome, {{ getUserName }}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-class-component";
-import { useStore } from "vuex";
+import { defineComponent } from "vue";
 
-export default class LoginForm extends Vue {
-  userName = "";
-  passWord = "";
-  isAuthenticated = false;
-  displayError: string | null = null;
-  displayMessage: string | null = null;
-  store = useStore();
+export default defineComponent({
+  data() {
+    return {
+      userName: "",
+      passWord: "",
+      displayError: null as string | null,
+    };
+  },
 
-  mounted() {
-    this.isAuthenticated = this.store.getters.getIsAuthenticated;
-    if (this.isAuthenticated) {
-      this.userName = this.store.getters.getUsername;
-    }
-  }
+  computed: {
+    getIsAuthenticated(): boolean {
+      return this.$store.getters.getIsAuthenticated;
+    },
+    getUserName(): boolean {
+      return this.$store.getters.getUsername;
+    },
+  },
+  methods: {
+    async login() {
+      try {
+        const errorMessage: string | null = await this.$store.dispatch(
+          `login`,
+          {
+            username: this.userName,
+            password: this.passWord,
+          }
+        );
 
-  async login() {
-    try {
-      const errorMessage: string | null = await this.store.dispatch(`login`, {
-        username: this.userName,
-        password: this.passWord,
-      });
-
-      if (errorMessage) {
-        this.displayError = errorMessage;
-        this.displayMessage = null;
-      } else {
-        this.isAuthenticated = this.store.getters.getIsAuthenticated;
-        this.displayError = null;
+        if (errorMessage) {
+          this.displayError = errorMessage;
+        } else {
+          this.displayError = null;
+          this.passWord = "";
+        }
+      } catch (error: unknown) {
+        this.displayError = "An error occurred during login";
       }
-    } catch (error: unknown) {
-      this.displayError = "An error occurred during login";
-    }
-  }
-}
+    },
+  },
+});
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

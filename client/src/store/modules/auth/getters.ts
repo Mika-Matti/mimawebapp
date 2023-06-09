@@ -13,7 +13,7 @@ const getters: GetterTree<AuthState, RootState> = {
         const expirationDate: Date = new Date(decodedToken.exp * 1000);
 
         if (expirationDate > new Date()) {
-          state.isAuthenticated;
+          state.isAuthenticated = true;
           state.username = decodedToken.username;
           state.role = decodedToken.role;
           state.expiration = decodedToken.exp;

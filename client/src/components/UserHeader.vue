@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref, watch } from "vue";
+import { defineComponent, computed, ref, watchEffect } from "vue";
 import { useStore } from "vuex";
 
 export default defineComponent({
@@ -49,7 +49,7 @@ export default defineComponent({
     const resetDisplayMessage = () => {
       setTimeout(() => {
         displayMessage.value = null;
-      }, 10000); // Reset the value after 10 seconds
+      }, 5000); // Reset the value after 5 seconds
     };
 
     const getSessionTimeLeft = (exp: number) => {
@@ -59,12 +59,9 @@ export default defineComponent({
       return Math.ceil(timeLeft / 60000); // Convert milliseconds to minutes
     };
 
-    watch(
-      () => store.getters.getIsAuthenticated,
-      (isAuthenticated) => {
-        isAuthenticatedRef.value = isAuthenticated;
-      }
-    );
+    watchEffect(() => {
+      isAuthenticatedRef.value = store.getters.getIsAuthenticated;
+    });
 
     return {
       displayMessage,
