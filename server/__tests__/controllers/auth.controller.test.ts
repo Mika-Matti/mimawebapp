@@ -23,7 +23,6 @@ describe("POST /auth/login", () => {
   beforeAll(() => {
     mockQuery.mockImplementation((sql: string, values?: any[]) => {
       return new Promise<any>((resolve, reject) => {
-        console.log("Calling mocked POST /auth/login");
         const expectedQuery: string = "SELECT * FROM users WHERE user_name = ?";
         const passwordHash: string = hashSync("validPassword", 10);
         const expectedUser: User = {
@@ -39,14 +38,6 @@ describe("POST /auth/login", () => {
         if (sql !== expectedQuery) {
           reject("Error: Mock function got wrong query");
         }
-
-        console.log(
-          "expected: '" +
-            expectedUser.user_name +
-            "' got: '" +
-            testUsername +
-            "'"
-        );
 
         if (expectedUser.user_name === testUsername) {
           resolve([

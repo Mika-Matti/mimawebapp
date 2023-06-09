@@ -20,7 +20,6 @@ describe("POST /projects", () => {
   beforeAll(() => {
     mockQuery.mockImplementation((sql: string, values?: any[]) => {
       return new Promise<any>((resolve, reject) => {
-        console.log("Calling mocked POST /projects");
         const expectedQuery: string = "INSERT INTO projects SET ?";
         const expectedProject: Project = {
           project_title: "test_title",
@@ -83,7 +82,6 @@ describe("GET /projects", () => {
   beforeAll(() => {
     mockQuery.mockImplementation((sql: string, values?: any[]) => {
       return new Promise<any>((resolve, reject) => {
-        console.log("Calling mocked GET /projects");
         if (sql === "SELECT * FROM projects ORDER BY project_id DESC") {
           resolve([
             {
@@ -159,7 +157,6 @@ describe("GET /projects/:id", () => {
   beforeAll(() => {
     mockQuery.mockImplementation((sql: string, values?: any[]) => {
       return new Promise<any>((resolve, reject) => {
-        console.log("Calling mocked GET /projects:id");
         const expectedId: string = "1";
         const expectedQuery: string =
           "SELECT * FROM projects WHERE project_id = ?";
@@ -214,8 +211,6 @@ describe("PUT /projects/:id", () => {
   beforeAll(() => {
     mockQuery.mockImplementation((sql: string, values?: any[]) => {
       return new Promise<any>((resolve, reject) => {
-        console.log("Calling mocked PUT /projects/id");
-
         let testProject: Project;
         let testId: string;
 
@@ -288,7 +283,6 @@ describe("DELETE /projects/:id", () => {
   beforeAll(() => {
     mockQuery.mockImplementation((sql: string, values?: any[]) => {
       return new Promise<any>((resolve, reject) => {
-        console.log("Calling mocked DELETE /projects:id");
         const expectedId: string = "1";
         const expectedQuery: string =
           "DELETE FROM projects WHERE project_id = ?";
