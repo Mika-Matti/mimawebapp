@@ -1,7 +1,7 @@
 <template>
   <div class="login-form">
     <!-- Show login form if not authenticated -->
-    <div v-if="!getIsAuthenticated">
+    <div v-if="!isAuthenticated">
       <form @submit.prevent="login">
         <div class="form-group">
           <label for="username">Username</label>
@@ -33,31 +33,32 @@
     <div v-else>
       <div class="login-welcome">
         <div class="text-loggedin"><h2>You are logged in</h2></div>
-        <p>Welcome, {{ getUserName }}</p>
+        <p>Welcome, {{ userName }}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, watch } from "vue";
 
 export default defineComponent({
   data() {
     return {
-      userName: "",
+      userName: this.$store.getters.getUsername,
       passWord: "",
       displayError: null as string | null,
+      isAuthenticated: this.$store.getters.getIsAuthenticated,
     };
   },
 
-  computed: {
-    getIsAuthenticated(): boolean {
-      return this.$store.getters.getIsAuthenticated;
-    },
-    getUserName(): boolean {
-      return this.$store.getters.getUsername;
-    },
+  mounted() {
+    watch(
+      () => this.$store.getters.getIsAuthenticated,
+      (value) => {
+        this.isAuthenticated = value;
+      }
+    );
   },
   methods: {
     async login() {
