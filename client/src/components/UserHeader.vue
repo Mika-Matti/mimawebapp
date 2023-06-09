@@ -1,26 +1,35 @@
 <template>
   <div class="user-header">
-    <div v-if="isAuthenticated" class="user-items">
-      <div class="user-item">Username</div>
-      <div class="user-item">Role</div>
-      <div class="user-item">Session time</div>
+    <div v-if="isAuthenticatedRef" class="user-items">
+      <div class="user-item">Username: {{ username }}</div>
+      <div class="user-item">User role: {{ role }}</div>
+      <div class="user-item">time left: {{ sessionTime }} min</div>
       <button @click="logout" class="button mx-0 my-0">Logout</button>
     </div>
-    <div v-if="displayMessage">{{ displayMessage }}</div>
+    <div v-if="displayMessage" class="user-message">{{ displayMessage }}</div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref } from "vue";
+import { defineComponent, computed, ref, watch } from "vue";
 import { useStore } from "vuex";
 
 export default defineComponent({
   setup() {
     const store = useStore();
     const displayMessage = ref<string | null>(null);
+    const isAuthenticatedRef = ref<boolean>(false);
 
-    const isAuthenticated = computed(() => {
-      return store.getters.getIsAuthenticated;
+    const username = computed(() => {
+      return store.getters.getUsername;
+    });
+
+    const role = computed(() => {
+      return store.getters.getRole;
+    });
+
+    const sessionTime = computed(() => {
+      return getSessionTimeLeft(store.getters.getExpiration);
     });
 
     const logout = async () => {
@@ -43,9 +52,26 @@ export default defineComponent({
       }, 10000); // Reset the value after 10 seconds
     };
 
+    const getSessionTimeLeft = (exp: number) => {
+      const expirationTime = exp * 1000; // Convert from seconds to milliseconds
+      const currentTime = Date.now();
+      const timeLeft = expirationTime - currentTime;
+      return Math.ceil(timeLeft / 60000); // Convert milliseconds to minutes
+    };
+
+    watch(
+      () => store.getters.getIsAuthenticated,
+      (isAuthenticated) => {
+        isAuthenticatedRef.value = isAuthenticated;
+      }
+    );
+
     return {
       displayMessage,
-      isAuthenticated,
+      isAuthenticatedRef,
+      username,
+      role,
+      sessionTime,
       logout,
     };
   },

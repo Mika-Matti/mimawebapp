@@ -35,9 +35,6 @@
       <div class="login-welcome">
         <div class="text-loggedin"><h2>You are logged in</h2></div>
         <p>Welcome, {{ userName }}</p>
-        <div class="text-loggedin">
-          Session time left: {{ sessionTime }} minutes
-        </div>
       </div>
     </div>
   </div>
@@ -53,16 +50,12 @@ export default class LoginForm extends Vue {
   isAuthenticated = false;
   displayError: string | null = null;
   displayMessage: string | null = null;
-  sessionTime = 0;
   store = useStore();
 
   mounted() {
     this.isAuthenticated = this.store.getters.getIsAuthenticated;
     if (this.isAuthenticated) {
       this.userName = this.store.getters.getUsername;
-      this.sessionTime = this.getSessionTimeLeft(
-        this.store.getters.getExpiration
-      );
     }
   }
 
@@ -78,21 +71,11 @@ export default class LoginForm extends Vue {
         this.displayMessage = null;
       } else {
         this.isAuthenticated = this.store.getters.getIsAuthenticated;
-        this.sessionTime = this.getSessionTimeLeft(
-          this.store.getters.getExpiration
-        );
         this.displayError = null;
       }
     } catch (error: unknown) {
       this.displayError = "An error occurred during login";
     }
-  }
-
-  getSessionTimeLeft(exp: number) {
-    const expirationTime = exp * 1000; // Convert from seconds to milliseconds
-    const currentTime = Date.now();
-    const timeLeft = expirationTime - currentTime;
-    return Math.ceil(timeLeft / 60000); // Convert milliseconds to minutes
   }
 }
 </script>
