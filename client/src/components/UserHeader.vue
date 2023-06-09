@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref, watchEffect } from "vue";
+import { defineComponent, ref, watchEffect, onBeforeUnmount } from "vue";
 import { useStore } from "vuex";
 
 export default defineComponent({
@@ -19,18 +19,29 @@ export default defineComponent({
     const store = useStore();
     const displayMessage = ref<string | null>(null);
     const isAuthenticatedRef = ref<boolean>(false);
+    const username = ref<string>("");
+    const role = ref<string>("");
+    const sessionTime = ref<number>(0);
 
-    const username = computed(() => {
-      return store.getters.getUsername;
-    });
+    const updateSessionTime = () => {
+      const expiration = store.getters.getExpiration;
+      sessionTime.value = getSessionTimeLeft(expiration);
+    };
 
-    const role = computed(() => {
-      return store.getters.getRole;
-    });
+    const timer = setInterval(updateSessionTime, 60000); // Update every minute
 
-    const sessionTime = computed(() => {
-      return getSessionTimeLeft(store.getters.getExpiration);
-    });
+    const getSessionTimeLeft = (exp: number) => {
+      const expirationTime = exp * 1000; // Convert from seconds to milliseconds
+      const currentTime = Date.now();
+      const timeLeft = expirationTime - currentTime;
+      return Math.ceil(timeLeft / 60000); // Convert milliseconds to minutes
+    };
+
+    const resetDisplayMessage = () => {
+      setTimeout(() => {
+        displayMessage.value = null;
+      }, 5000); // Reset the value after 5 seconds
+    };
 
     const logout = async () => {
       try {
@@ -46,21 +57,15 @@ export default defineComponent({
       }
     };
 
-    const resetDisplayMessage = () => {
-      setTimeout(() => {
-        displayMessage.value = null;
-      }, 5000); // Reset the value after 5 seconds
-    };
-
-    const getSessionTimeLeft = (exp: number) => {
-      const expirationTime = exp * 1000; // Convert from seconds to milliseconds
-      const currentTime = Date.now();
-      const timeLeft = expirationTime - currentTime;
-      return Math.ceil(timeLeft / 60000); // Convert milliseconds to minutes
-    };
-
     watchEffect(() => {
       isAuthenticatedRef.value = store.getters.getIsAuthenticated;
+      username.value = store.getters.getUsername;
+      role.value = store.getters.getRole;
+      sessionTime.value = getSessionTimeLeft(store.getters.getExpiration);
+    });
+
+    onBeforeUnmount(() => {
+      clearInterval(timer);
     });
 
     return {
