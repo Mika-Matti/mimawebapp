@@ -10,6 +10,18 @@
 
 .admin-panel {
   margin-bottom: 16px;
+
+  .view-options {
+    display: flex;
+  }
+
+  .button {
+    color: $brightRed;
+    &:hover {
+      color: $selection-color;
+      background-color: $brightRed;
+    }
+  }
 }
 
 .user-header {
