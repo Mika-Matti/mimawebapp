@@ -57,7 +57,7 @@ export default defineComponent({
           resetDisplayMessage();
         }
       } catch (error) {
-        console.log("An error occurred during logout");
+        console.log("An error occurred.");
       }
     };
 
