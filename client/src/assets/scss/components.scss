@@ -1,11 +1,15 @@
 @import "./theme.scss";
 
-.header {
+.app-header {
   margin: 8px;
   padding: 8px;
   border-left: 4px solid $primary-color;
   border-bottom: 4px solid $primary-color;
   text-align: center;
+}
+
+.admin-panel {
+  margin-bottom: 16px;
 }
 
 .user-header {

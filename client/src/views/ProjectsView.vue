@@ -1,5 +1,6 @@
 <template>
   <PageHeader />
+  <AdminPanel />
   <div class="projects">
     <ul>
       <li v-for="project in projects" :key="project.project_id">
@@ -14,11 +15,13 @@ import { Options, Vue } from "vue-class-component";
 import { useStore } from "vuex";
 import { Project } from "@/types";
 import PageHeader from "@/components/PageHeader.vue";
+import AdminPanel from "@/components/AdminPanel.vue";
 import ProjectNode from "@/components/ProjectNode.vue";
 
 @Options({
   components: {
     PageHeader,
+    AdminPanel,
     ProjectNode,
   },
 })

@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <div class="app-header">
     <div class="container-fluid">
       <div class="row px-0">
         <div class="col px-0"></div>
