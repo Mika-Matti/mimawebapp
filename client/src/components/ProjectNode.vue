@@ -12,14 +12,12 @@
       <div
         class="col-2 mx-0 px-0 d-flex align-items-center justify-content-end"
       >
-        <div class="project-button w-100 mx-0 my-0">
-          <router-link
-            :to="`/projects/${project.project_id}`"
-            class="project-link"
-          >
-            View Project
-          </router-link>
-        </div>
+        <router-link
+          class="project-link project-button"
+          :to="`/projects/${project.project_id}`"
+        >
+          View Project
+        </router-link>
       </div>
     </div>
   </div>

@@ -1,6 +1,12 @@
 <template>
   <PageHeader />
-  <AdminPanel />
+  <AdminPanel>
+    <template #buttons>
+      <router-link class="project-link project-button" :to="`/projects/create`">
+        new project
+      </router-link>
+    </template>
+  </AdminPanel>
   <div class="projects">
     <ul>
       <li v-for="project in projects" :key="project.project_id">

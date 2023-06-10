@@ -1,6 +1,8 @@
 <template>
   <div v-if="isAuthorized" class="admin-panel">
-    admin tools go here, defined by views this is used in
+    <div class="view-options">
+      <slot name="buttons"></slot>
+    </div>
   </div>
 </template>
 
