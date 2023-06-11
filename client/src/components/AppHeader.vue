@@ -7,7 +7,7 @@
           <img alt="mimanet logo" src="@/assets/images/mimanetlogo128.png" />
         </div>
         <div class="col px-0">
-          <UserHeader />
+          <UserPanel />
         </div>
       </div>
     </div>
@@ -16,11 +16,11 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import UserHeader from "@/components/UserHeader.vue";
+import UserPanel from "@/components/UserPanel.vue";
 
 @Options({
   components: {
-    UserHeader,
+    UserPanel,
   },
 })
 export default class AppHeader extends Vue {}

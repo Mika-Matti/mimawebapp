@@ -1,5 +1,5 @@
 <template>
-  <div class="user-header">
+  <div class="user-panel">
     <div v-if="isAuthenticatedRef" class="user-items">
       <div class="user-item">Username: {{ username }}</div>
       <div class="user-item">User role: {{ role }}</div>
@@ -22,6 +22,7 @@ export default defineComponent({
     const username = ref<string>("");
     const role = ref<string>("");
     const sessionTime = ref<number>(0);
+    let timer: number | null = null;
 
     const updateSessionTime = () => {
       const expiration = store.getters.getExpiration;
@@ -32,7 +33,16 @@ export default defineComponent({
       }
     };
 
-    const timer = setInterval(updateSessionTime, 60000); // Update every minute
+    const startTimer = () => {
+      timer = setInterval(updateSessionTime, 60000); // Start the timer
+    };
+
+    const stopTimer = () => {
+      if (timer) {
+        clearInterval(timer); // Stop the timer
+        timer = null; // Reset the timer variable
+      }
+    };
 
     const getSessionTimeLeft = (exp: number) => {
       const expirationTime = exp * 1000; // Convert from seconds to milliseconds
@@ -66,10 +76,17 @@ export default defineComponent({
       username.value = store.getters.getUsername;
       role.value = store.getters.getRole;
       sessionTime.value = getSessionTimeLeft(store.getters.getExpiration);
+
+      // Only have the session timer running if user is logged in
+      if (isAuthenticatedRef.value) {
+        startTimer();
+      } else {
+        stopTimer();
+      }
     });
 
     onBeforeUnmount(() => {
-      clearInterval(timer);
+      stopTimer();
     });
 
     return {
