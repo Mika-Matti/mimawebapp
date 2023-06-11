@@ -16,10 +16,10 @@
   }
 
   .button {
-    color: $brightRed;
+    color: $brightYellow;
+    background-color: $brightRed;
     &:hover {
       color: $selection-color;
-      background-color: $brightRed;
     }
   }
 }

@@ -1,5 +1,13 @@
 <template>
   <PageHeader />
+  <AdminPanel>
+    <template #buttons>
+      <router-link class="button ms-0 my-0" :to="`/projects/edit`">
+        edit project
+      </router-link>
+      <button class="button my-0" @click="confirmDelete">delete project</button>
+    </template>
+  </AdminPanel>
   <div class="project">
     <div class="project-page-title">
       <h2>{{ project.project_title }}</h2>
@@ -21,12 +29,14 @@
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
 import { useStore } from "vuex";
-import PageHeader from "@/components/PageHeader.vue";
 import { Project } from "@/types";
+import PageHeader from "@/components/PageHeader.vue";
+import AdminPanel from "@/components/AdminPanel.vue";
 
 @Options({
   components: {
     PageHeader,
+    AdminPanel,
   },
 })
 export default class ProjectView extends Vue {
@@ -46,6 +56,25 @@ export default class ProjectView extends Vue {
       this.project = this.store.getters.getProject;
     } catch (error) {
       console.error("Failed to fetch project by id", error);
+    }
+  }
+
+  // Delete project methods
+  confirmDelete() {
+    if (
+      confirm("Are you sure you want to delete this project from the database?")
+    ) {
+      this.deleteProjectById();
+    }
+  }
+
+  async deleteProjectById() {
+    try {
+      await this.store.dispatch(`deleteProjectById`, this.project_id);
+      // Redirect to projects page after deletion
+      this.$router.push("/projects");
+    } catch (error) {
+      console.error("Failed to delete project by id", error);
     }
   }
 

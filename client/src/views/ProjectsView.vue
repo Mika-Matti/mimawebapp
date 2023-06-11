@@ -2,7 +2,7 @@
   <PageHeader />
   <AdminPanel>
     <template #buttons>
-      <router-link class="button my-0" :to="`/projects/create`">
+      <router-link class="button ms-0 my-0" :to="`/projects/create`">
         new project
       </router-link>
     </template>

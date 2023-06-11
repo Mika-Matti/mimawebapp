@@ -35,4 +35,17 @@ export default {
       }
     }
   },
+
+  // Delete project by id
+  async deleteProjectById(
+    { commit }: ActionContext<ProjectsState, RootState>,
+    id: string
+  ) {
+    try {
+      await axios.delete(API_URLS.project(id));
+      commit("removeProject", parseInt(id, 10));
+    } catch (error) {
+      console.error("Error fetching project by id:", error);
+    }
+  },
 };
