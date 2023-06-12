@@ -13,7 +13,7 @@ const routes: Array<RouteRecordRaw> = [
     component: HomeView,
   },
   {
-    path: "/:objects/:id/edit",
+    path: "/:object/:id/edit",
     name: "edit",
     component: EditorView,
   },

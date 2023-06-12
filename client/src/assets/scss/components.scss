@@ -61,18 +61,19 @@
   }
 }
 
+.form-group {
+  margin-bottom: 16px;
+  .form-control {
+    border-radius: 0;
+    border: solid 4px $primary-color;
+    color: $primary-color;
+    background-color: $background-color;
+  }
+}
+
 .login-form {
   width: 100%;
 
-  .form-group {
-    margin-bottom: 16px;
-    .form-control {
-      border-radius: 0;
-      border: solid 4px $primary-color;
-      color: $primary-color;
-      background-color: $background-color;
-    }
-  }
   .button {
     width: 100%;
   }

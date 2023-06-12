@@ -5,13 +5,16 @@ export interface DecodedToken {
   role: string;
   exp: number;
 }
-
 export interface Project {
   project_id?: number;
   project_title: string;
   project_description: string;
   project_content: string;
   project_link: string;
+}
+
+export interface ObjectModel {
+  fields: Array<{ name: string; label: string; type: string }>;
 }
 
 // Store state types
