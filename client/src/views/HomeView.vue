@@ -1,12 +1,22 @@
 <template>
   <PageHeader />
   <div class="home">
-    <h3>Welcome to my website</h3>
+    <h3>Welcome to my website (Current version: 1.0)</h3>
     <p>
       This is my little project website with primary purpose to showcase my
       projects portfolio. For the website itself I used node.js for server,
       mySQL for database and VUE for the client as well as typescript for
       general programming and jest for unit testing.
+    </p>
+
+    <p>
+      As this website is very much a learning experience for me when it comes to
+      using VUE, you will probably notice little things like changes in how I
+      define components when you look at the code for the website on my Github.
+      As much as I appreciate having a set way to do certain things, I could not
+      help, but try to evolve along with what I learned during the development
+      and change the ways I used VUE components in the client. But I suppose
+      progress is progress.
     </p>
     <p>I hope you enjoy your stay.</p>
     <p>- Mika-Matti</p>

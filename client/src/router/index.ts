@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import ProjectsView from "../views/ProjectsView.vue";
-import AboutView from "../views/AboutView.vue";
 import ProjectView from "../views/ProjectView.vue";
+import AboutView from "../views/AboutView.vue";
 import AdminView from "../views/AdminView.vue";
+import EditorView from "../views/EditorView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -12,19 +13,29 @@ const routes: Array<RouteRecordRaw> = [
     component: HomeView,
   },
   {
+    path: "/:objects/:id/edit",
+    name: "edit",
+    component: EditorView,
+  },
+  {
+    path: "/create/:object",
+    name: "create",
+    component: EditorView,
+  },
+  {
     path: "/projects",
     name: "projects",
     component: ProjectsView,
   },
   {
-    path: "/about",
-    name: "about",
-    component: AboutView,
-  },
-  {
     path: "/projects/:id",
     name: "project",
     component: ProjectView,
+  },
+  {
+    path: "/about",
+    name: "about",
+    component: AboutView,
   },
   {
     path: "/admin",
