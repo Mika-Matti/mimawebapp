@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, watchEffect } from "vue";
+import { defineComponent, ref, computed, watchEffect, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { Project } from "@/types";
@@ -40,8 +40,10 @@ export default defineComponent({
     );
 
     const route = useRoute();
-    const param = route.params.object;
-    const objectType = Array.isArray(param) ? param[0] : param;
+    const params = route.params;
+    const objectType = Array.isArray(params.object)
+      ? params.object[0]
+      : params.object;
     const item = ref<Project | null>(null);
 
     // Set up initial values based on object type edited
@@ -65,13 +67,28 @@ export default defineComponent({
       return textareaFields.some((word) => key.includes(word));
     };
 
-    const submit = () => {
-      //TODO project type defines the store dispatch store module type used
-      //Word create or edit in params should define the type of store command
+    const submit = async () => {
+      //Check if creating a new object or editing old one
+      const path = route.path.split("/");
+      const object = objectType.charAt(0).toUpperCase() + objectType.slice(1);
+      let action = "";
+      if (path[1] === "create") {
+        action = path[1];
+      } else {
+        action = "edit";
+      }
+      const dispatchCommand = action + object;
+
       if (item.value) {
-        // null check
-        console.log("TODO: submit_item-method missing");
+        //TODO project type defines the store dispatch store module type used
         console.log(item.value);
+        console.log(dispatchCommand);
+        try {
+          await store.dispatch(dispatchCommand, item.value);
+          // Use router return to previous page after success
+        } catch (error) {
+          console.error("Failed to " + action + " " + objectType, error);
+        }
       } else {
         console.log("Nothing to submit");
       }
@@ -80,6 +97,21 @@ export default defineComponent({
     watchEffect(() => {
       isAuthenticated.value = store.getters.getIsAuthenticated;
       role.value = store.getters.getRole;
+    });
+
+    const fetchProjectById = async (id: string) => {
+      try {
+        await store.dispatch(`fetchProjectById`, id);
+        item.value = store.getters.getProject;
+      } catch (error) {
+        console.error("Failed to fetch project by id", error);
+      }
+    };
+
+    onMounted(() => {
+      if (params.id && objectType === "project") {
+        fetchProjectById(params.id[0]);
+      }
     });
 
     return {

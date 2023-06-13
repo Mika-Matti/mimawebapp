@@ -35,7 +35,14 @@ export default {
       }
     }
   },
-
+  // Create project
+  async createProject() {
+    console.log("TODO: createProject in store module incomplete");
+  },
+  // Edit project
+  async editProject() {
+    console.log("TODO: editProject in store module incomplete");
+  },
   // Delete project by id
   async deleteProjectById(
     { commit }: ActionContext<ProjectsState, RootState>,
