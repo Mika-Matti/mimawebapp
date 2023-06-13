@@ -22,15 +22,17 @@ import { Vue } from "vue-class-component";
 
 export default class PageHeader extends Vue {
   pageHeader = "~";
+  pageTitle = "mimanet -";
   showReturnButton = false;
 
   mounted() {
     this.pageHeader = this.$router.currentRoute.value.path;
     if (this.pageHeader == "/") {
-      this.pageHeader = "/HOME";
+      this.pageHeader = "/home";
     }
 
     this.showReturnButton = this.calculateShowReturnButton();
+    this.setPageTitle();
   }
 
   calculateShowReturnButton() {
@@ -40,6 +42,10 @@ export default class PageHeader extends Vue {
 
   goToPreviousPage() {
     this.$router.go(-1);
+  }
+
+  setPageTitle() {
+    document.title = this.pageTitle + this.pageHeader.replaceAll("/", " ");
   }
 }
 </script>

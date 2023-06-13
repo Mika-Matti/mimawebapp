@@ -88,6 +88,8 @@ export default defineComponent({
     }
 
     const submit = () => {
+      //TODO project type defines the store dispatch store module type used
+      //Word create or edit in params should define the type of store command
       console.log("TODO: submit formData method missing");
       console.log(formData);
     };
