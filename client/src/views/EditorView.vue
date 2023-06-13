@@ -2,21 +2,15 @@
   <PageHeader />
   <div v-if="isAuthorized" class="editor">
     <form @submit.prevent="submit">
-      <div v-for="field in model.fields" :key="field.name" class="form-group">
-        <label :for="field.name">{{ field.label }}</label>
+      <div v-for="(value, key) in item" :key="key" class="form-group">
+        <label :for="key"> {{ key }}</label>
         <textarea
-          v-if="field.type === 'textarea'"
-          :id="field.name"
+          v-if="isTextArea(key)"
+          :id="key"
+          v-model="item![key]"
           class="form-control"
-          v-model="formData[field.name]"
         ></textarea>
-        <input
-          v-else
-          :type="field.type"
-          :id="field.name"
-          class="form-control"
-          v-model="formData[field.name]"
-        />
+        <input v-else :id="key" v-model="item![key]" class="form-control" />
       </div>
       <button type="submit" class="button mx-0 my-0">
         Save {{ objectType }}
@@ -27,10 +21,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, computed, watchEffect } from "vue";
+import { defineComponent, ref, computed, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
-import { ObjectModel, Project } from "@/types";
+import { Project } from "@/types";
 import PageHeader from "@/components/PageHeader.vue";
 
 export default defineComponent({
@@ -49,7 +43,6 @@ export default defineComponent({
     const param = route.params.object;
     const objectType = Array.isArray(param) ? param[0] : param;
     const item = ref<Project | null>(null);
-    const formData: { [key: string]: string } = reactive({});
 
     // Set up initial values based on object type edited
     switch (objectType) {
@@ -61,37 +54,27 @@ export default defineComponent({
           project_link: "",
         };
         break;
-      // Add more objects here for the editor to support
+      // Add more object models here for the editor to support
       default:
         console.error("Invalid object type: ", objectType);
         break;
     }
 
-    const objectModels: Record<string, ObjectModel> = {
-      project: {
-        fields: [],
-      },
-      // Add more object models for the editor to support
+    const isTextArea = (key: string): boolean => {
+      const textareaFields = ["content", "description"];
+      return textareaFields.some((word) => key.includes(word));
     };
-
-    const textareaFields = ["content", "description"];
-    const model: ObjectModel = objectModels[objectType];
-
-    if (item.value) {
-      model.fields = Object.keys(item.value).map((key) => ({
-        name: key,
-        label: key,
-        type: textareaFields.some((word) => key.includes(word))
-          ? "textarea"
-          : "text",
-      }));
-    }
 
     const submit = () => {
       //TODO project type defines the store dispatch store module type used
       //Word create or edit in params should define the type of store command
-      console.log("TODO: submit formData method missing");
-      console.log(formData);
+      if (item.value) {
+        // null check
+        console.log("TODO: submit_item-method missing");
+        console.log(item.value);
+      } else {
+        console.log("Nothing to submit");
+      }
     };
 
     watchEffect(() => {
@@ -102,8 +85,8 @@ export default defineComponent({
     return {
       isAuthorized,
       objectType,
-      model,
-      formData,
+      item,
+      isTextArea,
       submit,
     };
   },
