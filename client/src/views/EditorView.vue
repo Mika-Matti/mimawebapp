@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, watchEffect, onMounted } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { Project } from "@/types";
 import PageHeader from "@/components/PageHeader.vue";
@@ -33,17 +33,17 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
+    const route = useRoute();
+    const router = useRouter();
+
     const isAuthenticated = ref(store.getters.getIsAuthenticated);
     const role = ref(store.getters.getRole);
     const isAuthorized = computed(
       () => isAuthenticated.value && role.value === "admin"
     );
 
-    const route = useRoute();
     const params = route.params;
-    const objectType = Array.isArray(params.object)
-      ? params.object[0]
-      : params.object;
+    const objectType = params.object.toString();
     const item = ref<Project | null>(null);
 
     // Set up initial values based on object type edited
@@ -80,12 +80,10 @@ export default defineComponent({
       const dispatchCommand = action + object;
 
       if (item.value) {
-        //TODO project type defines the store dispatch store module type used
-        console.log(item.value);
-        console.log(dispatchCommand);
         try {
           await store.dispatch(dispatchCommand, item.value);
           // Use router return to previous page after success
+          router.go(-1);
         } catch (error) {
           console.error("Failed to " + action + " " + objectType, error);
         }
@@ -110,7 +108,7 @@ export default defineComponent({
 
     onMounted(() => {
       if (params.id && objectType === "project") {
-        fetchProjectById(params.id[0]);
+        fetchProjectById(params.id.toString());
       }
     });
 

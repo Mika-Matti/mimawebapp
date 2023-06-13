@@ -8,6 +8,9 @@ const mutations: MutationTree<ProjectsState> = {
   setProject: (state: ProjectsState, project: Project) => {
     state.project = project;
   },
+  addProject: (state: ProjectsState, project: Project) => {
+    state.projects.push(project);
+  },
   removeProject: (state: ProjectsState, id: number) => {
     const index = state.projects.findIndex(
       (project) => project.project_id === id

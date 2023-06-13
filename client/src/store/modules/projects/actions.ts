@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_URLS } from "@/config";
 import { ActionContext } from "vuex";
-import { RootState, ProjectsState } from "@/types";
+import { RootState, ProjectsState, Project } from "@/types";
 
 axios.defaults.withCredentials = true;
 
@@ -36,8 +36,16 @@ export default {
     }
   },
   // Create project
-  async createProject() {
-    console.log("TODO: createProject in store module incomplete");
+  async createProject(
+    { commit }: ActionContext<ProjectsState, RootState>,
+    project: Project
+  ) {
+    try {
+      const response = await axios.post(API_URLS.projects, project);
+      commit("addProject", response.data);
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+    }
   },
   // Edit project
   async editProject() {

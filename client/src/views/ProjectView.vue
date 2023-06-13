@@ -79,7 +79,7 @@ export default class ProjectView extends Vue {
   }
 
   mounted() {
-    this.project_id = this.$route.params.id[0];
+    this.project_id = this.$route.params.id.toString();
     this.fetchProjectById(this.project_id);
   }
 }
