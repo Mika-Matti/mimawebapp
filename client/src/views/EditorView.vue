@@ -9,6 +9,7 @@
           :id="key"
           v-model="item![key]"
           class="form-control"
+          required
         ></textarea>
         <input
           v-else
@@ -16,6 +17,7 @@
           :disabled="isItemId(key)"
           v-model="item![key]"
           class="form-control"
+          required
         />
       </div>
       <button type="submit" class="button mx-0 my-0">
