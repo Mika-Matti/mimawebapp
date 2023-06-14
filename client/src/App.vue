@@ -10,14 +10,17 @@
   <div class="content">
     <router-view />
   </div>
+  <AppFooter />
 </template>
 
 <script lang="ts">
 import AppHeader from "@/components/AppHeader.vue";
+import AppFooter from "@/components/AppFooter.vue";
 
 export default {
   components: {
     AppHeader,
+    AppFooter,
   },
 };
 </script>

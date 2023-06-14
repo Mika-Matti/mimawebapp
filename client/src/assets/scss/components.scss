@@ -8,6 +8,22 @@
   text-align: center;
 }
 
+.app-footer {
+  margin: 0 8px 8px 8px;
+  padding: 8px 0 16px 0;
+  text-align: center;
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    display: inline-block;
+    margin: 0 8px;
+  }
+}
+
 .admin-panel {
   margin-bottom: 16px;
 
@@ -104,17 +120,6 @@
     text-transform: uppercase;
     color: $green;
     margin-bottom: 16px;
-  }
-}
-
-.home {
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  li {
-    display: inline-block;
-    margin: 0 10px;
   }
 }
 

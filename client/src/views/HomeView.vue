@@ -20,27 +20,6 @@
     </p>
     <p>I hope you enjoy your stay.</p>
     <p>- Mika-Matti</p>
-    <h3>Some essential links</h3>
-    <ul>
-      <li>
-        <a href="https://github.com/Mika-Matti" target="_blank" rel="noopener"
-          >Github</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://www.linkedin.com/in/mika-matti/"
-          target="_blank"
-          rel="noopener"
-          >LinkedIn</a
-        >
-      </li>
-      <li>
-        <a href="mailto:mima@mimanet.net" target="_blank" rel="noopener"
-          >mima@mimanet.net</a
-        >
-      </li>
-    </ul>
   </div>
 </template>
 
