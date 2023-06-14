@@ -16,8 +16,8 @@
   }
 
   .button {
-    color: $brightYellow;
-    background-color: $brightRed;
+    color: $forbidden-color;
+    background-color: $forbidden-background;
     &:hover {
       color: $selection-color;
     }
@@ -68,6 +68,12 @@
     border: solid 4px $primary-color;
     color: $primary-color;
     background-color: $background-color;
+
+    &[disabled] {
+      cursor: not-allowed;
+      color: $forbidden-color;
+      background-color: $forbidden-background;
+    }
   }
 }
 

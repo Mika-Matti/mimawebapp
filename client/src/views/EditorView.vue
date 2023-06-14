@@ -10,7 +10,13 @@
           v-model="item![key]"
           class="form-control"
         ></textarea>
-        <input v-else :id="key" v-model="item![key]" class="form-control" />
+        <input
+          v-else
+          :id="key"
+          :disabled="isItemId(key)"
+          v-model="item![key]"
+          class="form-control"
+        />
       </div>
       <button type="submit" class="button mx-0 my-0">
         Save {{ objectType }}
@@ -63,8 +69,14 @@ export default defineComponent({
     }
 
     const isTextArea = (key: string): boolean => {
+      // Use keywords to recognize when textarea is better than input
       const textareaFields = ["content", "description"];
       return textareaFields.some((word) => key.includes(word));
+    };
+
+    const isItemId = (key: string): boolean => {
+      // Don't make an editable field for object id
+      return key.includes("_id");
     };
 
     const submit = async () => {
@@ -117,6 +129,7 @@ export default defineComponent({
       objectType,
       item,
       isTextArea,
+      isItemId,
       submit,
     };
   },
