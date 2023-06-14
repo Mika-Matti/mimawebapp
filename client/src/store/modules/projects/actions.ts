@@ -44,12 +44,21 @@ export default {
       const response = await axios.post(API_URLS.projects, project);
       commit("addProject", response.data);
     } catch (error) {
-      console.error("Error fetching projects:", error);
+      console.error("Error creating project:", error);
     }
   },
   // Edit project
-  async editProject() {
-    console.log("TODO: editProject in store module incomplete");
+  async editProject(
+    { commit }: ActionContext<ProjectsState, RootState>,
+    project: Project
+  ) {
+    try {
+      const id = project.project_id!.toString();
+      await axios.put(API_URLS.project(id), project);
+      commit("setProject", project);
+    } catch (error) {
+      console.error("Error editing project:", error);
+    }
   },
   // Delete project by id
   async deleteProjectById(
