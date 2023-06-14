@@ -163,3 +163,14 @@
     }
   }
 }
+
+.editor {
+  .edit-form {
+    margin-bottom: 16px;
+  }
+
+  .preview {
+    border: solid 4px $primary-color;
+    padding: 8px;
+  }
+}

@@ -13,10 +13,10 @@
       As this website is very much a learning experience for me when it comes to
       using VUE, you will probably notice little things like changes in how I
       define components when you look at the code for the website on my Github.
-      As much as I appreciate having a set way to do certain things, I could not
-      help, but try to evolve along with what I learned during the development
-      and change the ways I used VUE components in the client. But I suppose
-      progress is progress.
+      As much as I appreciate having a set way to do certain things, I tried to
+      evolve along with what I learned during the development and change the
+      ways I used VUE components in the client, hopefully finding a style that
+      eventually becomes solid.
     </p>
     <p>I hope you enjoy your stay.</p>
     <p>- Mika-Matti</p>

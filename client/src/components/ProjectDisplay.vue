@@ -13,19 +13,25 @@
         </a>
       </p>
     </div>
-    <div class="project-page-content" v-html="project.project_content" />
+    <div class="project-page-content" v-html="sanitizedContent" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { Project } from "@/types";
+import sanitizeHtml from "sanitize-html";
 
 export default defineComponent({
   props: {
     project: {
       type: Object as PropType<Project>,
       required: true,
+    },
+  },
+  computed: {
+    sanitizedContent(): string {
+      return sanitizeHtml(this.project.project_content);
     },
   },
 });

@@ -1,7 +1,7 @@
 <template>
   <PageHeader />
   <div v-if="isAuthorized" class="editor">
-    <form @submit.prevent="submit">
+    <form @submit.prevent="submit" class="edit-form">
       <div v-for="(value, key) in item" :key="key" class="form-group">
         <label :for="key"> {{ key }}</label>
         <textarea
@@ -24,6 +24,10 @@
         Save {{ objectType }}
       </button>
     </form>
+    <h2 class="mb-0">{{ objectType }} Preview</h2>
+    <div class="preview">
+      <ProjectDisplay v-if="objectType === 'project'" :project="item!" />
+    </div>
   </div>
   <div v-else>Unauthorized access</div>
 </template>
@@ -34,10 +38,12 @@ import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { Project } from "@/types";
 import PageHeader from "@/components/PageHeader.vue";
+import ProjectDisplay from "@/components/ProjectDisplay.vue";
 
 export default defineComponent({
   components: {
     PageHeader,
+    ProjectDisplay,
   },
   setup() {
     const store = useStore();
