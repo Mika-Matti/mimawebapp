@@ -53,9 +53,11 @@ export default {
     project: Project
   ) {
     try {
-      const id = project.project_id!.toString();
-      await axios.put(API_URLS.project(id), project);
-      commit("setProject", project);
+      const id = project.project_id?.toString();
+      if (id) {
+        await axios.put(API_URLS.project(id), project);
+        commit("setProject", project);
+      }
     } catch (error) {
       console.error("Error editing project:", error);
     }

@@ -7,17 +7,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref } from "vue";
+import { defineComponent, ref, watchEffect } from "vue";
 import { useStore } from "vuex";
 
 export default defineComponent({
   setup() {
     const store = useStore();
-    const isAuthenticated = ref(store.getters.getIsAuthenticated);
-    const role = ref(store.getters.getRole);
-    const isAuthorized = computed(
-      () => isAuthenticated.value && role.value === "admin"
-    );
+    const isAuthorized = ref(false);
+
+    watchEffect(() => {
+      const isAuthenticated = store.getters.getIsAuthenticated;
+      const role = store.getters.getRole;
+      isAuthorized.value = isAuthenticated && role === "admin";
+    });
 
     return {
       isAuthorized,

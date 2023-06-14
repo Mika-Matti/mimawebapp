@@ -40,6 +40,7 @@ import AdminPanel from "@/components/AdminPanel.vue";
   },
 })
 export default class ProjectView extends Vue {
+  store = useStore();
   project_id = "-1";
   project: Project = {
     project_title: "",
@@ -47,7 +48,6 @@ export default class ProjectView extends Vue {
     project_content: "",
     project_link: "",
   };
-  store = useStore();
 
   // Fetch project by id from server
   async fetchProjectById(id: string) {

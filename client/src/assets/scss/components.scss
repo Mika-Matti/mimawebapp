@@ -130,6 +130,14 @@
   .project-item {
     border-left: solid 4px $primary-color;
     border-bottom: solid 4px $primary-color;
+
+    .row {
+      margin-bottom: 4px;
+    }
+
+    .admin-panel {
+      margin: 4px;
+    }
   }
 }
 
