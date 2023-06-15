@@ -10,6 +10,8 @@ jest.mock("jsonwebtoken", () => ({
   verify: jest.fn(),
 }));
 
+const consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+
 describe("verifyAuthentication middleware", () => {
   beforeAll(() => {
     mockVerify.mockImplementation((token: string, jwtSecret: string) => {
@@ -32,11 +34,34 @@ describe("verifyAuthentication middleware", () => {
       } else {
         throw new Error("Token verification failed");
       }
-    });
+    }); // Mock verify ends
   });
 
   afterEach(() => {
     jest.clearAllMocks();
+  });
+
+  afterAll(() => {
+    consoleSpy.mockRestore();
+  });
+
+  it("should return 500 with expected message if request was empty", async () => {
+    const req: ExtendedRequest = {} as unknown as ExtendedRequest;
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    } as unknown as Response;
+    const next: NextFunction = jest.fn();
+
+    const expectedMessage: string = "Internal server error";
+
+    await verifyAuthentication(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({
+      message: expectedMessage,
+    });
+    expect(next).toHaveBeenCalledTimes(0);
   });
 
   it("should return 401 with expected message if token was not provided", async () => {
