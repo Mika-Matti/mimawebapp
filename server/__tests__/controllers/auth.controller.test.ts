@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { hashSync } from "bcrypt";
 import { User } from "../../src/models/user.model";
 import { db } from "../../src/utils/db";
+import { config } from "../../src/config";
 import {
   authenticateUser,
   logoutUser,
@@ -17,6 +18,8 @@ jest.mock("../../src/utils/db", () => ({
 jest.mock("jsonwebtoken", () => ({
   sign: jest.fn().mockReturnValue("validToken"),
 }));
+
+let consoleSpy: jest.SpyInstance;
 
 // test authenticateUser
 describe("POST /auth/login", () => {
@@ -34,6 +37,10 @@ describe("POST /auth/login", () => {
         };
         const testUsername: string =
           values && values.length > 0 ? values[0] : "";
+
+        if (testUsername === "errorTrigger") {
+          reject("Error: Test case needs query to fail");
+        }
 
         if (sql !== expectedQuery) {
           reject("Error: Mock function got wrong query");
@@ -53,11 +60,39 @@ describe("POST /auth/login", () => {
           resolve([]);
         }
       });
-    });
+    }); // Mock query ends
+
+    consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
   });
 
   afterEach(() => {
     jest.clearAllMocks();
+  });
+
+  afterAll(() => {
+    consoleSpy.mockRestore();
+  });
+
+  it("should return code 500 with expected message if database query fails", async () => {
+    const req: Request = {
+      body: {
+        username: "errorTrigger",
+        password: "validPassword",
+      },
+    } as unknown as Request;
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    } as unknown as Response;
+
+    const expectedMessage: string = "Internal server error";
+
+    await authenticateUser(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({
+      message: expectedMessage,
+    });
   });
 
   it("should return code 400 with expected message if username is invalid", async () => {
@@ -148,6 +183,33 @@ describe("POST /auth/login", () => {
     });
   });
 
+  it("should return 401 with expected message if jwtSecret is null", async () => {
+    const req: Request = {
+      body: {
+        username: "validUsername",
+        password: "validPassword",
+      },
+    } as unknown as Request;
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    } as unknown as Response;
+
+    const expectedMessage: string = "User authentication failed";
+
+    const originalJwtSecret = config.jwtSecret;
+    config.jwtSecret = undefined;
+
+    await authenticateUser(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.json).toHaveBeenCalledWith({
+      message: expectedMessage,
+    });
+
+    config.jwtSecret = originalJwtSecret;
+  });
+
   it("should return 200 with expected message and token if valid user and password match", async () => {
     const req: Request = {
       body: {
@@ -180,8 +242,16 @@ describe("POST /auth/login", () => {
 
 // test logoutUser
 describe("POST /auth/logout", () => {
+  beforeAll(() => {
+    consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+  });
+
   afterEach(() => {
     jest.clearAllMocks();
+  });
+
+  afterAll(() => {
+    consoleSpy.mockRestore();
   });
 
   it("should return code 200 with expected message", async () => {
@@ -198,6 +268,27 @@ describe("POST /auth/logout", () => {
 
     expect(res.clearCookie).toHaveBeenCalledWith("authToken");
     expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      message: expectedMessage,
+    });
+  });
+
+  it("should return code 500 with expected message if clearCookie fails", async () => {
+    const req: Request = {} as unknown as Request;
+    const res = {
+      clearCookie: jest.fn().mockImplementation(() => {
+        throw new Error("Clear cookie error");
+      }),
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    } as unknown as Response;
+
+    const expectedMessage: string = "Internal server error";
+
+    await logoutUser(req, res);
+
+    expect(res.clearCookie).toHaveBeenCalledWith("authToken");
+    expect(res.status).toHaveBeenCalledWith(500);
     expect(res.json).toHaveBeenCalledWith({
       message: expectedMessage,
     });
