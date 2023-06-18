@@ -3,4 +3,5 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: ["src/**/*.{ts,vue}", "!src/main.ts"],
   transformIgnorePatterns: ["node_modules/(?!axios)"],
+  coverageProvider: "v8",
 };
