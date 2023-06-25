@@ -5,6 +5,7 @@ import ProjectView from "../views/ProjectView.vue";
 import AboutView from "../views/AboutView.vue";
 import AdminView from "../views/AdminView.vue";
 import EditorView from "../views/EditorView.vue";
+import NotFoundView from "../views/NotFoundView.vue";
 import store from "../store";
 
 const routes: Array<RouteRecordRaw> = [
@@ -50,6 +51,12 @@ const routes: Array<RouteRecordRaw> = [
     component: AdminView,
     meta: { requiresAuth: false }, // Set requiresAuth to false for public
   },
+  {
+    path: "/:catchAll(.*)", // Handle nonexisting routes
+    name: "NotFound",
+    component: NotFoundView,
+    meta: { requiresAuth: false }, // Set requiresAuth to false for public
+  },
 ];
 
 const router = createRouter({
@@ -64,7 +71,7 @@ router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
 
   if (requiresAuth && !isAuthorized) {
-    next("/");
+    next({ name: "NotFound" });
   } else {
     next();
   }
