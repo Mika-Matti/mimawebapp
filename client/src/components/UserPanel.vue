@@ -28,6 +28,7 @@ export default defineComponent({
       const expiration = store.getters.getExpiration;
       sessionTime.value = getSessionTimeLeft(expiration);
 
+      console.log("Expiration inside updateSessionTime:", expiration);
       if (sessionTime.value <= 0) {
         logout();
       }
@@ -45,6 +46,9 @@ export default defineComponent({
     };
 
     const getSessionTimeLeft = (exp: number) => {
+      if (exp <= 0) {
+        return 0;
+      }
       const expirationTime = exp * 1000; // Convert from seconds to milliseconds
       const currentTime = Date.now();
       const timeLeft = expirationTime - currentTime;

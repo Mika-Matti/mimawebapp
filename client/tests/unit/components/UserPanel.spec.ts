@@ -1,0 +1,114 @@
+import { mount } from "@vue/test-utils";
+import { createStore } from "vuex";
+import UserPanel from "@/components/UserPanel.vue";
+
+describe("UserPanel-component", () => {
+  it("should render empty user-panel when not logged in", () => {
+    const store = createStore({
+      getters: {
+        getIsAuthenticated: () => false,
+        getUsername: () => "",
+        getRole: () => "guest",
+        getExpiration: () => 0,
+      },
+    });
+
+    const mountConfig = {
+      global: {
+        plugins: [store],
+      },
+    };
+
+    const wrapper = mount(UserPanel, mountConfig);
+
+    expect(wrapper.find(".user-panel").exists()).toBe(true);
+    expect(wrapper.find(".user-items").exists()).toBe(false);
+    expect(wrapper.find(".button").exists()).toBe(false);
+  }); // Test case ends
+
+  it("should render full user-panel when logged in", () => {
+    const store = createStore({
+      getters: {
+        getIsAuthenticated: () => true,
+        getUsername: () => "JohnDoe",
+        getRole: () => "admin",
+        getExpiration: () => 1000000000,
+      },
+    });
+
+    const mountConfig = {
+      global: {
+        plugins: [store],
+      },
+    };
+
+    const wrapper = mount(UserPanel, mountConfig);
+
+    expect(wrapper.find(".user-panel").exists()).toBe(true);
+    expect(wrapper.find(".user-items").exists()).toBe(true);
+    expect(wrapper.find(".button").exists()).toBe(true);
+  }); // Test case ends
+
+  it("should update computed properties based on the store", async () => {
+    const store = createStore({
+      state: {
+        isAuthenticated: false,
+        username: "",
+        role: "guest",
+        expiration: 0,
+      },
+      mutations: {
+        setIsAuthenticated(state, isAuthenticated) {
+          state.isAuthenticated = isAuthenticated;
+        },
+        setUsername(state, username) {
+          state.username = username;
+        },
+        setRole(state, role) {
+          state.role = role;
+        },
+        setExpiration(state, expiration) {
+          state.expiration = expiration;
+        },
+      },
+      getters: {
+        getIsAuthenticated: (state) => state.isAuthenticated,
+        getUsername: (state) => state.username,
+        getRole: (state) => state.role,
+        getExpiration: (state) => state.expiration,
+      },
+    });
+
+    const mountConfig = {
+      global: {
+        plugins: [store],
+      },
+    };
+
+    const wrapper = mount(UserPanel, mountConfig);
+
+    // Wait for the next tick to allow computed properties to update
+    await wrapper.vm.$nextTick();
+
+    // Assert initial state
+    expect(wrapper.vm.isAuthenticatedRef).toBe(false);
+    expect(wrapper.vm.username).toBe("");
+    expect(wrapper.vm.role).toBe("guest");
+    expect(wrapper.vm.sessionTime).toBeLessThanOrEqual(0);
+
+    // Update store state to simulate authentication
+    store.commit("setIsAuthenticated", true);
+    store.commit("setUsername", "JohnDoe");
+    store.commit("setRole", "admin");
+    store.commit("setExpiration", Date.now() + 36000000);
+
+    // Wait for the next tick to allow computed properties to update
+    await wrapper.vm.$nextTick();
+
+    // Assert updated state after authentication
+    expect(wrapper.vm.isAuthenticatedRef).toBe(true);
+    expect(wrapper.vm.username).toBe("JohnDoe");
+    expect(wrapper.vm.role).toBe("admin");
+    expect(wrapper.vm.sessionTime).toBeGreaterThan(0);
+  }); // Test case ends
+});
