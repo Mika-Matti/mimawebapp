@@ -52,7 +52,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiresAuth: false }, // Set requiresAuth to false for public
   },
   {
-    path: "/:catchAll(.*)", // Handle nonexisting routes
+    path: "/:catchAll(.*)*", // Handle nonexisting routes
     name: "NotFound",
     component: NotFoundView,
     meta: { requiresAuth: false }, // Set requiresAuth to false for public
@@ -67,10 +67,9 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const isAuthenticated = store.getters.getIsAuthenticated;
   const role = store.getters.getRole;
-  const isAuthorized = () => isAuthenticated.value && role.value === "admin";
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
 
-  if (requiresAuth && !isAuthorized) {
+  if (requiresAuth && !(isAuthenticated && role === "admin")) {
     next({ name: "NotFound" });
   } else {
     next();
