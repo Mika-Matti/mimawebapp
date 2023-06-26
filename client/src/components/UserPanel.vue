@@ -28,7 +28,6 @@ export default defineComponent({
       const expiration = store.getters.getExpiration;
       sessionTime.value = getSessionTimeLeft(expiration);
 
-      console.log("Expiration inside updateSessionTime:", expiration);
       if (sessionTime.value <= 0) {
         logout();
       }

@@ -111,4 +111,53 @@ describe("UserPanel-component", () => {
     expect(wrapper.vm.role).toBe("admin");
     expect(wrapper.vm.sessionTime).toBeGreaterThan(0);
   }); // Test case ends
+
+  it("should call logout function when session time is 0", async () => {
+    jest.useFakeTimers();
+    const mockLogout = jest.fn();
+    const store = createStore({
+      state: {
+        isAuthenticated: true,
+        username: "JohnDoe",
+        role: "admin",
+        expiration: 1000,
+      },
+      mutations: {
+        setIsAuthenticated(state, isAuthenticated) {
+          state.isAuthenticated = isAuthenticated;
+        },
+        setUsername(state, username) {
+          state.username = username;
+        },
+        setRole(state, role) {
+          state.role = role;
+        },
+        setExpiration(state, expiration) {
+          state.expiration = expiration;
+        },
+      },
+      getters: {
+        getIsAuthenticated: (state) => state.isAuthenticated,
+        getUsername: (state) => state.username,
+        getRole: (state) => state.role,
+        getExpiration: (state) => state.expiration,
+      },
+    });
+
+    store.dispatch = mockLogout;
+
+    const mountConfig = {
+      global: {
+        plugins: [store],
+      },
+    };
+
+    const wrapper = mount(UserPanel, mountConfig);
+
+    jest.runOnlyPendingTimers(); // Run the timers
+
+    await wrapper.vm.$nextTick(); // Wait for the next tick to allow changes to propagate
+
+    expect(mockLogout).toHaveBeenCalled();
+  }); // Test case ends
 });
