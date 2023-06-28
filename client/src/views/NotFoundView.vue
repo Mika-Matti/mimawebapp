@@ -1,7 +1,12 @@
 <template>
   <PageHeader />
   <div class="not-found">
-    <p>Oops, looks like something went wrong and you ended up here.</p>
+    <h2>Page not found</h2>
+    <p>
+      Oops, looks like something went wrong and you ended up here. Either the
+      page you were looking for doesn't exist or you are not authorized to view
+      it.
+    </p>
     <div class="image-container">
       <img
         class="image"

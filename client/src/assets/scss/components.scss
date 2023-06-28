@@ -70,11 +70,12 @@
 
   .image {
     width: 128px;
-    margin: 8px;
   }
   .image-caption {
     color: $secondary-color;
     text-align: center;
+    margin: 16px;
+    margin-top: 8px;
   }
 }
 
@@ -143,17 +144,6 @@
 
     .admin-panel {
       margin: 4px;
-    }
-  }
-}
-
-.about {
-  .about-content {
-    display: flex;
-    align-items: center;
-
-    .text {
-      align-self: flex-start;
     }
   }
 }
