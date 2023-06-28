@@ -9,6 +9,22 @@
       general programming and jest for unit testing.
     </p>
 
+    <p>To shortly summarize the current content of this website:</p>
+    <ul>
+      <li>Home - This page you are currently reading</li>
+      <li>
+        Projects - The portfolio page, with all my public projects explained and
+        their github repositories linked.
+      </li>
+      <li>About - General summary about who I am and what I do.</li>
+    </ul>
+
+    <p>
+      And with possible future updates the site may expand to other sections as
+      well, but for now this will serve my most critical needs: Showcasing my
+      work.
+    </p>
+
     <p>
       As this website is very much a learning experience for me when it comes to
       using VUE, you will probably notice little things like changes in how I

@@ -6,7 +6,56 @@
         <h3>Some things about me</h3>
         <p>
           I am a computer science student, currently open for work opportunities
-          in Finland.
+          in Finland. I have the sufficient skills and understanding to work as
+          a software developer, but I am forever curious about things and as
+          such, I actively work to expand my understanding of concepts
+          previously unknown to me.
+        </p>
+        <p>
+          The results my curiousity often turn out in form of small demos, such
+          as my
+          <a
+            href="https://github.com/Mika-Matti/gifreader"
+            target="_blank"
+            rel="noopener"
+            >Gifreader</a
+          >
+          or the
+          <a
+            href="https://github.com/Mika-Matti/3DPerspectiveDemo"
+            target="_blank"
+            rel="noopener"
+          >
+            3DPerspectiveDemo</a
+          >
+          I made, often having just one single purpose: Make something work,
+          that I previously haven't known how.
+        </p>
+
+        <p>
+          I do also sometimes complete much bigger projects on my freetime, such
+          as
+          <a
+            href="https://github.com/Mika-Matti/csolitaire"
+            target="_blank"
+            rel="noopener"
+          >
+            this Solitaire game</a
+          >, that I still play every day whenever I'm bored or
+          <a
+            href="https://github.com/Mika-Matti/mimawebapp"
+            target="_blank"
+            rel="noopener"
+          >
+            this website</a
+          >, that you are currently browsing, which specifically took a lot of
+          work in order to make the website more convenient to update whenever
+          needed.
+        </p>
+        <p>
+          In general, I just like to create stuff and it doesn't always have to
+          be related to programming. For example, I tried my hand in drawing
+          pixel art to use on this site, which was pretty fun.
         </p>
         <p>
           To contact me, you can mail me at
