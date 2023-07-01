@@ -5,17 +5,24 @@
       <div v-for="(value, key) in item" :key="key" class="form-group">
         <label :for="key"> {{ key }}</label>
         <textarea
-          v-if="isTextArea(key)"
+          v-if="keyType(key) === 'textarea'"
           :id="key"
-          v-model="item![key]"
+          v-model="item[key]"
           class="form-control"
           required
         ></textarea>
+        <Datepicker
+          :id="key"
+          v-else-if="keyType(key) === 'date'"
+          :model-value="new Date(item[key])"
+          @update:modelValue="item[key] = $event.toISOString().split('T')[0]"
+          class="form-control"
+        />
         <input
           v-else
           :id="key"
-          :disabled="isItemId(key)"
-          v-model="item![key]"
+          :disabled="keyType(key) === 'id'"
+          v-model="item[key]"
           class="form-control"
           required
         />
@@ -26,7 +33,10 @@
     </form>
     <h2 class="mb-0">{{ objectType }} Preview</h2>
     <div class="preview">
-      <ProjectDisplay v-if="objectType === 'project'" :project="item!" />
+      <ProjectDisplay
+        v-if="objectType === 'project'"
+        :project="convertObject()"
+      />
     </div>
   </div>
   <div v-else>Unauthorized access</div>
@@ -36,6 +46,7 @@
 import { defineComponent, ref, computed, watchEffect, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
+import Datepicker from "vue3-datepicker";
 import { Project } from "@/types";
 import PageHeader from "@/components/PageHeader.vue";
 import ProjectDisplay from "@/components/ProjectDisplay.vue";
@@ -44,6 +55,7 @@ export default defineComponent({
   components: {
     PageHeader,
     ProjectDisplay,
+    Datepicker,
   },
   setup() {
     const store = useStore();
@@ -58,7 +70,7 @@ export default defineComponent({
 
     const params = route.params;
     const objectType = params.object.toString();
-    const item = ref<Project | null>(null);
+    const item = ref<Record<string, string | number>>({});
 
     // Set up initial values based on object type edited
     switch (objectType) {
@@ -68,6 +80,7 @@ export default defineComponent({
           project_description: "",
           project_content: "",
           project_link: "",
+          project_start_date: new Date().toISOString().split("T")[0],
         };
         break;
       // Add more object models here for the editor to support
@@ -76,15 +89,31 @@ export default defineComponent({
         break;
     }
 
-    const isTextArea = (key: string): boolean => {
-      // Use keywords to recognize when textarea is better than input
-      const textareaFields = ["content", "description"];
-      return textareaFields.some((word) => key.includes(word));
+    const convertObject = (): Project | null => {
+      switch (objectType) {
+        case "project":
+          return {
+            project_title: item.value.project_title,
+            project_description: item.value.project_description,
+            project_content: item.value.project_content,
+            project_link: item.value.project_link,
+            project_start_date: new Date(item.value.project_start_date),
+          } as Project;
+        default:
+          return null;
+      }
     };
 
-    const isItemId = (key: string): boolean => {
-      // Don't make an editable field for object id
-      return key.includes("_id");
+    const keyType = (key: string): string => {
+      const textareaFields = ["_content", "_description"];
+      if (textareaFields.some((word) => key.includes(word))) {
+        return "textarea";
+      } else if (key.includes("_date")) {
+        return "date";
+      } else if (key.includes("_id")) {
+        return "id";
+      }
+      return "default";
     };
 
     const submit = async () => {
@@ -101,7 +130,7 @@ export default defineComponent({
 
       if (item.value) {
         try {
-          await store.dispatch(dispatchCommand, item.value);
+          await store.dispatch(dispatchCommand, convertObject());
           // Use router return to previous page after success
           router.go(-1);
         } catch (error) {
@@ -136,8 +165,8 @@ export default defineComponent({
       isAuthorized,
       objectType,
       item,
-      isTextArea,
-      isItemId,
+      convertObject,
+      keyType,
       submit,
     };
   },

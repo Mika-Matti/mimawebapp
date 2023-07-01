@@ -5,6 +5,15 @@
         <div class="row mx-0 px-0 project-title">
           <h2>{{ project.project_title }}</h2>
         </div>
+        <div
+          v-if="project.project_start_date"
+          class="row mx-0 px-0 project-start-date"
+        >
+          <h3>
+            DATE STARTED:
+            {{ project.project_start_date.toISOString().split("T")[0] }}
+          </h3>
+        </div>
         <div class="row mx-0 px-0 project-summary">
           <p>{{ project.project_description }}</p>
         </div>

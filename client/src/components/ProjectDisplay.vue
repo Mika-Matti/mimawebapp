@@ -1,12 +1,18 @@
 <template>
-  <div class="project">
+  <div v-if="project" class="project">
     <div class="project-page-title">
       <h2>{{ project.project_title }}</h2>
+    </div>
+    <div v-if="project.project_start_date" class="project-start-date">
+      <h3>
+        DATE STARTED:
+        {{ project.project_start_date.toISOString().split("T")[0] }}
+      </h3>
     </div>
     <div class="project-page-summary">
       <p>{{ project.project_description }}</p>
     </div>
-    <div class="project-page-link">
+    <div v-if="project.project_link" class="project-page-link">
       <p>
         <a :href="project.project_link" target="_blank" rel="noopener"
           >View project on Github
@@ -14,6 +20,10 @@
       </p>
     </div>
     <div class="project-page-content" v-html="sanitizedContent" />
+  </div>
+  <div v-else>
+    <!-- Handle the case when project is null -->
+    <p>No project found.</p>
   </div>
 </template>
 
@@ -25,13 +35,16 @@ import sanitizeHtml from "sanitize-html";
 export default defineComponent({
   props: {
     project: {
-      type: Object as PropType<Project>,
+      type: [Object, null] as PropType<Project | null>,
       required: true,
     },
   },
   computed: {
     sanitizedContent(): string {
-      return sanitizeHtml(this.project.project_content);
+      if (this.project) {
+        return sanitizeHtml(this.project.project_content);
+      }
+      return "";
     },
   },
 });

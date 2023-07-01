@@ -7,11 +7,12 @@ export interface DecodedToken {
 }
 
 export interface Project {
-  project_id?: number;
   project_title: string;
   project_description: string;
   project_content: string;
-  project_link: string;
+  project_id?: number;
+  project_link?: string;
+  project_start_date?: Date;
 }
 
 // Store state types

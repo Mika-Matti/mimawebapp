@@ -8,7 +8,7 @@
       <button class="button my-0" @click="confirmDelete">delete project</button>
     </template>
   </AdminPanel>
-  <ProjectDisplay :project="project" />
+  <ProjectDisplay v-if="project" :project="project" />
 </template>
 
 <script lang="ts">
@@ -33,7 +33,6 @@ export default class ProjectView extends Vue {
     project_title: "",
     project_description: "",
     project_content: "",
-    project_link: "",
   };
 
   // Fetch project by id from server
@@ -41,6 +40,10 @@ export default class ProjectView extends Vue {
     try {
       await this.store.dispatch(`fetchProjectById`, id);
       this.project = this.store.getters.getProject;
+
+      if (!this.project) {
+        this.$router.push({ name: "NotFound" });
+      }
     } catch (error) {
       console.error("Failed to fetch project by id", error);
     }
