@@ -6,7 +6,7 @@
     <div v-if="project.project_start_date" class="project-start-date">
       <h3>
         DATE STARTED:
-        {{ project.project_start_date.toISOString().split("T")[0] }}
+        {{ project.project_start_date.toLocaleDateString("en-GB") }}
       </h3>
     </div>
     <div class="project-page-summary">

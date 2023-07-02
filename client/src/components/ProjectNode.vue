@@ -11,7 +11,7 @@
         >
           <h3>
             DATE STARTED:
-            {{ project.project_start_date.toISOString().split("T")[0] }}
+            {{ project.project_start_date.toLocaleDateString("en-GB") }}
           </h3>
         </div>
         <div class="row mx-0 px-0 project-summary">

@@ -15,7 +15,7 @@
           v-else-if="keyType(key) === 'date'"
           :id="key"
           :model-value="new Date(item[key])"
-          @update:modelValue="item[key] = $event.toISOString().split('T')[0]"
+          @update:modelValue="item[key] = $event"
           class="form-control"
         />
         <input
@@ -80,7 +80,7 @@ export default defineComponent({
           project_description: "",
           project_content: "",
           project_link: "",
-          project_start_date: new Date().toISOString().split("T")[0],
+          project_start_date: new Date().toLocaleDateString("en-GB"),
         };
         break;
       // Add more object models here for the editor to support

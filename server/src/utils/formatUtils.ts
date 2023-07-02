@@ -24,3 +24,14 @@ export const validateInput = (text: string): boolean => {
     return false;
   }
 };
+
+export const formatDate = (input: string): string => {
+  // input is in format: yyyy-MM-ddThh:mm:ss.sssZ
+  const date: string = new Date(input).toLocaleDateString("en-GB");
+  // date is in format is dd/MM/yyyy
+  const list = date.split("/");
+
+  const output = list[2] + "-" + list[1] + "-" + list[0];
+  // output is in format: yyyy-MM-dd
+  return output;
+};
