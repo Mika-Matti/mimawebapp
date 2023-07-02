@@ -53,6 +53,7 @@ export default {
     project: Project
   ) {
     try {
+      console.log("EDITING:", project);
       const id = project.project_id?.toString();
       if (id) {
         await axios.put(API_URLS.project(id), project);

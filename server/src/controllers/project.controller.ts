@@ -7,6 +7,9 @@ import { sanitizeHTML } from "../utils/formatUtils";
 // route POST '/projects/'
 export const createProject = async (req: Request, res: Response) => {
   const newProject: Project = req.body;
+  newProject.project_start_date = req.body.project_start_date?.split("T")[0];
+  console.log("req.body:", req.body);
+  console.log("newProject:", console.log(newProject));
   try {
     const result: OkPacket = await db.query("INSERT INTO projects SET ?", [
       newProject,
@@ -63,6 +66,8 @@ export const getProjectById = async (req: Request, res: Response) => {
 export const updateProject = async (req: Request, res: Response) => {
   const projectId: string = req.params.id;
   const updatedProject: Project = req.body;
+  updatedProject.project_start_date =
+    req.body.project_start_date?.split("T")[0];
   try {
     const results: OkPacket = await db.query(
       "UPDATE projects SET ? WHERE project_id = ?",

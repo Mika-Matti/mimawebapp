@@ -12,8 +12,8 @@
           required
         ></textarea>
         <Datepicker
-          :id="key"
           v-else-if="keyType(key) === 'date'"
+          :id="key"
           :model-value="new Date(item[key])"
           @update:modelValue="item[key] = $event.toISOString().split('T')[0]"
           class="form-control"
@@ -98,6 +98,7 @@ export default defineComponent({
             project_content: item.value.project_content,
             project_link: item.value.project_link,
             project_start_date: new Date(item.value.project_start_date),
+            project_id: params.id ? Number(params.id) : undefined,
           } as Project;
         default:
           return null;
@@ -122,7 +123,7 @@ export default defineComponent({
       const object = objectType.charAt(0).toUpperCase() + objectType.slice(1);
       let action = "";
       if (path[1] === "create") {
-        action = path[1];
+        action = "create";
       } else {
         action = "edit";
       }

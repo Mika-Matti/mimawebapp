@@ -4,5 +4,5 @@ export interface Project {
   project_content: string;
   project_id?: number;
   project_link?: string;
-  project_start_date?: Date;
+  project_start_date?: string;
 }
