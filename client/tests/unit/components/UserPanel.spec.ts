@@ -115,6 +115,7 @@ describe("UserPanel-component", () => {
   it("should call logout function when session time is 0", async () => {
     jest.useFakeTimers();
     const mockLogout = jest.fn();
+
     const store = createStore({
       state: {
         isAuthenticated: true,
@@ -151,7 +152,6 @@ describe("UserPanel-component", () => {
         plugins: [store],
       },
     };
-
     const wrapper = mount(UserPanel, mountConfig);
 
     jest.runOnlyPendingTimers(); // Run the timers
@@ -159,5 +159,13 @@ describe("UserPanel-component", () => {
     await wrapper.vm.$nextTick(); // Wait for the next tick to allow changes to propagate
 
     expect(mockLogout).toHaveBeenCalled();
+
+    jest.advanceTimersByTime(100); // Fast-forward 100ms
+
+    expect(wrapper.vm.displayMessage).toBe("You are no longer logged in");
+
+    jest.advanceTimersByTime(5000); // Fast-forward 5 seconds
+
+    expect(wrapper.vm.displayMessage).toBe(null);
   }); // Test case ends
 });
