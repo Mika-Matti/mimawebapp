@@ -23,7 +23,7 @@
           <template #buttons>
             <router-link
               class="button ms-0 my-0"
-              :to="`/project/${project.project_id}/edit`"
+              :to="`/edit/project/${project.project_id}`"
             >
               edit
             </router-link>

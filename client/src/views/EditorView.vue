@@ -121,12 +121,8 @@ export default defineComponent({
       //Check if creating a new object or editing old one
       const path = route.path.split("/");
       const object = objectType.charAt(0).toUpperCase() + objectType.slice(1);
-      let action = "";
-      if (path[1] === "create") {
-        action = "create";
-      } else {
-        action = "edit";
-      }
+      let action = path[1]; //path format is /edit/:object/:id or /create/:object
+
       const dispatchCommand = action + object;
 
       if (item.value) {

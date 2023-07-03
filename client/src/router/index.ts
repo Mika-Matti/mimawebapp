@@ -16,7 +16,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiresAuth: false }, // Set requiresAuth to false for public
   },
   {
-    path: "/:object/:id/edit",
+    path: "/edit/:object/:id",
     name: "edit",
     component: EditorView,
     meta: { requiresAuth: true }, // Set requiresAuth to true for protected routes

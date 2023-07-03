@@ -2,7 +2,7 @@
   <PageHeader />
   <AdminPanel>
     <template #buttons>
-      <router-link class="button ms-0 my-0" :to="`/project/${project_id}/edit`">
+      <router-link class="button ms-0 my-0" :to="`/edit/project/${project_id}`">
         edit project
       </router-link>
       <button class="button my-0" @click="confirmDelete">delete project</button>
