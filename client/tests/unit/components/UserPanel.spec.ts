@@ -1,5 +1,6 @@
 import { mount } from "@vue/test-utils";
 import { createStore } from "vuex";
+import { onBeforeUnmount } from "vue";
 import UserPanel from "@/components/UserPanel.vue";
 
 describe("UserPanel-component", () => {
@@ -112,7 +113,7 @@ describe("UserPanel-component", () => {
     expect(wrapper.vm.sessionTime).toBeGreaterThan(0);
   }); // Test case ends
 
-  it("should call logout function when session time is 0", async () => {
+  it("should set displayMessage when logout is called for five seconds", async () => {
     jest.useFakeTimers();
     const mockLogout = jest.fn();
 
@@ -122,20 +123,6 @@ describe("UserPanel-component", () => {
         username: "JohnDoe",
         role: "admin",
         expiration: 1000,
-      },
-      mutations: {
-        setIsAuthenticated(state, isAuthenticated) {
-          state.isAuthenticated = isAuthenticated;
-        },
-        setUsername(state, username) {
-          state.username = username;
-        },
-        setRole(state, role) {
-          state.role = role;
-        },
-        setExpiration(state, expiration) {
-          state.expiration = expiration;
-        },
       },
       getters: {
         getIsAuthenticated: (state) => state.isAuthenticated,
@@ -167,5 +154,38 @@ describe("UserPanel-component", () => {
     jest.advanceTimersByTime(5000); // Fast-forward 5 seconds
 
     expect(wrapper.vm.displayMessage).toBe(null);
+  }); // Test case ends
+
+  it("should set displayMessage when logout fails and dispatch returns an error message", async () => {
+    const mockLogout = jest.fn().mockResolvedValue("Logout failed");
+
+    const store = createStore({
+      state: {
+        isAuthenticated: true,
+        username: "JohnDoe",
+        role: "admin",
+        expiration: 1000,
+      },
+      getters: {
+        getIsAuthenticated: (state) => state.isAuthenticated,
+        getUsername: (state) => state.username,
+        getRole: (state) => state.role,
+        getExpiration: (state) => state.expiration,
+      },
+    });
+
+    store.dispatch = mockLogout;
+
+    const mountConfig = {
+      global: {
+        plugins: [store],
+      },
+    };
+    const wrapper = mount(UserPanel, mountConfig);
+
+    await wrapper.vm.logout();
+
+    expect(mockLogout).toHaveBeenCalled();
+    expect(wrapper.vm.displayMessage).toBe("Logout failed");
   }); // Test case ends
 });
