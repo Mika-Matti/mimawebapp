@@ -71,7 +71,7 @@ export default {
       await axios.delete(API_URLS.project(id));
       commit("removeProject", parseInt(id, 10));
     } catch (error) {
-      console.error("Error fetching project by id:", error);
+      console.error("Error deleting project by id:", error);
     }
   },
 };
