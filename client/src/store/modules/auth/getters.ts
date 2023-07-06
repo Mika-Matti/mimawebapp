@@ -18,6 +18,8 @@ const getters: GetterTree<AuthState, RootState> = {
           state.role = decodedToken.role;
           state.expiration = decodedToken.exp;
           return true;
+        } else {
+          return false;
         }
       } else {
         return false;
