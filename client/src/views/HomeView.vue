@@ -3,13 +3,17 @@
   <div class="home">
     <h3>Welcome to my website (Current version: 1.0)</h3>
     <p>
-      This is my little project website with primary purpose to showcase my
-      projects portfolio. For the website itself I used node.js for server,
-      mySQL for database and VUE for the client as well as typescript for
-      general programming and jest for unit testing.
+      This is my little project, that I started building in the spring of 2023.
+      I used node.js for server, mySQL for database and VUE for the client as
+      well as typescript for general programming and Jest for unit testing.
     </p>
 
-    <p>To shortly summarize the current content of this website:</p>
+    <h3>What's mimanet 1.0 for?</h3>
+    <p>
+      The main purpose of this site is to showcase my work as a software
+      developer. The current content of this website can be summarized as
+      follows:
+    </p>
     <ul>
       <li>Home - This page you are currently reading</li>
       <li>
@@ -19,21 +23,28 @@
       <li>About - General summary about who I am and what I do.</li>
     </ul>
 
+    <h3>What's coming in future updates?</h3>
     <p>
-      And with possible future updates the site may expand to other sections as
-      well, but for now this will serve my most critical needs: Showcasing my
-      work.
+      I have some features in mind, that I want to add to the website in future,
+      but didn't feel the urge to rush them to the current release. Here's a few
+      to mention:
     </p>
+    <ul>
+      <li>
+        New page for posts to keep a blog about whatever day to day thoughts I
+        feel like sharing, perhaps linking the latest post as a sort of news
+        section on the homepage.
+      </li>
+      <li>Pagination for projects and posts</li>
+      <li>
+        Fetch currently static content dynamically from database. This is more
+        of a quality of life thing for myself so updating home- and aboutpage
+        would be more convenient.
+      </li>
+      <li>Tags to add to projects and possibly posts</li>
+      <li>Filter options to sort projects and posts with</li>
+    </ul>
 
-    <p>
-      As this website is very much a learning experience for me when it comes to
-      using VUE, you will probably notice little things like changes in how I
-      define components when you look at the code for the website on my Github.
-      As much as I appreciate having a set way to do certain things, I tried to
-      evolve along with what I learned during the development and change the
-      ways I used VUE components in the client, hopefully finding a style that
-      eventually becomes solid.
-    </p>
     <p>I hope you enjoy your stay.</p>
     <p>- Mika-Matti</p>
   </div>

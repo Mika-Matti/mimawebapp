@@ -125,6 +125,14 @@
   }
 }
 
+.home {
+  ul {
+    li:not(:last-child) {
+      margin-bottom: 8px;
+    }
+  }
+}
+
 .projects {
   ul {
     list-style-type: none;

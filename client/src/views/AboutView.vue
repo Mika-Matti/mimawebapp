@@ -13,10 +13,11 @@
       </div>
       <p>
         I am a computer science student, currently open for work opportunities
-        in Finland. I have the sufficient skills and understanding to work as a
+        in Finland. I have sufficient skills and understanding to work as a
         software developer, but I am forever curious about things and as such, I
         actively work to expand my understanding of concepts previously unknown
-        to me.
+        to me. Right now one of my dreams is to advance more into the data
+        science side of programming.
       </p>
 
       <p>
