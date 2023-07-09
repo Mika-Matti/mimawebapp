@@ -20,6 +20,11 @@ import AdminPanel from "@/components/AdminPanel.vue";
 import ProjectDisplay from "@/components/ProjectDisplay.vue";
 
 export default defineComponent({
+  components: {
+    PageHeader,
+    AdminPanel,
+    ProjectDisplay,
+  },
   data() {
     return {
       store: useStore(),
@@ -65,11 +70,7 @@ export default defineComponent({
       }
     },
   },
-  components: {
-    PageHeader,
-    AdminPanel,
-    ProjectDisplay,
-  },
+
   mounted() {
     this.project_id = this.$route.params.id.toString();
     this.fetchProjectById(this.project_id);
