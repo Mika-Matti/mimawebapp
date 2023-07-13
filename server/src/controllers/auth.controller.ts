@@ -53,8 +53,7 @@ export const authenticateUser = async (req: Request, res: Response) => {
       }
     );
 
-    const corsOrigin = config.corsOrigin;
-    const domain = corsOrigin.replace(/^https?:\/\//, ""); // Remove "http://" or "https://"
+    const domain = new URL(config.corsOrigin).hostname;
 
     res.cookie("authToken", token, {
       httpOnly: false,

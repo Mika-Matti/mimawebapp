@@ -224,7 +224,7 @@ describe("POST /auth/login", () => {
     } as unknown as Response;
 
     const originalCorsOrigin = config.corsOrigin;
-    config.corsOrigin = "test.com";
+    config.corsOrigin = "https://test.com:8080";
 
     const expectedMessage: string = "User authentication successful";
     const expectedToken: string = "validToken";
