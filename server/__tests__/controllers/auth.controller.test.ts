@@ -223,6 +223,9 @@ describe("POST /auth/login", () => {
       json: jest.fn(),
     } as unknown as Response;
 
+    const originalCorsOrigin = config.corsOrigin;
+    config.corsOrigin = "test.com";
+
     const expectedMessage: string = "User authentication successful";
     const expectedToken: string = "validToken";
 
@@ -232,11 +235,14 @@ describe("POST /auth/login", () => {
       httpOnly: false,
       secure: false,
       maxAge: 3600000,
+      domain: "test.com",
     });
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({
       message: expectedMessage,
     });
+
+    config.corsOrigin = originalCorsOrigin;
   });
 });
 
