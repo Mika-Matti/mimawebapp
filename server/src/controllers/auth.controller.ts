@@ -74,7 +74,11 @@ export const authenticateUser = async (req: Request, res: Response) => {
 // route POST '/auth/logout'
 export const logoutUser = async (req: Request, res: Response) => {
   try {
-    res.clearCookie("authToken");
+    if (!config.corsOrigin) {
+      return res.status(401).json({ message: "User logout failed" });
+    }
+    const domain = new URL(config.corsOrigin).hostname;
+    res.clearCookie("authToken", { domain });
     res.status(200).json({ message: "User logged out successfully" });
   } catch (error) {
     console.error("Error logging out user:", error);
