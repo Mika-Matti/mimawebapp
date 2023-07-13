@@ -85,7 +85,7 @@ export default defineComponent({
         break;
       // Add more object models here for the editor to support
       default:
-        console.error("Invalid object type: ", objectType);
+        //console.error("Invalid object type: ", objectType);
         break;
     }
 
@@ -131,10 +131,10 @@ export default defineComponent({
           // Use router return to previous page after success
           router.go(-1);
         } catch (error) {
-          console.error("Failed to " + action + " " + objectType, error);
+          //console.error("Failed to " + action + " " + objectType, error);
         }
       } else {
-        console.log("Nothing to submit");
+        //console.log("Nothing to submit");
       }
     };
 
@@ -148,7 +148,7 @@ export default defineComponent({
         await store.dispatch(`fetchProjectById`, id);
         item.value = store.getters.getProject;
       } catch (error) {
-        console.error("Failed to fetch project by id", error);
+        //console.error("Failed to fetch project by id", error);
       }
     };
 

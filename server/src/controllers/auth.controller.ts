@@ -36,34 +36,36 @@ export const authenticateUser = async (req: Request, res: Response) => {
       return res.status(401).json({ message: "Invalid username or password" });
     }
 
-    if (config.jwtSecret) {
-      // Authentication successful
-      const isSecure: boolean = config.cookieSecure === "true" ? true : false;
-      const token: string = jwt.sign(
-        {
-          userId: user.user_id,
-          username: user.user_name,
-          role: user.user_role,
-        },
-        config.jwtSecret,
-        {
-          expiresIn: "1h",
-        }
-      );
-
-      res.cookie("authToken", token, {
-        httpOnly: false,
-        secure: isSecure, // Using HTTPS
-        maxAge: 3600000, // 1 hour in milliseconds
-      });
-
-      res.status(200).json({
-        message: "User authentication successful",
-      });
-    } else {
-      // Authentication failed
-      res.status(401).json({ message: "User authentication failed" });
+    if (!config.jwtSecret || !config.corsOrigin) {
+      return res.status(401).json({ message: "User authentication failed" });
     }
+
+    const isSecure: boolean = config.cookieSecure === "true" ? true : false;
+    const token: string = jwt.sign(
+      {
+        userId: user.user_id,
+        username: user.user_name,
+        role: user.user_role,
+      },
+      config.jwtSecret,
+      {
+        expiresIn: "1h",
+      }
+    );
+
+    const corsOrigin = config.corsOrigin;
+    const domain = corsOrigin.replace(/^https?:\/\//, ""); // Remove "http://" or "https://"
+
+    res.cookie("authToken", token, {
+      httpOnly: false,
+      secure: isSecure, // Using HTTPS
+      maxAge: 3600000, // 1 hour in milliseconds
+      domain: domain,
+    });
+
+    res.status(200).json({
+      message: "User authentication successful",
+    });
   } catch (error) {
     console.error("Error authenticating user:", error);
     res.status(500).json({ message: "Internal server error" });

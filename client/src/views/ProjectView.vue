@@ -47,7 +47,7 @@ export default defineComponent({
           this.$router.push({ name: "NotFound" });
         }
       } catch (error) {
-        console.error("Failed to fetch project by id", error);
+        //console.error("Failed to fetch project by id", error);
       }
     },
     // Delete project methods
@@ -66,7 +66,7 @@ export default defineComponent({
         // Redirect to projects page after deletion
         this.$router.push("/projects");
       } catch (error) {
-        console.error("Failed to delete project by id", error);
+        //console.error("Failed to delete project by id", error);
       }
     },
   },

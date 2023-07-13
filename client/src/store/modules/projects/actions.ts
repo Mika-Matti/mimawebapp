@@ -12,7 +12,7 @@ export default {
       const response = await axios.get(API_URLS.projects);
       commit("setProjects", response.data);
     } catch (error) {
-      console.error("Error fetching projects:", error);
+      //console.error("Error fetching projects:", error);
     }
   },
   // Fetch project by id
@@ -31,7 +31,7 @@ export default {
         const response = await axios.get(API_URLS.project(id));
         commit("setProject", response.data);
       } catch (error) {
-        console.error("Error fetching project by id:", error);
+        //console.error("Error fetching project by id:", error);
       }
     }
   },
@@ -44,7 +44,7 @@ export default {
       const response = await axios.post(API_URLS.projects, project);
       commit("addProject", response.data);
     } catch (error) {
-      console.error("Error creating project:", error);
+      //console.error("Error creating project:", error);
     }
   },
   // Edit project
@@ -59,7 +59,7 @@ export default {
         commit("setProject", project);
       }
     } catch (error) {
-      console.error("Error editing project:", error);
+      //console.error("Error editing project:", error);
     }
   },
   // Delete project by id
@@ -71,7 +71,7 @@ export default {
       await axios.delete(API_URLS.project(id));
       commit("removeProject", parseInt(id, 10));
     } catch (error) {
-      console.error("Error deleting project by id:", error);
+      //console.error("Error deleting project by id:", error);
     }
   },
 };

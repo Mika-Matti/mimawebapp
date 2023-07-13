@@ -76,7 +76,7 @@ export default class ProjectNode extends Vue {
       // Redirect to projects page after deletion
       this.$router.push("/projects");
     } catch (error) {
-      console.error("Failed to delete project by id", error);
+      //console.error("Failed to delete project by id", error);
     }
   }
 }
