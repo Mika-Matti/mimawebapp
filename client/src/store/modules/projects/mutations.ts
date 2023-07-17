@@ -11,6 +11,9 @@ const mutations: MutationTree<ProjectsState> = {
     });
   },
   setProject: (state: ProjectsState, project: Project) => {
+    if (project.project_start_date) {
+      project.project_start_date = new Date(project.project_start_date);
+    }
     state.project = project;
   },
   addProject: (state: ProjectsState, project: Project) => {
