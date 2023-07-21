@@ -3,6 +3,7 @@ import cors = require("cors");
 import cookieParser = require("cookie-parser");
 import projectRouter from "./routes/project.routes";
 import authRouter from "./routes/auth.routes";
+import postRouter from "./routes/post.routes";
 import { config } from "./config";
 
 export function createServer() {
@@ -31,6 +32,9 @@ export function createServer() {
 
   // use the auth router for all routes starting with '/auth'
   app.use("/auth", authRouter);
+
+  // use the post router for all routes starting with '/posts'
+  app.use("/posts", postRouter);
 
   return app;
 }

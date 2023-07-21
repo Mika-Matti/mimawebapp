@@ -6,7 +6,7 @@ import { sanitizeHTML, formatDate } from "../utils/formatUtils";
 import { JwtPayload } from "jsonwebtoken";
 
 export interface ExtendedRequest extends Request {
-  decodedToken: JwtPayload;
+  decodedToken?: JwtPayload;
 }
 
 // route POST '/posts'
@@ -16,7 +16,9 @@ export const createPost = async (req: ExtendedRequest, res: Response) => {
     newPost.post_date = formatDate(req.body.post_date);
   }
   //Use ExtendedRequest to insert user_id to post.
-  newPost.user_id = req.decodedToken.userId;
+  if (req.decodedToken) {
+    newPost.user_id = req.decodedToken.userId;
+  }
 
   try {
     const result: OkPacket = await db.query("INSERT INTO posts SET ?", [
