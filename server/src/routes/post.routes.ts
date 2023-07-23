@@ -13,7 +13,7 @@ import { verifyAuthentication } from "../utils/auth.middleware";
 const router = Router();
 
 // appends of all routes starting with '/posts'
-router.post("/", verifyAuthentication, createPost);
+router.post("/all", verifyAuthentication, createPost);
 router.get("/public", getPublicPosts);
 router.get("/public/:id", getPublicPostById);
 router.get("/all", verifyAuthentication, getAllPosts);
