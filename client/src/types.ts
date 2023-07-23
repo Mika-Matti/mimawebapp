@@ -15,6 +15,15 @@ export interface Project {
   project_start_date?: Date;
 }
 
+export interface Post {
+  post_title: string;
+  post_content: string;
+  post_date: Date;
+  post_is_public: boolean;
+  post_id?: number;
+  user_id?: number;
+}
+
 // Store state types
 export interface RootState {
   projects: ProjectsState;
@@ -23,6 +32,11 @@ export interface RootState {
 export interface ProjectsState {
   projects: Project[];
   project: Project | null;
+}
+
+export interface PostsState {
+  posts: Post[];
+  post: Post | null;
 }
 
 export interface AuthState {
