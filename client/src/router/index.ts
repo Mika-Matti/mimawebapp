@@ -2,6 +2,8 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import ProjectsView from "../views/ProjectsView.vue";
 import ProjectView from "../views/ProjectView.vue";
+import PostsView from "../views/PostsView.vue";
+import PostView from "../views/PostView.vue";
 import AboutView from "../views/AboutView.vue";
 import AdminView from "../views/AdminView.vue";
 import EditorView from "../views/EditorView.vue";
@@ -37,6 +39,18 @@ const routes: Array<RouteRecordRaw> = [
     path: "/projects/:id",
     name: "project",
     component: ProjectView,
+    meta: { requiresAuth: false }, // Set requiresAuth to false for public
+  },
+  {
+    path: "/posts",
+    name: "posts",
+    component: PostsView,
+    meta: { requiresAuth: false }, // Set requiresAuth to false for public
+  },
+  {
+    path: "/posts/:id",
+    name: "postt",
+    component: PostView,
     meta: { requiresAuth: false }, // Set requiresAuth to false for public
   },
   {
