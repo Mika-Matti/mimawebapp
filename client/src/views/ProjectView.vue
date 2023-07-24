@@ -15,8 +15,8 @@
 import { defineComponent } from "vue";
 import { useStore } from "vuex";
 import { Project } from "@/types";
-import PageHeader from "@/components/PageHeader.vue";
-import AdminPanel from "@/components/AdminPanel.vue";
+import PageHeader from "@/components/ui/PageHeader.vue";
+import AdminPanel from "@/components/ui/AdminPanel.vue";
 import ProjectDisplay from "@/components/ProjectDisplay.vue";
 
 export default defineComponent({

@@ -44,7 +44,7 @@
 import { Options, Vue } from "vue-class-component";
 import { useStore } from "vuex";
 import { Post } from "@/types";
-import AdminPanel from "@/components/AdminPanel.vue";
+import AdminPanel from "@/components/ui/AdminPanel.vue";
 
 @Options({
   props: {

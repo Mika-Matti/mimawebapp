@@ -20,8 +20,8 @@
 import { Options, Vue } from "vue-class-component";
 import { useStore } from "vuex";
 import { Project } from "@/types";
-import PageHeader from "@/components/PageHeader.vue";
-import AdminPanel from "@/components/AdminPanel.vue";
+import PageHeader from "@/components/ui/PageHeader.vue";
+import AdminPanel from "@/components/ui/AdminPanel.vue";
 import ProjectNode from "@/components/ProjectNode.vue";
 
 @Options({

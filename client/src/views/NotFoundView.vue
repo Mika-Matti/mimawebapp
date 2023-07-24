@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import PageHeader from "@/components/PageHeader.vue";
+import PageHeader from "@/components/ui/PageHeader.vue";
 
 export default defineComponent({
   components: {

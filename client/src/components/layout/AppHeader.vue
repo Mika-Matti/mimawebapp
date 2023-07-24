@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import UserPanel from "@/components/UserPanel.vue";
+import UserPanel from "@/components/ui/UserPanel.vue";
 
 @Options({
   components: {
@@ -28,5 +28,5 @@ export default class AppHeader extends Vue {}
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-@import "../assets/scss/components.scss";
+@import "../../assets/scss/components.scss";
 </style>

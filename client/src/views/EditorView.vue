@@ -48,7 +48,7 @@ import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 import Datepicker from "vue3-datepicker";
 import { Project } from "@/types";
-import PageHeader from "@/components/PageHeader.vue";
+import PageHeader from "@/components/ui/PageHeader.vue";
 import ProjectDisplay from "@/components/ProjectDisplay.vue";
 
 export default defineComponent({

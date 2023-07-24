@@ -52,7 +52,7 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import PageHeader from "@/components/PageHeader.vue";
+import PageHeader from "@/components/ui/PageHeader.vue";
 
 @Options({
   components: {
