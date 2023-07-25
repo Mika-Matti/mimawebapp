@@ -14,8 +14,9 @@
         <Datepicker
           v-else-if="keyType(key) === 'date'"
           :id="key"
-          :model-value="new Date(item[key])"
+          :modelValue="new Date(item[key])"
           @update:modelValue="item[key] = $event"
+          inputFormat="dd/MM/yyyy"
           class="form-control"
         />
         <input
@@ -35,7 +36,11 @@
     <div class="preview">
       <ProjectDisplay
         v-if="objectType === 'project'"
-        :project="convertObject()"
+        :project="(convertObject() as Project)"
+      />
+      <PostDisplay
+        v-else-if="objectType === 'post'"
+        :post="(convertObject() as Post)"
       />
     </div>
   </div>
@@ -47,14 +52,16 @@ import { defineComponent, ref, computed, watchEffect, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 import Datepicker from "vue3-datepicker";
-import { Project } from "@/types";
+import { Project, Post } from "@/types";
 import PageHeader from "@/components/ui/PageHeader.vue";
 import ProjectDisplay from "@/components/ProjectDisplay.vue";
+import PostDisplay from "@/components/PostDisplay.vue";
 
 export default defineComponent({
   components: {
     PageHeader,
     ProjectDisplay,
+    PostDisplay,
     Datepicker,
   },
   setup() {
@@ -77,10 +84,18 @@ export default defineComponent({
       case "project":
         item.value = {
           project_title: "",
+          project_start_date: new Date().toLocaleDateString(),
+          project_link: "",
           project_description: "",
           project_content: "",
-          project_link: "",
-          project_start_date: new Date().toLocaleDateString("en-GB"),
+        };
+        break;
+      case "post":
+        item.value = {
+          post_title: "",
+          post_date: new Date().toLocaleDateString(),
+          post_content: "",
+          post_is_public: "0",
         };
         break;
       // Add more object models here for the editor to support
@@ -89,7 +104,7 @@ export default defineComponent({
         break;
     }
 
-    const convertObject = (): Project | null => {
+    const convertObject = (): Project | Post | null => {
       switch (objectType) {
         case "project":
           return {
@@ -100,6 +115,17 @@ export default defineComponent({
             project_start_date: new Date(item.value.project_start_date),
             project_id: params.id ? Number(params.id) : undefined,
           } as Project;
+        case "post":
+          return {
+            post_title: item.value.post_title,
+            post_content: item.value.post_content,
+            post_date: new Date(item.value.post_date),
+            post_is_public: item.value.post_is_public === "1" ? true : false,
+            post_id: params.id ? Number(params.id) : undefined,
+            user_id: item.value.user_id
+              ? Number(item.value.user_id)
+              : undefined,
+          } as Post;
         default:
           return null;
       }
@@ -143,18 +169,31 @@ export default defineComponent({
       role.value = store.getters.getRole;
     });
 
-    const fetchProjectById = async (id: string) => {
+    const fetchObjectById = async (id: string) => {
       try {
-        await store.dispatch(`fetchProjectById`, id);
-        item.value = store.getters.getProject;
+        const object = objectType.charAt(0).toUpperCase() + objectType.slice(1);
+        const command = "fetch" + object + "ById";
+        await store.dispatch(command, id);
+
+        switch (objectType) {
+          case "project":
+            item.value = store.getters.getProject;
+            break;
+          case "post":
+            item.value = store.getters.getPost;
+            break;
+          default:
+            //console.error("Invalid object type: ", objectType);
+            break;
+        }
       } catch (error) {
         //console.error("Failed to fetch project by id", error);
       }
     };
 
     onMounted(() => {
-      if (params.id && objectType === "project") {
-        fetchProjectById(params.id.toString());
+      if (params.id) {
+        fetchObjectById(params.id.toString());
       }
     });
 

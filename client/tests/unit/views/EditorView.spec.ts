@@ -152,7 +152,7 @@ describe("EditorView", () => {
     await wrapper.vm.$nextTick(); // Wait for the component to be mounted and the item to be populated
 
     const item = wrapper.vm.item;
-    const project: Project | null = wrapper.vm.convertObject();
+    const project: Project | null = wrapper.vm.convertObject() as Project;
 
     await wrapper.vm.submit();
 

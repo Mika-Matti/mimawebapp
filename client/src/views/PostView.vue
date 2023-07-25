@@ -8,7 +8,7 @@
       <button class="button my-0" @click="confirmDelete">delete post</button>
     </template>
   </AdminPanel>
-  <ProjectDisplay v-if="post" :post="post" />
+  <PostDisplay v-if="post" :post="post" />
 </template>
 
 <script lang="ts">
@@ -42,11 +42,7 @@ export default defineComponent({
     // Fetch post by id from server
     async fetchPostById(id: string) {
       try {
-        const isAuth = this.store.getters.getIsAuthenticated;
-        await this.store.dispatch(`fetchPostById`, {
-          isAuth,
-          id,
-        });
+        await this.store.dispatch(`fetchPostById`, id);
         this.post = this.store.getters.getPost;
 
         if (!this.post) {

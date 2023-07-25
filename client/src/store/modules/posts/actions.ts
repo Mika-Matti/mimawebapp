@@ -7,11 +7,12 @@ axios.defaults.withCredentials = true;
 
 export default {
   // Fetch posts
-  async fetchPosts(
-    { commit }: ActionContext<PostsState, RootState>,
-    isAuthenticated: boolean
-  ) {
+  async fetchPosts({
+    commit,
+    rootGetters,
+  }: ActionContext<PostsState, RootState>) {
     try {
+      const isAuthenticated = rootGetters["auth/getIsAuthenticated"];
       const visibility = isAuthenticated ? "all" : "public";
       const response = await axios.get(API_URLS.posts(visibility));
       commit("setPosts", response.data);
@@ -21,8 +22,8 @@ export default {
   },
   // Fetch post by id
   async fetchPostById(
-    { commit, state }: ActionContext<PostsState, RootState>,
-    { isAuthenticated, id }: { isAuthenticated: boolean; id: string }
+    { commit, state, rootGetters }: ActionContext<PostsState, RootState>,
+    id: string
   ) {
     const existingPost = state.posts.find(
       (post) => String(post.post_id) === id
@@ -32,6 +33,7 @@ export default {
       commit("setPost", existingPost);
     } else {
       try {
+        const isAuthenticated = rootGetters["auth/getIsAuthenticated"];
         const visibility = isAuthenticated ? "all" : "public";
         const response = await axios.get(API_URLS.post(visibility, id));
         commit("setPost", response.data);
@@ -41,7 +43,7 @@ export default {
     }
   },
   // Create post
-  async createProject(
+  async createPost(
     { commit }: ActionContext<PostsState, RootState>,
     post: Post
   ) {

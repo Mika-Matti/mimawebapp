@@ -22,7 +22,7 @@ import { useStore } from "vuex";
 import { Post } from "@/types";
 import PageHeader from "@/components/ui/PageHeader.vue";
 import AdminPanel from "@/components/ui/AdminPanel.vue";
-import PostNode from "@/components/PosttNode.vue";
+import PostNode from "@/components/PostNode.vue";
 
 @Options({
   components: {
@@ -39,10 +39,7 @@ export default class PostsView extends Vue {
   // Fetch posts from server
   async fetchPosts() {
     try {
-      await this.store.dispatch(
-        "fetchPosts",
-        this.store.getters.getIsAuthenticated
-      );
+      await this.store.dispatch("fetchPosts");
       this.posts = this.store.getters.getPosts;
     } catch (error) {
       //console.error("Failed to fetch posts", error);
