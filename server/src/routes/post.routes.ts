@@ -18,7 +18,7 @@ router.get("/public", getPublicPosts);
 router.get("/public/:id", getPublicPostById);
 router.get("/all", verifyAuthentication, getAllPosts);
 router.get("/all/:id", verifyAuthentication, getAnyPostById);
-router.put("all/:id", verifyAuthentication, updatePost);
-router.delete("all/:id", verifyAuthentication, deletePost);
+router.put("/all/:id", verifyAuthentication, updatePost);
+router.delete("/all/:id", verifyAuthentication, deletePost);
 
 export default router;

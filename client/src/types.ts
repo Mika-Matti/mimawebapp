@@ -27,6 +27,8 @@ export interface Post {
 // Store state types
 export interface RootState {
   projects: ProjectsState;
+  posts: PostsState;
+  auth: AuthState;
 }
 
 export interface ProjectsState {

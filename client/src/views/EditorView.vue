@@ -20,6 +20,14 @@
           class="form-control"
         />
         <input
+          v-else-if="keyType(key) === 'checkbox'"
+          :id="key"
+          type="checkbox"
+          v-model="item[key]"
+          true-value="yes"
+          false-value="no"
+        />
+        <input
           v-else
           :id="key"
           :disabled="keyType(key) === 'id'"
@@ -95,7 +103,7 @@ export default defineComponent({
           post_title: "",
           post_date: new Date().toLocaleDateString(),
           post_content: "",
-          post_is_public: "0",
+          post_is_public: "no",
         };
         break;
       // Add more object models here for the editor to support
@@ -120,7 +128,7 @@ export default defineComponent({
             post_title: item.value.post_title,
             post_content: item.value.post_content,
             post_date: new Date(item.value.post_date),
-            post_is_public: item.value.post_is_public === "1" ? true : false,
+            post_is_public: item.value.post_is_public === "yes" ? true : false,
             post_id: params.id ? Number(params.id) : undefined,
             user_id: item.value.user_id
               ? Number(item.value.user_id)
@@ -139,6 +147,8 @@ export default defineComponent({
         return "date";
       } else if (key.includes("_id")) {
         return "id";
+      } else if (key.includes("_is_")) {
+        return "checkbox";
       }
       return "default";
     };

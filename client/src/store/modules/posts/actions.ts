@@ -12,7 +12,7 @@ export default {
     rootGetters,
   }: ActionContext<PostsState, RootState>) {
     try {
-      const isAuthenticated = rootGetters["auth/getIsAuthenticated"];
+      const isAuthenticated = rootGetters.getIsAuthenticated;
       const visibility = isAuthenticated ? "all" : "public";
       const response = await axios.get(API_URLS.posts(visibility));
       commit("setPosts", response.data);
@@ -33,7 +33,7 @@ export default {
       commit("setPost", existingPost);
     } else {
       try {
-        const isAuthenticated = rootGetters["auth/getIsAuthenticated"];
+        const isAuthenticated = rootGetters.getIsAuthenticated;
         const visibility = isAuthenticated ? "all" : "public";
         const response = await axios.get(API_URLS.post(visibility, id));
         commit("setPost", response.data);

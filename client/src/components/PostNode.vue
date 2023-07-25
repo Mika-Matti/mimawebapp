@@ -2,8 +2,11 @@
   <div class="post-item container-fluid mx-0 px-0">
     <div class="row mx-0 px-0">
       <div class="col mx-0 px-0">
-        <div class="row mx-0 px-0 post-title">
+        <div v-if="post.post_is_public" class="row mx-0 px-0 post-title">
           <h2>{{ post.post_title }}</h2>
+        </div>
+        <div v-else class="row mx-0 px-0 post-title">
+          <h2>{{ post.post_title }} (PRIVATE)</h2>
         </div>
         <div v-if="post.post_date" class="row mx-0 px-0 post-date">
           <h3>

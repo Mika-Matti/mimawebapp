@@ -1,7 +1,10 @@
 <template>
   <div v-if="post" class="post">
-    <div class="post-page-title">
+    <div v-if="post.post_is_public" class="post-page-title">
       <h2>{{ post.post_title }}</h2>
+    </div>
+    <div v-else class="post-page-title">
+      <h2>{{ post.post_title }} (PRIVATE)</h2>
     </div>
     <div v-if="post.post_date" class="post-date">
       <h3>
