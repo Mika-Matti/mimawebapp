@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS projects (
   project_description TEXT NOT NULL,
   project_content TEXT NOT NULL,
   project_link VARCHAR(255),
-  project_start_date DATE,
+  project_start_date DATETIME,
   PRIMARY KEY (project_id)
 );
 

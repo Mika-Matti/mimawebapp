@@ -12,7 +12,7 @@
           required
         ></textarea>
         <Datepicker
-          v-else-if="keyType(key) === 'date'"
+          v-else-if="keyType(key) === 'date' && objectType !== 'post'"
           :id="key"
           :modelValue="new Date(item[key])"
           @update:modelValue="item[key] = $event"
@@ -30,7 +30,7 @@
         <input
           v-else
           :id="key"
-          :disabled="keyType(key) === 'id'"
+          :disabled="keyType(key) === 'id' || keyType(key) === 'date'"
           v-model="item[key]"
           class="form-control"
           required

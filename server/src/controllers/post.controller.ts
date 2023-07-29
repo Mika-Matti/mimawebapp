@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { OkPacket } from "mysql2";
 import { Post } from "../models/post.model";
 import { db } from "../utils/db";
-import { sanitizeHTML, formatDate } from "../utils/formatUtils";
+import { sanitizeHTML, getTimeStamp } from "../utils/formatUtils";
 import { JwtPayload } from "jsonwebtoken";
 
 export interface ExtendedRequest extends Request {
@@ -13,7 +13,7 @@ export interface ExtendedRequest extends Request {
 export const createPost = async (req: ExtendedRequest, res: Response) => {
   const newPost: Post = req.body;
   if (req.body.post_date) {
-    newPost.post_date = formatDate(req.body.post_date);
+    newPost.post_date = getTimeStamp();
   }
   //Use ExtendedRequest to insert user_id to post.
   if (req.decodedToken) {
@@ -113,10 +113,15 @@ export const getAnyPostById = async (req: Request, res: Response) => {
 export const updatePost = async (req: Request, res: Response) => {
   const postId: string = req.params.id;
   const updatedPost: Post = req.body;
-  if (req.body.post_date) {
-    updatedPost.post_date = formatDate(req.body.post_date);
-  }
   try {
+    // Keep datetime unchanged.
+    if (req.body.post_date) {
+      const existingPost = await db.query(
+        "SELECT post_date FROM posts WHERE post_id = ?",
+        [postId]
+      );
+      updatedPost.post_date = existingPost[0].post_date;
+    }
     const results: OkPacket = await db.query(
       "UPDATE posts SET ? WHERE post_id = ?",
       [updatedPost, postId]

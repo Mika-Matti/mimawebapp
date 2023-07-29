@@ -35,3 +35,20 @@ export const formatDate = (input: string): string => {
   // output is in format: yyyy-MM-dd
   return output;
 };
+
+export const getTimeStamp = (): string => {
+  // input is in format: yyyy-MM-ddThh:mm:ss.sssZ
+  const date = new Date();
+
+  // Extract the date and time components
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const seconds = String(date.getSeconds()).padStart(2, "0");
+
+  // output is in format: yyyy-MM-dd hh:mm:ss
+  const output = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  return output;
+};

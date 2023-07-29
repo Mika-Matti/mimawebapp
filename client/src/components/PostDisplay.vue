@@ -8,8 +8,7 @@
     </div>
     <div v-if="post.post_date" class="post-date">
       <h3>
-        POSTED:
-        {{ post.post_date.toLocaleDateString("en-GB") }}
+        {{ post.post_date.toLocaleString("en-GB") }}
       </h3>
     </div>
     <div class="post-page-content" v-html="sanitizedContent" />
