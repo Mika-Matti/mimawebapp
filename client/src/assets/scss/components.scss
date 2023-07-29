@@ -133,7 +133,7 @@
   }
 }
 
-.projects {
+.nodes {
   ul {
     list-style-type: none;
     padding: 0;
@@ -142,7 +142,7 @@
     margin: 0 0 16px 0;
   }
 
-  .project-item {
+  .item-node {
     border-left: solid 4px $primary-color;
     border-bottom: solid 4px $primary-color;
 

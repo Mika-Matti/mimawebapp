@@ -1,22 +1,8 @@
 <template>
-  <div class="post-item container-fluid mx-0 px-0">
+  <div class="item-node container-fluid mx-0 px-0">
     <div class="row mx-0 px-0">
       <div class="col mx-0 px-0">
-        <div v-if="post.post_is_public" class="row mx-0 px-0 post-title">
-          <h2>{{ post.post_title }}</h2>
-        </div>
-        <div v-else class="row mx-0 px-0 post-title">
-          <h2>{{ post.post_title }} (PRIVATE)</h2>
-        </div>
-        <div v-if="post.post_date" class="row mx-0 px-0 post-date">
-          <h3>
-            POSTED:
-            {{ post.post_date.toLocaleDateString("en-GB") }}
-          </h3>
-        </div>
-        <div class="row mx-0 px-0 post-content">
-          <p>{{ post.post_content }}</p>
-        </div>
+        <PostDisplay :post="post" class="row mx-0 px-0" />
       </div>
       <div class="col-auto mx-0 px-0 d-flex flex-column justify-content-center">
         <AdminPanel>
@@ -32,10 +18,7 @@
             </button>
           </template>
         </AdminPanel>
-        <router-link
-          class="post-link post-button"
-          :to="`/posts/${post.post_id}`"
-        >
+        <router-link class="node-link button" :to="`/posts/${post.post_id}`">
           View Post
         </router-link>
       </div>
@@ -47,6 +30,7 @@
 import { Options, Vue } from "vue-class-component";
 import { useStore } from "vuex";
 import { Post } from "@/types";
+import PostDisplay from "@/components/PostDisplay.vue";
 import AdminPanel from "@/components/ui/AdminPanel.vue";
 
 @Options({
@@ -54,6 +38,7 @@ import AdminPanel from "@/components/ui/AdminPanel.vue";
     post: {},
   },
   components: {
+    PostDisplay,
     AdminPanel,
   },
 })

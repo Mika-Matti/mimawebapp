@@ -1,5 +1,5 @@
 <template>
-  <div class="project-item container-fluid mx-0 px-0">
+  <div class="item-node container-fluid mx-0 px-0">
     <div class="row mx-0 px-0">
       <div class="col mx-0 px-0">
         <div class="row mx-0 px-0 project-title">
@@ -33,7 +33,7 @@
           </template>
         </AdminPanel>
         <router-link
-          class="project-link project-button"
+          class="node-link button"
           :to="`/projects/${project.project_id}`"
         >
           View Project

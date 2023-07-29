@@ -7,7 +7,7 @@
       </router-link>
     </template>
   </AdminPanel>
-  <div class="posts">
+  <div class="nodes">
     <ul>
       <li v-for="post in posts" :key="post.post_id">
         <PostNode :post="post" />

@@ -7,7 +7,7 @@
       </router-link>
     </template>
   </AdminPanel>
-  <div class="projects">
+  <div class="nodes">
     <ul>
       <li v-for="project in projects" :key="project.project_id">
         <ProjectNode :project="project" />
