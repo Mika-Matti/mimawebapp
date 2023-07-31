@@ -1,9 +1,9 @@
 <template>
   <div v-if="post" class="post">
-    <div v-if="post.post_is_public" class="post-page-title">
+    <div v-if="post.post_is_public" class="post-title">
       <h2>{{ post.post_title }}</h2>
     </div>
-    <div v-else class="post-page-title">
+    <div v-else class="post-title">
       <h2>{{ post.post_title }} (PRIVATE)</h2>
     </div>
     <div v-if="post.post_date" class="post-date">
@@ -11,7 +11,7 @@
         {{ post.post_date.toLocaleString("en-GB") }}
       </h3>
     </div>
-    <div class="post-page-content" v-html="sanitizedContent" />
+    <div class="post-content" v-html="sanitizedContent" />
   </div>
   <div v-else>
     <!-- Handle the case when post is null -->
