@@ -8,7 +8,7 @@
       <button class="button my-0" @click="confirmDelete">delete post</button>
     </template>
   </AdminPanel>
-  <PostDisplay v-if="post" :post="post" />
+  <PostDisplay v-if="post" :post="post" :showFullContent="true" />
 </template>
 
 <script lang="ts">

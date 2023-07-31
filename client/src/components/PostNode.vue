@@ -2,7 +2,11 @@
   <div class="item-node container-fluid mx-0 px-0">
     <div class="row mx-0 px-0">
       <div class="col mx-0 px-0">
-        <PostDisplay :post="post" class="row mx-0 px-0" />
+        <PostDisplay
+          :post="post"
+          :showFullContent="showFullContent"
+          class="row mx-0 px-0"
+        />
       </div>
       <div class="col-auto mx-0 px-0 d-flex flex-column justify-content-center">
         <AdminPanel>
@@ -19,8 +23,15 @@
           </template>
         </AdminPanel>
         <router-link class="node-link button" :to="`/posts/${post.post_id}`">
-          View Post
+          Go To Post
         </router-link>
+        <button
+          class="button"
+          v-if="post.post_content.length > maxLength"
+          @click="toggleShowFullContent"
+        >
+          {{ showFullContent ? "Show Less" : "Show More" }}
+        </button>
       </div>
     </div>
   </div>
@@ -44,7 +55,13 @@ import AdminPanel from "@/components/ui/AdminPanel.vue";
 })
 export default class PostNode extends Vue {
   post!: Post;
+  maxLength = 100;
+  showFullContent = false;
   store = useStore();
+
+  toggleShowFullContent() {
+    this.showFullContent = !this.showFullContent;
+  }
 
   // Delete post methods
   confirmDelete() {

@@ -30,13 +30,23 @@ export default defineComponent({
       type: [Object, null] as PropType<Post | null>,
       required: true,
     },
+    showFullContent: {
+      type: Boolean,
+      required: true,
+    },
   },
   computed: {
     sanitizedContent(): string {
       if (this.post) {
-        return sanitizeHtml(this.post.post_content);
+        return this.showFullContent
+          ? sanitizeHtml(this.post.post_content)
+          : sanitizeHtml(this.post.post_content).slice(0, this.maxLength);
       }
       return "";
+    },
+    maxLength(): number {
+      // Set your desired maximum length for truncated content here
+      return 100;
     },
   },
 });
