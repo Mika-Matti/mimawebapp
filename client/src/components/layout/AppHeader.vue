@@ -4,7 +4,9 @@
       <div class="row px-0">
         <div class="col px-0"></div>
         <div class="col px-0">
-          <img alt="mimanet logo" src="@/assets/images/mimanetlogo128.png" />
+          <router-link :to="`/`">
+            <img alt="mimanet logo" src="@/assets/images/mimanetlogo128.png" />
+          </router-link>
         </div>
         <div class="col px-0">
           <UserPanel />
