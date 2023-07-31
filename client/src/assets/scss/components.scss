@@ -81,6 +81,7 @@
 
 .form-group {
   margin-bottom: 16px;
+
   .form-control {
     border-radius: 0;
     border: solid 4px $primary-color;
@@ -92,6 +93,16 @@
       color: $forbidden-color;
       background-color: $forbidden-background;
     }
+  }
+
+  .form-check-input {
+    display: block;
+    border-radius: 0;
+    border: solid 4px $primary-color;
+    color: $primary-color;
+    background-color: $background-color;
+    width: 24px;
+    height: 24px;
   }
 }
 

@@ -6,6 +6,7 @@
         <label :for="key"> {{ key }}</label>
         <textarea
           v-if="keyType(key) === 'textarea'"
+          rows="16"
           :id="key"
           v-model="item[key]"
           class="form-control"
@@ -26,6 +27,7 @@
           v-model="item[key]"
           true-value="yes"
           false-value="no"
+          class="form-check-input"
         />
         <input
           v-else
