@@ -1,10 +1,21 @@
 const sanitizeHtml = require("sanitize-html");
 
 export const sanitizeHTML = (text: string): string => {
-  const sanitizedText: string = sanitizeHtml(text, {
-    allowedTags: sanitizeHtml.defaults.allowedTags,
-    allowedAttributes: sanitizeHtml.defaults.allowedAttributes,
-  });
+  const sanitizedHtmlOptions = {
+    allowedTags: sanitizeHtml.defaults.allowedTags.concat(["iframe"]),
+    allowedAttributes: {
+      ...sanitizeHtml.defaults.allowedAttributes,
+      iframe: [
+        "src",
+        "width",
+        "height",
+        "frameborder",
+        "allow",
+        "allowfullscreen",
+      ],
+    },
+  };
+  const sanitizedText: string = sanitizeHtml(text, sanitizedHtmlOptions);
 
   return sanitizedText;
 };

@@ -23,6 +23,7 @@
 import { defineComponent, PropType } from "vue";
 import { Post } from "@/types";
 import sanitizeHtml from "sanitize-html";
+import { sanitizedHtmlOptions } from "@/config";
 
 export default defineComponent({
   props: {
@@ -48,7 +49,7 @@ export default defineComponent({
           sanitizeHtml(this.post.post_content).slice(0, this.maxLength) + "..."
         );
       }
-      return sanitizeHtml(this.post.post_content);
+      return sanitizeHtml(this.post.post_content, sanitizedHtmlOptions);
     },
     maxLength(): number {
       // Set your desired maximum length for truncated content here

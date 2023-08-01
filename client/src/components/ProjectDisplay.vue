@@ -31,6 +31,7 @@
 import { defineComponent, PropType } from "vue";
 import { Project } from "@/types";
 import sanitizeHtml from "sanitize-html";
+import { sanitizedHtmlOptions } from "@/config";
 
 export default defineComponent({
   props: {
@@ -42,7 +43,7 @@ export default defineComponent({
   computed: {
     sanitizedContent(): string {
       if (this.project) {
-        return sanitizeHtml(this.project.project_content);
+        return sanitizeHtml(this.project.project_content, sanitizedHtmlOptions);
       }
       return "";
     },

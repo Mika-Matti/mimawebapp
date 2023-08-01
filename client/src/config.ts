@@ -1,3 +1,5 @@
+import sanitizeHtml from "sanitize-html";
+
 const API_BASE_URL = process.env.VUE_APP_BASE_URL;
 
 export const API_URLS = {
@@ -8,4 +10,19 @@ export const API_URLS = {
     `${API_BASE_URL}/posts/${visibility}/${id}`,
   login: `${API_BASE_URL}/auth/login`,
   logout: `${API_BASE_URL}/auth/logout`,
+};
+
+export const sanitizedHtmlOptions = {
+  allowedTags: sanitizeHtml.defaults.allowedTags.concat(["iframe"]),
+  allowedAttributes: {
+    ...sanitizeHtml.defaults.allowedAttributes,
+    iframe: [
+      "src",
+      "width",
+      "height",
+      "frameborder",
+      "allow",
+      "allowfullscreen",
+    ],
+  },
 };
