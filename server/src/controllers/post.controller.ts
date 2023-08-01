@@ -37,9 +37,14 @@ export const createPost = async (req: ExtendedRequest, res: Response) => {
 
 // route GET '/posts/public' Only return public posts
 export const getPublicPosts = async (req: Request, res: Response) => {
+  let limit: string = "";
+  if (req.query.limit && req.query.fromRow) {
+    limit = ` LIMIT ${req.query.fromRow},${req.query.limit}`;
+  }
   try {
     const results: Post[] = await db.query(
-      "SELECT * FROM posts WHERE post_is_public = true ORDER BY post_date DESC"
+      "SELECT * FROM posts WHERE post_is_public = true ORDER BY post_date DESC" +
+        limit
     );
     res.status(200).json(results);
   } catch (err) {
@@ -50,9 +55,13 @@ export const getPublicPosts = async (req: Request, res: Response) => {
 
 // route GET '/posts/all Authenticated can return all posts.
 export const getAllPosts = async (req: Request, res: Response) => {
+  let limit: string = "";
+  if (req.query.limit && req.query.fromRow) {
+    limit = ` LIMIT ${req.query.fromRow},${req.query.limit}`;
+  }
   try {
     const results: Post[] = await db.query(
-      "SELECT * FROM posts ORDER BY post_date DESC"
+      "SELECT * FROM posts ORDER BY post_date DESC" + limit
     );
     res.status(200).json(results);
   } catch (err) {

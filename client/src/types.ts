@@ -24,6 +24,11 @@ export interface Post {
   user_id?: number;
 }
 
+export interface Filters {
+  fromRow: number;
+  limit: number;
+}
+
 // Store state types
 export interface RootState {
   projects: ProjectsState;

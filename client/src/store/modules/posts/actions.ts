@@ -1,20 +1,26 @@
 import axios from "axios";
 import { API_URLS } from "@/config";
 import { ActionContext } from "vuex";
-import { RootState, PostsState, Post } from "@/types";
+import { RootState, PostsState, Post, Filters } from "@/types";
 
 axios.defaults.withCredentials = true;
 
 export default {
   // Fetch posts
-  async fetchPosts({
-    commit,
-    rootGetters,
-  }: ActionContext<PostsState, RootState>) {
+  async fetchPosts(
+    { commit, rootGetters }: ActionContext<PostsState, RootState>,
+    filters?: Filters
+  ) {
     try {
+      const queryParams: Record<string, string | number | boolean> = {
+        ...filters, // Spread the filters object to include any additional properties
+      };
+
       const isAuthenticated = rootGetters.getIsAuthenticated;
       const visibility = isAuthenticated ? "all" : "public";
-      const response = await axios.get(API_URLS.posts(visibility));
+      const response = await axios.get(API_URLS.posts(visibility), {
+        params: queryParams,
+      });
       commit("setPosts", response.data);
     } catch (error) {
       //console.error("Error fetching posts:", error);

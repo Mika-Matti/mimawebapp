@@ -1,65 +1,66 @@
 <template>
   <PageHeader />
   <div class="home">
-    <h3>Welcome to my website (Current version: 1.0)</h3>
-    <p>
-      This is my little project, that I started building in the spring of 2023.
-      I used node.js for server, mySQL for database and VUE for the client as
-      well as typescript for general programming and Jest for unit testing.
-    </p>
-
-    <h3>What's mimanet 1.0 for?</h3>
-    <p>
-      The main purpose of this site is to showcase my work as a software
-      developer. The current content of this website can be summarized as
-      follows:
-    </p>
+    <h2>Welcome to mimanet (Current version: 1.1)</h2>
+    <div class="home-content">
+      <p>
+        Welcome to my website. The main purpose of this site is to showcase my
+        portfolio as a software developer. I started building this site in 2023
+        spring. I used node.js for server, mySQL for database and VUE for the
+        client as well as typescript for general programming and Jest for unit
+        testing. You can read more about this and other projects from the
+        projects page.
+      </p>
+      <p>I hope you enjoy your stay.</p>
+      <p>- Mika-Matti</p>
+    </div>
+  </div>
+  <div class="nodes">
+    <h2>Latest posts</h2>
     <ul>
-      <li>Home - This page you are currently reading</li>
-      <li>
-        Projects - The portfolio page, with all my public projects explained and
-        their github repositories linked.
+      <li v-for="post in posts" :key="post.post_id">
+        <PostNode :post="post" />
       </li>
-      <li>About - General summary about who I am and what I do.</li>
     </ul>
-
-    <h3>What's coming in future updates?</h3>
-    <p>
-      I have some features in mind, that I want to add to the website in future,
-      but didn't feel the urge to rush them to the current release. Here's a few
-      to mention:
-    </p>
-    <ul>
-      <li>
-        New page for posts to keep a blog about whatever day to day thoughts I
-        feel like sharing, perhaps linking the latest post as a sort of news
-        section on the homepage.
-      </li>
-      <li>Pagination for projects and posts</li>
-      <li>
-        Fetch currently static content dynamically from database. This is more
-        of a quality of life thing for myself so updating home- and aboutpage
-        would be more convenient.
-      </li>
-      <li>Tags to add to projects and possibly posts</li>
-      <li>Filter options to sort projects and posts with</li>
-    </ul>
-
-    <p>I hope you enjoy your stay.</p>
-    <p>- Mika-Matti</p>
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
+import { useStore } from "vuex";
+import { Post } from "@/types";
 import PageHeader from "@/components/ui/PageHeader.vue";
+import PostNode from "@/components/PostNode.vue";
 
 @Options({
   components: {
     PageHeader,
+    PostNode,
   },
 })
-export default class HomeView extends Vue {}
+export default class HomeView extends Vue {
+  posts: Post[] = [];
+  store = useStore();
+
+  // Fetch latest posts from server
+  async fetchPosts() {
+    try {
+      const filters = {
+        fromRow: 0,
+        limit: 2,
+      };
+      await this.store.dispatch("fetchPosts", filters);
+      this.posts = this.store.getters.getPosts;
+    } catch (error) {
+      //console.error("Failed to fetch posts", error);
+    }
+  }
+
+  // Call fetch once component is mounted
+  mounted() {
+    this.fetchPosts();
+  }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

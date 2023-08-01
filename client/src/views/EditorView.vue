@@ -51,6 +51,7 @@
       <PostDisplay
         v-else-if="objectType === 'post'"
         :post="(convertObject() as Post)"
+        :showFullContent="true"
       />
     </div>
   </div>
@@ -193,6 +194,11 @@ export default defineComponent({
             break;
           case "post":
             item.value = store.getters.getPost;
+            if (store.getters.getPost.post_is_public) {
+              item.value.post_is_public = "yes";
+            } else {
+              item.value.post_is_public = "no";
+            }
             break;
           default:
             //console.error("Invalid object type: ", objectType);

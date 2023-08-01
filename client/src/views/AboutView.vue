@@ -2,7 +2,7 @@
   <PageHeader />
   <div class="about">
     <div class="about-content">
-      <h3>Some things about me</h3>
+      <h2>Some things about me</h2>
       <div class="image-container float-end">
         <img
           class="image"
@@ -67,7 +67,7 @@
         art to use on this site, which was pretty fun.
       </p>
       <p>
-        To contact me, you can mail me at
+        Feel free to contact me for any reason. You can mail me at
         <a href="mailto:mima@mimanet.net" target="_blank" rel="noopener"
           >mima@mimanet.net</a
         >

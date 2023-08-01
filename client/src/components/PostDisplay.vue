@@ -37,16 +37,22 @@ export default defineComponent({
   },
   computed: {
     sanitizedContent(): string {
-      if (this.post) {
-        return this.showFullContent
-          ? sanitizeHtml(this.post.post_content)
-          : sanitizeHtml(this.post.post_content).slice(0, this.maxLength);
+      if (!this.post) {
+        return "";
       }
-      return "";
+      if (
+        this.post.post_content.length > this.maxLength &&
+        !this.showFullContent
+      ) {
+        return (
+          sanitizeHtml(this.post.post_content).slice(0, this.maxLength) + "..."
+        );
+      }
+      return sanitizeHtml(this.post.post_content);
     },
     maxLength(): number {
       // Set your desired maximum length for truncated content here
-      return 100;
+      return 280;
     },
   },
 });
