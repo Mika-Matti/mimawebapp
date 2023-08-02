@@ -49,7 +49,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/posts/:id",
-    name: "postt",
+    name: "post",
     component: PostView,
     meta: { requiresAuth: false }, // Set requiresAuth to false for public
   },
