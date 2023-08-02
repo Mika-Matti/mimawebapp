@@ -268,15 +268,22 @@ describe("POST /auth/logout", () => {
       json: jest.fn(),
     } as unknown as Response;
 
+    const originalCorsOrigin = config.corsOrigin;
+    config.corsOrigin = "https://test.com:8080";
+
     const expectedMessage: string = "User logged out successfully";
 
     await logoutUser(req, res);
 
-    expect(res.clearCookie).toHaveBeenCalledWith("authToken");
+    expect(res.clearCookie).toHaveBeenCalledWith("authToken", {
+      domain: "test.com",
+    });
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({
       message: expectedMessage,
     });
+
+    config.corsOrigin = originalCorsOrigin;
   });
 
   it("should return code 500 with expected message if clearCookie fails", async () => {
@@ -289,14 +296,20 @@ describe("POST /auth/logout", () => {
       json: jest.fn(),
     } as unknown as Response;
 
+    const originalCorsOrigin = config.corsOrigin;
+    config.corsOrigin = "https://test.com:8080";
+
     const expectedMessage: string = "Internal server error";
 
     await logoutUser(req, res);
 
-    expect(res.clearCookie).toHaveBeenCalledWith("authToken");
+    expect(res.clearCookie).toHaveBeenCalledWith("authToken", {
+      domain: "test.com",
+    });
     expect(res.status).toHaveBeenCalledWith(500);
     expect(res.json).toHaveBeenCalledWith({
       message: expectedMessage,
     });
+    config.corsOrigin = originalCorsOrigin;
   });
 });
