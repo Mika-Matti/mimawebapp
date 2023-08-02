@@ -1,6 +1,6 @@
 import { shallowMount } from "@vue/test-utils";
 import AboutView from "@/views/AboutView.vue";
-import PageHeader from "@/components/PageHeader.vue";
+import PageHeader from "@/components/ui/PageHeader.vue";
 
 describe("AboutView", () => {
   it("should render the view properly", () => {

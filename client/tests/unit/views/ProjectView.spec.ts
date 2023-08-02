@@ -2,8 +2,8 @@ import { shallowMount } from "@vue/test-utils";
 import { createStore } from "vuex";
 import router from "@/router";
 import ProjectView from "@/views/ProjectView.vue";
-import PageHeader from "@/components/PageHeader.vue";
-import AdminPanel from "@/components/AdminPanel.vue";
+import PageHeader from "@/components/ui/PageHeader.vue";
+import AdminPanel from "@/components/ui/AdminPanel.vue";
 import ProjectDisplay from "@/components/ProjectDisplay.vue";
 import { Project } from "@/types";
 

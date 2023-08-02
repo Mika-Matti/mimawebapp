@@ -186,13 +186,14 @@ export default defineComponent({
       try {
         const object = objectType.charAt(0).toUpperCase() + objectType.slice(1);
         const command = "fetch" + object + "ById";
-        await store.dispatch(command, id);
 
         switch (objectType) {
           case "project":
+            await store.dispatch(command, id);
             item.value = store.getters.getProject;
             break;
           case "post":
+            await store.dispatch(command, id);
             item.value = store.getters.getPost;
             if (store.getters.getPost.post_is_public) {
               item.value.post_is_public = "yes";

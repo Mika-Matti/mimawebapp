@@ -3,8 +3,8 @@ import { createStore } from "vuex";
 import { Project } from "@/types";
 import router from "@/router";
 import ProjectsView from "@/views/ProjectsView.vue";
-import PageHeader from "@/components/PageHeader.vue";
-import AdminPanel from "@/components/AdminPanel.vue";
+import PageHeader from "@/components/ui/PageHeader.vue";
+import AdminPanel from "@/components/ui/AdminPanel.vue";
 import ProjectNode from "@/components/ProjectNode.vue";
 
 describe("ProjectsView", () => {
@@ -72,7 +72,7 @@ describe("ProjectsView", () => {
 
     expect(mockDispatch).toHaveBeenCalledWith("fetchProjects");
     expect(wrapper.vm.projects.length).toBe(3);
-    expect(wrapper.find(".projects").exists()).toBe(true);
+    expect(wrapper.find(".nodes").exists()).toBe(true);
     expect(wrapper.findComponent(PageHeader).exists()).toBe(true);
     expect(wrapper.findComponent(AdminPanel).exists()).toBe(true);
     expect(wrapper.findAllComponents(ProjectNode).length).toBe(3);

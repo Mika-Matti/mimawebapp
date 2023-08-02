@@ -28,7 +28,7 @@ describe("ProjectNode-component", () => {
     };
     const wrapper = shallowMount(ProjectNode, mountConfig);
 
-    expect(wrapper.find(".project-item").exists()).toBe(true);
+    expect(wrapper.find(".item-node").exists()).toBe(true);
     expect(wrapper.find(".project-title h2").text()).toBe(
       project.project_title
     );

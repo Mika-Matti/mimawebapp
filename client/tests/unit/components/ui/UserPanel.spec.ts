@@ -1,7 +1,7 @@
 import { mount } from "@vue/test-utils";
 import { createStore } from "vuex";
 import { onBeforeUnmount } from "vue";
-import UserPanel from "@/components/UserPanel.vue";
+import UserPanel from "@/components/ui/UserPanel.vue";
 
 describe("UserPanel-component", () => {
   it("should render empty user-panel when not logged in", () => {

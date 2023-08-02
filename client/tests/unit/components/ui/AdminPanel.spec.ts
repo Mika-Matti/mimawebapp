@@ -1,6 +1,6 @@
 import { mount } from "@vue/test-utils";
 import { createStore } from "vuex";
-import AdminPanel from "@/components/AdminPanel.vue";
+import AdminPanel from "@/components/ui/AdminPanel.vue";
 
 describe("AdminPanel-component", () => {
   it("should not render adminpanel when not logged in", () => {

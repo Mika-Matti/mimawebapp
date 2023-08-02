@@ -67,8 +67,6 @@ describe("Projects module fetchProjects action", () => {
     const error = new Error("Failed to fetch projects");
 
     jest.spyOn(axios, "get").mockRejectedValueOnce(error);
-    // Spy on console.error
-    const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
 
     // Create a mock context
     const context = {
@@ -81,17 +79,11 @@ describe("Projects module fetchProjects action", () => {
     };
 
     // Call the action
-    await actions.fetchProjects(context);
+    await expect(actions.fetchProjects(context)).rejects.toThrowError(error);
 
     //Assertions
     expect(axios.get).toHaveBeenCalledWith(API_URLS.projects);
     expect(commit).not.toHaveBeenCalled();
-    expect(consoleErrorSpy).toHaveBeenCalledWith(
-      "Error fetching projects:",
-      error
-    );
-
-    consoleErrorSpy.mockRestore();
   }); // Test case ends
 });
 
@@ -172,8 +164,6 @@ describe("Projects module fetchProjectById action", () => {
     const commit = jest.fn();
     const error = new Error("Failed to fetch project");
     jest.spyOn(axios, "get").mockRejectedValueOnce(error);
-    // Spy on console.error
-    const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
 
     // Create a mock context
     const context = {
@@ -189,17 +179,13 @@ describe("Projects module fetchProjectById action", () => {
     };
 
     // Call the action
-    await actions.fetchProjectById(context, "3");
+    await expect(actions.fetchProjectById(context, "3")).rejects.toThrowError(
+      error
+    );
 
     // Assertions
     expect(commit).not.toHaveBeenCalled();
     expect(axios.get).toHaveBeenCalledWith(API_URLS.project("3"));
-    expect(consoleErrorSpy).toHaveBeenCalledWith(
-      "Error fetching project by id:",
-      error
-    );
-
-    consoleErrorSpy.mockRestore();
   });
 });
 
@@ -261,8 +247,6 @@ describe("Projects module createProject action", () => {
       project_link: "https://www.exampleC.com",
     };
 
-    // Spy on console.error
-    const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
     const error = new Error("Failed to create project");
     jest.spyOn(axios, "post").mockRejectedValueOnce(error);
 
@@ -280,17 +264,13 @@ describe("Projects module createProject action", () => {
     };
 
     // Call the action
-    await actions.createProject(context, project);
+    await expect(actions.createProject(context, project)).rejects.toThrowError(
+      error
+    );
 
     // Assertions
     expect(axios.post).toHaveBeenCalledWith(API_URLS.projects, project);
     expect(commit).not.toHaveBeenCalled();
-    expect(consoleErrorSpy).toHaveBeenCalledWith(
-      "Error creating project:",
-      error
-    );
-
-    consoleErrorSpy.mockRestore();
   }); // Test case ends
 });
 
@@ -360,8 +340,6 @@ describe("Projects module editProject action", () => {
       project_link: "https://www.exampleC.com",
     };
 
-    // Spy on console.error
-    const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
     const error = new Error("Failed to edit project");
     jest.spyOn(axios, "put").mockRejectedValueOnce(error);
 
@@ -385,17 +363,13 @@ describe("Projects module editProject action", () => {
     };
 
     // Call the action
-    await actions.editProject(context, project);
+    await expect(actions.editProject(context, project)).rejects.toThrowError(
+      error
+    );
 
     // Assertions
     expect(axios.put).toHaveBeenCalledWith(API_URLS.project("3"), project);
     expect(commit).not.toHaveBeenCalled();
-    expect(consoleErrorSpy).toHaveBeenCalledWith(
-      "Error editing project:",
-      error
-    );
-
-    consoleErrorSpy.mockRestore();
   }); // Test case ends
 });
 
@@ -443,8 +417,6 @@ describe("Projects module deleteProjectById action", () => {
   it("should throw error if delete request to server is unsuccessful", async () => {
     const commit = jest.fn();
 
-    // Spy on console.error
-    const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
     const error = new Error("Failed to delete project");
     jest.spyOn(axios, "delete").mockRejectedValueOnce(error);
 
@@ -462,16 +434,12 @@ describe("Projects module deleteProjectById action", () => {
     };
 
     // Call the action
-    await actions.deleteProjectById(context, "3");
+    await expect(actions.deleteProjectById(context, "3")).rejects.toThrowError(
+      error
+    );
 
     // Assertions
     expect(axios.delete).toHaveBeenCalledWith(API_URLS.project("3"));
     expect(commit).not.toHaveBeenCalled();
-    expect(consoleErrorSpy).toHaveBeenCalledWith(
-      "Error deleting project by id:",
-      error
-    );
-
-    consoleErrorSpy.mockRestore();
   }); // Test case ends
 });

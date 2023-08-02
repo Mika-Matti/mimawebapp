@@ -1,8 +1,8 @@
 import { shallowMount } from "@vue/test-utils";
 import { RouterView } from "vue-router";
 import App from "@/App.vue";
-import AppHeader from "@/components/AppHeader.vue";
-import AppFooter from "@/components/AppFooter.vue";
+import AppHeader from "@/components/layout/AppHeader.vue";
+import AppFooter from "@/components/layout/AppFooter.vue";
 import router from "@/router";
 
 const mountConfig = {
@@ -28,9 +28,10 @@ describe("App.vue", () => {
 
     const routerLinks = wrapper.findAll(".router-link");
 
-    expect(routerLinks.length).toBe(3);
+    expect(routerLinks.length).toBe(4);
 
     expect(wrapper.html()).toContain('to="/"');
+    expect(wrapper.html()).toContain('to="/posts"');
     expect(wrapper.html()).toContain('to="/projects"');
     expect(wrapper.html()).toContain('to="/about"');
   });

@@ -1,5 +1,5 @@
 import { mount, shallowMount } from "@vue/test-utils";
-import PageHeader from "@/components/PageHeader.vue";
+import PageHeader from "@/components/ui/PageHeader.vue";
 import router from "@/router";
 
 describe("PageHeader-component", () => {

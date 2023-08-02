@@ -1,7 +1,7 @@
 import { shallowMount } from "@vue/test-utils";
 import { createStore } from "vuex";
 import Datepicker from "vue3-datepicker";
-import PageHeader from "@/components/PageHeader.vue";
+import PageHeader from "@/components/ui/PageHeader.vue";
 import ProjectDisplay from "@/components/ProjectDisplay.vue";
 import EditorView from "@/views/EditorView.vue";
 import { Project } from "@/types";
@@ -55,7 +55,7 @@ describe("EditorView", () => {
     expect(wrapper.findComponent(Datepicker).exists()).toBe(true);
   }); // Test case ends
 
-  it("should throw console error if invalid objectType", () => {
+  it("should not call any store dispatch if invalid objectType", () => {
     const mockRouter = createRouter({
       history: createWebHistory(),
       routes: [{ path: "/", name: "edit", component: EditorView }],
@@ -91,19 +91,15 @@ describe("EditorView", () => {
       },
     };
 
-    const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
+    const mockDispatch = jest.fn();
+    store.dispatch = mockDispatch;
 
     const wrapper = shallowMount(EditorView, mountConfig);
 
     const expectedObject = wrapper.vm.convertObject();
 
-    expect(consoleErrorSpy).toHaveBeenCalledWith(
-      "Invalid object type: ",
-      mockRouter.currentRoute.value.params.object
-    );
+    expect(mockDispatch).not.toHaveBeenCalled();
     expect(expectedObject).toBe(null);
-
-    consoleErrorSpy.mockRestore();
   }); // Test case ends
 
   it("should call dispatch with right action and object", async () => {
