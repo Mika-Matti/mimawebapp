@@ -84,3 +84,152 @@ describe("POST /posts", () => {
     });
   });
 }); // End of POST /posts
+
+describe("GET /posts/public", () => {
+  beforeAll(() => {
+    mockQuery.mockImplementation((sql: string, values?: any[]) => {
+      return new Promise<any>((resolve, reject) => {
+        if (
+          sql ===
+          "SELECT * FROM posts WHERE post_is_public = true ORDER BY post_date DESC"
+        ) {
+          resolve([
+            {
+              post_id: 2,
+              post_title: "Post B",
+              post_content: "Lorem ipsum dolor sit amet...",
+              post_date: "2023-01-22 21:22:00",
+              post_is_public: true,
+              user_id: 1,
+            },
+            {
+              post_id: 1,
+              post_title: "Post A",
+              post_content: "Lorem ipsum dolor sit amet...",
+              post_date: "2023-01-21 21:22:00",
+              post_is_public: true,
+              user_id: 1,
+            },
+          ]);
+        } else {
+          reject("Error: Mock function got wrong query");
+        }
+      });
+    });
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("should return an array of Post-objects", async () => {
+    const req = {} as Request;
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    } as unknown as Response;
+
+    await getPublicPosts(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith([
+      {
+        post_id: 2,
+        post_title: "Post B",
+        post_content: "Lorem ipsum dolor sit amet...",
+        post_date: "2023-01-22 21:22:00",
+        post_is_public: true,
+        user_id: 1,
+      },
+      {
+        post_id: 1,
+        post_title: "Post A",
+        post_content: "Lorem ipsum dolor sit amet...",
+        post_date: "2023-01-21 21:22:00",
+        post_is_public: true,
+        user_id: 1,
+      },
+    ]);
+  });
+}); // End of GET /posts/public
+
+describe("GET /posts/all", () => {
+  beforeAll(() => {
+    mockQuery.mockImplementation((sql: string, values?: any[]) => {
+      return new Promise<any>((resolve, reject) => {
+        if (sql === "SELECT * FROM posts ORDER BY post_date DESC") {
+          resolve([
+            {
+              post_id: 3,
+              post_title: "Post C",
+              post_content: "Lorem ipsum dolor sit amet...",
+              post_date: "2023-01-23 21:22:00",
+              post_is_public: false,
+              user_id: 1,
+            },
+            {
+              post_id: 2,
+              post_title: "Post B",
+              post_content: "Lorem ipsum dolor sit amet...",
+              post_date: "2023-01-22 21:22:00",
+              post_is_public: true,
+              user_id: 1,
+            },
+            {
+              post_id: 1,
+              post_title: "Post A",
+              post_content: "Lorem ipsum dolor sit amet...",
+              post_date: "2023-01-21 21:22:00",
+              post_is_public: true,
+              user_id: 1,
+            },
+          ]);
+        } else {
+          reject("Error: Mock function got wrong query");
+        }
+      });
+    });
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("should return an array of Post-objects", async () => {
+    const req = {} as Request;
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    } as unknown as Response;
+
+    await getAllPosts(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith([
+      {
+        post_id: 3,
+        post_title: "Post C",
+        post_content: "Lorem ipsum dolor sit amet...",
+        post_date: "2023-01-23 21:22:00",
+        post_is_public: false,
+        user_id: 1,
+      },
+      {
+        post_id: 2,
+        post_title: "Post B",
+        post_content: "Lorem ipsum dolor sit amet...",
+        post_date: "2023-01-22 21:22:00",
+        post_is_public: true,
+        user_id: 1,
+      },
+      {
+        post_id: 1,
+        post_title: "Post A",
+        post_content: "Lorem ipsum dolor sit amet...",
+        post_date: "2023-01-21 21:22:00",
+        post_is_public: true,
+        user_id: 1,
+      },
+    ]);
+  });
+}); // End of GET /posts/all

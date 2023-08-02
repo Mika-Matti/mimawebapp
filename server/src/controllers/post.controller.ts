@@ -38,7 +38,7 @@ export const createPost = async (req: ExtendedRequest, res: Response) => {
 // route GET '/posts/public' Only return public posts
 export const getPublicPosts = async (req: Request, res: Response) => {
   let limit: string = "";
-  if (req.query.limit && req.query.fromRow) {
+  if (req.query != undefined && req.query.limit && req.query.fromRow) {
     limit = ` LIMIT ${req.query.fromRow},${req.query.limit}`;
   }
   try {
@@ -56,7 +56,7 @@ export const getPublicPosts = async (req: Request, res: Response) => {
 // route GET '/posts/all Authenticated can return all posts.
 export const getAllPosts = async (req: Request, res: Response) => {
   let limit: string = "";
-  if (req.query.limit && req.query.fromRow) {
+  if (req.query != undefined && req.query.limit && req.query.fromRow) {
     limit = ` LIMIT ${req.query.fromRow},${req.query.limit}`;
   }
   try {

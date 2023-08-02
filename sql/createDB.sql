@@ -12,16 +12,6 @@ CREATE TABLE IF NOT EXISTS projects (
   PRIMARY KEY (project_id)
 );
 
-CREATE TABLE IF NOT EXISTS projects (
-  project_id INT(11) NOT NULL AUTO_INCREMENT,
-  project_title VARCHAR(255) NOT NULL,
-  project_description TEXT NOT NULL,
-  project_content TEXT NOT NULL,
-  project_link VARCHAR(255),
-  project_start_date DATETIME,
-  PRIMARY KEY (project_id)
-);
-
 CREATE TABLE IF NOT EXISTS users (
 	user_id INT(11) NOT NULL AUTO_INCREMENT,
 	user_name VARCHAR(255) NOT NULL,
@@ -35,7 +25,7 @@ CREATE TABLE IF NOT EXISTS posts (
   post_id INT(11) NOT NULL AUTO_INCREMENT,
   post_title VARCHAR(255) NOT NULL,
   post_content TEXT NOT NULL,
-  post_date DATE,
+  post_date DATETIME,
   post_is_public BOOLEAN,
   user_id INT(11),
   PRIMARY KEY (post_id),
