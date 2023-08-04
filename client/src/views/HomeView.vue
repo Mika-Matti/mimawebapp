@@ -50,7 +50,7 @@ export default class HomeView extends Vue {
         limit: 2,
       };
       await this.store.dispatch("fetchPosts", filters);
-      this.posts = this.store.getters.getPosts;
+      this.posts = this.store.getters.getPosts(2);
     } catch (error) {
       //console.error("Failed to fetch posts", error);
     }

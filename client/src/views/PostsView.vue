@@ -40,7 +40,7 @@ export default class PostsView extends Vue {
   async fetchPosts() {
     try {
       await this.store.dispatch("fetchPosts");
-      this.posts = this.store.getters.getPosts;
+      this.posts = this.store.getters.getPosts();
     } catch (error) {
       //console.error("Failed to fetch posts", error);
     }
