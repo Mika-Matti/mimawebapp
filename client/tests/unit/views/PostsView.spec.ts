@@ -42,7 +42,7 @@ describe("PostsView", () => {
         posts: mockPosts,
       },
       getters: {
-        getPosts: (state) => state.posts,
+        getPosts: (state) => () => state.posts,
       },
       actions: {
         fetchPosts: jest.fn(),

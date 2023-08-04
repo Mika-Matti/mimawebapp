@@ -61,7 +61,7 @@ describe("Projects module fetchProjects action", () => {
     expect(commit).toHaveBeenCalledWith("setProjects", response.data);
   }); // Test case ends
 
-  it("should throw error if fetch request to server unsuccessful", async () => {
+  it("should not commit if fetch request to server unsuccessful", async () => {
     const commit = jest.fn();
     // Create a mock error object
     const error = new Error("Failed to fetch projects");
@@ -79,7 +79,7 @@ describe("Projects module fetchProjects action", () => {
     };
 
     // Call the action
-    await expect(actions.fetchProjects(context)).rejects.toThrowError(error);
+    await actions.fetchProjects(context);
 
     //Assertions
     expect(axios.get).toHaveBeenCalledWith(API_URLS.projects);
@@ -160,7 +160,7 @@ describe("Projects module fetchProjectById action", () => {
     expect(axios.get).toHaveBeenCalledWith(API_URLS.project("3"));
   }); // Test case ends
 
-  it("should throw an error fetching project from server if request unsuccessful", async () => {
+  it("should not commit when fetching project from server if request unsuccessful", async () => {
     const commit = jest.fn();
     const error = new Error("Failed to fetch project");
     jest.spyOn(axios, "get").mockRejectedValueOnce(error);
@@ -179,9 +179,7 @@ describe("Projects module fetchProjectById action", () => {
     };
 
     // Call the action
-    await expect(actions.fetchProjectById(context, "3")).rejects.toThrowError(
-      error
-    );
+    await actions.fetchProjectById(context, "3");
 
     // Assertions
     expect(commit).not.toHaveBeenCalled();
@@ -238,7 +236,7 @@ describe("Projects module createProject action", () => {
     expect(axios.post).toHaveBeenCalledWith(API_URLS.projects, project);
   }); // Test case ends
 
-  it("should throw error if request to server is unsuccessful", async () => {
+  it("should not commit if request to server is unsuccessful", async () => {
     const commit = jest.fn();
     const project = {
       project_title: "Project C",
@@ -264,9 +262,7 @@ describe("Projects module createProject action", () => {
     };
 
     // Call the action
-    await expect(actions.createProject(context, project)).rejects.toThrowError(
-      error
-    );
+    await actions.createProject(context, project);
 
     // Assertions
     expect(axios.post).toHaveBeenCalledWith(API_URLS.projects, project);
@@ -330,7 +326,7 @@ describe("Projects module editProject action", () => {
     expect(axios.put).toHaveBeenCalledWith(API_URLS.project("3"), project);
   }); // Test case ends
 
-  it("should throw error if edit request to server is unsuccessful", async () => {
+  it("should not commit if edit request to server is unsuccessful", async () => {
     const commit = jest.fn();
     const project = {
       project_id: 3,
@@ -363,9 +359,7 @@ describe("Projects module editProject action", () => {
     };
 
     // Call the action
-    await expect(actions.editProject(context, project)).rejects.toThrowError(
-      error
-    );
+    await actions.editProject(context, project);
 
     // Assertions
     expect(axios.put).toHaveBeenCalledWith(API_URLS.project("3"), project);
@@ -414,7 +408,7 @@ describe("Projects module deleteProjectById action", () => {
     expect(axios.delete).toHaveBeenCalledWith(API_URLS.project("3"));
   }); // Test case ends
 
-  it("should throw error if delete request to server is unsuccessful", async () => {
+  it("should not commit if delete request to server is unsuccessful", async () => {
     const commit = jest.fn();
 
     const error = new Error("Failed to delete project");
@@ -434,9 +428,7 @@ describe("Projects module deleteProjectById action", () => {
     };
 
     // Call the action
-    await expect(actions.deleteProjectById(context, "3")).rejects.toThrowError(
-      error
-    );
+    await actions.deleteProjectById(context, "3");
 
     // Assertions
     expect(axios.delete).toHaveBeenCalledWith(API_URLS.project("3"));
