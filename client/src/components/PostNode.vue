@@ -1,14 +1,16 @@
 <template>
   <div class="item-node container-fluid mx-0 px-0">
     <div class="row mx-0 px-0">
-      <div class="col mx-0 px-0">
+      <div class="col-sm mx-0 px-0">
         <PostDisplay
           :post="post"
           :showFullContent="showFullContent"
           class="row mx-0 px-0"
         />
       </div>
-      <div class="col-auto mx-0 px-0 d-flex flex-column justify-content-center">
+      <div
+        class="col-sm-auto mx-0 px-0 d-flex flex-column justify-content-center"
+      >
         <AdminPanel>
           <template #buttons>
             <router-link

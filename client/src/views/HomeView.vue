@@ -5,11 +5,11 @@
     <div class="home-content">
       <p>
         Welcome to my website. The main purpose of this site is to showcase my
-        portfolio as a software developer. I started building this site in 2023
-        spring. I used node.js for server, mySQL for database and VUE for the
-        client as well as typescript for general programming and Jest for unit
-        testing. You can read more about this and other projects from the
-        projects page.
+        portfolio as a software developer. I started building this site in
+        spring 2023. I used node.js for server, mySQL for database and VUE for
+        the client as well as typescript for general programming. Unit testing
+        was done with Jest. You can read more about this and other projects from
+        the projects page.
       </p>
       <p>I hope you enjoy your stay.</p>
       <p>- Mika-Matti</p>
