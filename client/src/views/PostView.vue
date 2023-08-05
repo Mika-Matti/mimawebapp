@@ -2,10 +2,12 @@
   <PageHeader />
   <AdminPanel>
     <template #buttons>
-      <router-link class="button ms-0 my-0" :to="`/edit/post/${post_id}`">
+      <router-link class="col button ms-0 my-0" :to="`/edit/post/${post_id}`">
         edit post
       </router-link>
-      <button class="button my-0" @click="confirmDelete">delete post</button>
+      <button class="col button my-0 me-0" @click="confirmDelete">
+        delete post
+      </button>
     </template>
   </AdminPanel>
   <PostDisplay v-if="post" :post="post" :showFullContent="true" />

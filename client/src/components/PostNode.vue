@@ -9,31 +9,36 @@
         />
       </div>
       <div
-        class="col-sm-auto mx-0 px-0 d-flex flex-column justify-content-center"
+        class="col-sm-auto node-options mx-0 d-flex flex-column justify-content-center"
       >
         <AdminPanel>
           <template #buttons>
             <router-link
-              class="button ms-0 my-0"
+              class="col button ms-0 my-0"
               :to="`/edit/post/${post.post_id}`"
             >
               edit
             </router-link>
-            <button class="button me-0 my-0" @click="confirmDelete">
+            <button class="col button me-0 my-0" @click="confirmDelete">
               delete
             </button>
           </template>
         </AdminPanel>
-        <router-link class="node-link button" :to="`/posts/${post.post_id}`">
-          Go To Post
-        </router-link>
-        <button
-          class="button"
-          v-if="post.post_content.length > maxLength"
-          @click="toggleShowFullContent"
-        >
-          {{ showFullContent ? "Show Less" : "Show More" }}
-        </button>
+        <div class="d-flex flex-sm-column flex-row">
+          <router-link
+            class="col node-link button mx-sm-0 ms-0"
+            :to="`/posts/${post.post_id}`"
+          >
+            Go To Post
+          </router-link>
+          <button
+            class="col button mx-sm-0 me-0"
+            v-if="post.post_content.length > maxLength"
+            @click="toggleShowFullContent"
+          >
+            {{ showFullContent ? "Show Less" : "Show More" }}
+          </button>
+        </div>
       </div>
     </div>
   </div>

@@ -1,6 +1,6 @@
 <template>
-  <div v-if="isAuthorized" class="admin-panel">
-    <div class="view-options">
+  <div v-if="isAuthorized" class="container-fluid mx-0 px-0 admin-panel">
+    <div class="row mx-0 px-0 my-0 view-options">
       <slot name="buttons"></slot>
     </div>
   </div>

@@ -1,7 +1,7 @@
 <template>
   <div class="item-node container-fluid mx-0 px-0">
     <div class="row mx-0 px-0">
-      <div class="col mx-0 px-0">
+      <div class="col-sm mx-0 px-0">
         <div class="row mx-0 px-0 project-title">
           <h2>{{ project.project_title }}</h2>
         </div>
@@ -18,22 +18,24 @@
           <p>{{ project.project_description }}</p>
         </div>
       </div>
-      <div class="col-auto mx-0 px-0 d-flex flex-column justify-content-center">
+      <div
+        class="col-sm-auto node-options mx-0 d-flex flex-column justify-content-center"
+      >
         <AdminPanel>
           <template #buttons>
             <router-link
-              class="button ms-0 my-0"
+              class="col button ms-0 my-0"
               :to="`/edit/project/${project.project_id}`"
             >
               edit
             </router-link>
-            <button class="button me-0 my-0" @click="confirmDelete">
+            <button class="col button me-0 my-0" @click="confirmDelete">
               delete
             </button>
           </template>
         </AdminPanel>
         <router-link
-          class="node-link button"
+          class="node-link button mx-0"
           :to="`/projects/${project.project_id}`"
         >
           View Project
