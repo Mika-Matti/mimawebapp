@@ -1,15 +1,41 @@
 <!DOCTYPE html>
 <html lang="">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <meta name="description" content="Welcome to mimanet" />
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="https://mimanet.net/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="mimanet" />
+    <meta property="og:description" content="Welcome to mimanet" />
+    <meta
+      property="og:image"
+      content="https://mimanet.net/images/mimanetlogo128.png"
+    />
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:domain" content="mimanet.net" />
+    <meta property="twitter:url" content="https://mimanet.net/" />
+    <meta name="twitter:title" content="mimanet" />
+    <meta name="twitter:description" content="Welcome to mimanet" />
+    <meta
+      name="twitter:image"
+      content="https://mimanet.net/images/mimanetlogo128.png"
+    />
   </head>
   <body>
     <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+      <strong
+        >We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work
+        properly without JavaScript enabled. Please enable it to
+        continue.</strong
+      >
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
