@@ -1,7 +1,7 @@
 <template>
   <PageHeader />
   <div class="home">
-    <h2>Welcome to mimanet (Current version: 1.1)</h2>
+    <h2>Welcome to mimanet (Current version: 1.1.1)</h2>
     <div class="home-content">
       <p>
         Welcome to my website. The main purpose of this site is to showcase my
