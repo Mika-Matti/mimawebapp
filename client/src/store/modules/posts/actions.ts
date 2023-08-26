@@ -11,20 +11,16 @@ export default {
     { commit, rootGetters }: ActionContext<PostsState, RootState>,
     filters?: Filters
   ) {
-    try {
-      const queryParams: Record<string, string | number | boolean> = {
-        ...filters, // Spread the filters object to include any additional properties
-      };
+    const queryParams: Record<string, string | number | boolean> = {
+      ...filters, // Spread the filters object to include any additional properties
+    };
 
-      const isAuthenticated = rootGetters.getIsAuthenticated;
-      const visibility = isAuthenticated ? "all" : "public";
-      const response = await axios.get(API_URLS.posts(visibility), {
-        params: queryParams,
-      });
-      commit("setPosts", response.data);
-    } catch (error) {
-      //console.error("Error fetching posts:", error);
-    }
+    const isAuthenticated = rootGetters.getIsAuthenticated;
+    const visibility = isAuthenticated ? "all" : "public";
+    const response = await axios.get(API_URLS.posts(visibility), {
+      params: queryParams,
+    });
+    commit("setPosts", response.data);
   },
   // Fetch post by id
   async fetchPostById(
@@ -38,14 +34,10 @@ export default {
     if (existingPost) {
       commit("setPost", existingPost);
     } else {
-      try {
-        const isAuthenticated = rootGetters.getIsAuthenticated;
-        const visibility = isAuthenticated ? "all" : "public";
-        const response = await axios.get(API_URLS.post(visibility, id));
-        commit("setPost", response.data);
-      } catch (error) {
-        //console.error("Error fetching post by id:", error);
-      }
+      const isAuthenticated = rootGetters.getIsAuthenticated;
+      const visibility = isAuthenticated ? "all" : "public";
+      const response = await axios.get(API_URLS.post(visibility, id));
+      commit("setPost", response.data);
     }
   },
   // Create post
