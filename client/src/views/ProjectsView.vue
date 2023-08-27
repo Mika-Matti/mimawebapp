@@ -7,6 +7,7 @@
       </router-link>
     </template>
   </AdminPanel>
+  <LoadingScreen :error="error" :display="display" />
   <div class="nodes">
     <ul>
       <li v-for="project in projects" :key="project.project_id">
@@ -22,12 +23,14 @@ import { useStore } from "vuex";
 import { Project } from "@/types";
 import PageHeader from "@/components/ui/PageHeader.vue";
 import AdminPanel from "@/components/ui/AdminPanel.vue";
+import LoadingScreen from "@/components/ui/LoadingScreen.vue";
 import ProjectNode from "@/components/ProjectNode.vue";
 
 @Options({
   components: {
     PageHeader,
     AdminPanel,
+    LoadingScreen,
     ProjectNode,
   },
 })
@@ -35,13 +38,17 @@ export default class ProjectsView extends Vue {
   pageHeader = "/";
   projects: Project[] = [];
   store = useStore();
+  error = false;
+  display = true;
 
   // Fetch projects from server
   async fetchProjects() {
     try {
       await this.store.dispatch("fetchProjects");
       this.projects = this.store.getters.getProjects;
+      this.display = false;
     } catch (error) {
+      this.error = true;
       //console.error("Failed to fetch projects", error);
     }
   }
