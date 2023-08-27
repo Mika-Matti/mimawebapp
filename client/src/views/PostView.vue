@@ -1,6 +1,6 @@
 <template>
   <PageHeader />
-  <AdminPanel>
+  <AdminPanel v-if="post">
     <template #buttons>
       <router-link class="col button ms-0 my-0" :to="`/edit/post/${post_id}`">
         edit post
@@ -10,6 +10,7 @@
       </button>
     </template>
   </AdminPanel>
+  <LoadingScreen :error="error" :display="display" />
   <PostDisplay v-if="post" :post="post" :showFullContent="true" />
 </template>
 
@@ -19,25 +20,23 @@ import { useStore } from "vuex";
 import { Post } from "@/types";
 import PageHeader from "@/components/ui/PageHeader.vue";
 import AdminPanel from "@/components/ui/AdminPanel.vue";
+import LoadingScreen from "@/components/ui/LoadingScreen.vue";
 import PostDisplay from "@/components/PostDisplay.vue";
 
 export default defineComponent({
   components: {
     PageHeader,
     AdminPanel,
+    LoadingScreen,
     PostDisplay,
   },
   data() {
     return {
       store: useStore(),
+      error: false,
+      display: true,
       post_id: "-1",
-      post: {
-        post_title: "",
-        post_description: "",
-        post_content: "",
-        post_date: new Date(),
-        post_is_public: true,
-      } as Post,
+      post: null as Post | null,
     };
   },
   methods: {
@@ -46,11 +45,9 @@ export default defineComponent({
       try {
         await this.store.dispatch(`fetchPostById`, id);
         this.post = this.store.getters.getPost;
-
-        if (!this.post) {
-          this.$router.push({ name: "NotFound" });
-        }
+        this.display = false;
       } catch (error) {
+        this.error = true;
         //console.error("Failed to fetch post by id", error);
       }
     },

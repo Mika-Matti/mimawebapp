@@ -8,12 +8,8 @@ axios.defaults.withCredentials = true;
 export default {
   // Fetch projects
   async fetchProjects({ commit }: ActionContext<ProjectsState, RootState>) {
-    try {
-      const response = await axios.get(API_URLS.projects);
-      commit("setProjects", response.data);
-    } catch (error) {
-      //console.error("Error fetching projects:", error);
-    }
+    const response = await axios.get(API_URLS.projects);
+    commit("setProjects", response.data);
   },
   // Fetch project by id
   async fetchProjectById(
@@ -27,12 +23,8 @@ export default {
     if (existingProject) {
       commit("setProject", existingProject);
     } else {
-      try {
-        const response = await axios.get(API_URLS.project(id));
-        commit("setProject", response.data);
-      } catch (error) {
-        //console.error("Error fetching project:", error);
-      }
+      const response = await axios.get(API_URLS.project(id));
+      commit("setProject", response.data);
     }
   },
   // Create project

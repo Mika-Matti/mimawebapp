@@ -1,6 +1,6 @@
 <template>
   <PageHeader />
-  <AdminPanel>
+  <AdminPanel v-if="project">
     <template #buttons>
       <router-link
         class="col button ms-0 my-0"
@@ -13,6 +13,7 @@
       </button>
     </template>
   </AdminPanel>
+  <LoadingScreen :error="error" :display="display" />
   <ProjectDisplay v-if="project" :project="project" />
 </template>
 
@@ -22,23 +23,23 @@ import { useStore } from "vuex";
 import { Project } from "@/types";
 import PageHeader from "@/components/ui/PageHeader.vue";
 import AdminPanel from "@/components/ui/AdminPanel.vue";
+import LoadingScreen from "@/components/ui/LoadingScreen.vue";
 import ProjectDisplay from "@/components/ProjectDisplay.vue";
 
 export default defineComponent({
   components: {
     PageHeader,
     AdminPanel,
+    LoadingScreen,
     ProjectDisplay,
   },
   data() {
     return {
       store: useStore(),
+      error: false,
+      display: true,
       project_id: "-1",
-      project: {
-        project_title: "",
-        project_description: "",
-        project_content: "",
-      } as Project,
+      project: null as Project | null,
     };
   },
   methods: {
@@ -47,11 +48,9 @@ export default defineComponent({
       try {
         await this.store.dispatch(`fetchProjectById`, id);
         this.project = this.store.getters.getProject;
-
-        if (!this.project) {
-          this.$router.push({ name: "NotFound" });
-        }
+        this.display = false;
       } catch (error) {
+        this.error = true;
         //console.error("Failed to fetch project by id", error);
       }
     },

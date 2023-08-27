@@ -85,7 +85,7 @@ describe("Posts module fetchPosts action", () => {
     };
 
     // Call the action
-    await actions.fetchPosts(context);
+    await expect(actions.fetchPosts(context)).rejects.toThrowError();
 
     //Assertions
     expect(axios.get).toHaveBeenCalledWith(API_URLS.posts("all"), {
@@ -194,7 +194,7 @@ describe("Posts module fetchPostById action", () => {
     };
 
     // Call the action
-    await actions.fetchPostById(context, "1");
+    await expect(actions.fetchPostById(context, "1")).rejects.toThrowError();
 
     // Assertions
     expect(commit).not.toHaveBeenCalled();

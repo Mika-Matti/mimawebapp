@@ -1,7 +1,7 @@
 <template>
   <PageHeader />
   <div class="home">
-    <h2>Welcome to mimanet (Current version: 1.1.1)</h2>
+    <h2>Welcome to mimanet (Current version: 1.1.2)</h2>
     <div class="home-content">
       <p>
         Welcome to my website. The main purpose of this site is to showcase my
@@ -23,6 +23,7 @@
       </li>
     </ul>
   </div>
+  <LoadingScreen :error="error" :display="display" />
 </template>
 
 <script lang="ts">
@@ -30,17 +31,21 @@ import { Options, Vue } from "vue-class-component";
 import { useStore } from "vuex";
 import { Post } from "@/types";
 import PageHeader from "@/components/ui/PageHeader.vue";
+import LoadingScreen from "@/components/ui/LoadingScreen.vue";
 import PostNode from "@/components/PostNode.vue";
 
 @Options({
   components: {
     PageHeader,
+    LoadingScreen,
     PostNode,
   },
 })
 export default class HomeView extends Vue {
   posts: Post[] = [];
   store = useStore();
+  error = false;
+  display = true;
 
   // Fetch latest posts from server
   async fetchPosts() {
@@ -51,7 +56,9 @@ export default class HomeView extends Vue {
       };
       await this.store.dispatch("fetchPosts", filters);
       this.posts = this.store.getters.getPosts(2);
+      this.display = false;
     } catch (error) {
+      this.error = true;
       //console.error("Failed to fetch posts", error);
     }
   }
