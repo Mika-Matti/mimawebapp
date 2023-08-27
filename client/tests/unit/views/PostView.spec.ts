@@ -12,7 +12,7 @@ describe("PostView", () => {
     jest.clearAllMocks();
   });
 
-  it("should render the view properly", () => {
+  it("should render the view properly", async () => {
     const store = createStore({
       getters: {
         getPost: () => {
@@ -48,6 +48,9 @@ describe("PostView", () => {
 
     const wrapper = shallowMount(PostView, mountConfig);
 
+    await wrapper.vm.fetchPostById("2");
+
+    expect(wrapper.vm.post).not.toBe(null);
     expect(wrapper.findComponent(PageHeader).exists()).toBe(true);
     expect(wrapper.findComponent(PostDisplay).exists()).toBe(true);
     expect(wrapper.findComponent(AdminPanel).exists()).toBe(true);

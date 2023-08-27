@@ -79,7 +79,7 @@ describe("Projects module fetchProjects action", () => {
     };
 
     // Call the action
-    await actions.fetchProjects(context);
+    await expect(actions.fetchProjects(context)).rejects.toThrowError();
 
     //Assertions
     expect(axios.get).toHaveBeenCalledWith(API_URLS.projects);
@@ -179,7 +179,7 @@ describe("Projects module fetchProjectById action", () => {
     };
 
     // Call the action
-    await actions.fetchProjectById(context, "3");
+    await expect(actions.fetchProjectById(context, "3")).rejects.toThrowError();
 
     // Assertions
     expect(commit).not.toHaveBeenCalled();

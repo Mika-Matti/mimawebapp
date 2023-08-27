@@ -12,7 +12,7 @@ describe("ProjectView", () => {
     jest.clearAllMocks();
   });
 
-  it("should render the view properly", () => {
+  it("should render the view properly", async () => {
     const store = createStore({
       getters: {
         getProject: () => {
@@ -48,6 +48,9 @@ describe("ProjectView", () => {
 
     const wrapper = shallowMount(ProjectView, mountConfig);
 
+    await wrapper.vm.fetchProjectById("3");
+
+    expect(wrapper.vm.project).not.toBe(null);
     expect(wrapper.findComponent(PageHeader).exists()).toBe(true);
     expect(wrapper.findComponent(ProjectDisplay).exists()).toBe(true);
     expect(wrapper.findComponent(AdminPanel).exists()).toBe(true);
