@@ -13,7 +13,7 @@ export const API_URLS = {
 };
 
 export const sanitizedHtmlOptions = {
-  allowedTags: sanitizeHtml.defaults.allowedTags.concat(["iframe"]),
+  allowedTags: sanitizeHtml.defaults.allowedTags.concat(["iframe", "img"]),
   allowedAttributes: {
     ...sanitizeHtml.defaults.allowedAttributes,
     iframe: [
@@ -24,5 +24,6 @@ export const sanitizedHtmlOptions = {
       "allow",
       "allowfullscreen",
     ],
+    img: ["src", "alt", "width", "height"],
   },
 };
