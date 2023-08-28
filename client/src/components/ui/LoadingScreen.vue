@@ -3,8 +3,13 @@
     <div v-if="!error" class="text-center">
       <div class="image-container">
         <img
-          class="image"
+          class="image d-none d-sm-block"
           src="@/assets/images/loadinganimation128.gif"
+          alt="Loading animation for retrieving items"
+        />
+        <img
+          class="image d-sm-none"
+          src="@/assets/images/loadinganimation64.gif"
           alt="Loading animation for retrieving items"
         />
         <p class="image-caption">Retrieving data from server.</p>

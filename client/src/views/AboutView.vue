@@ -9,7 +9,7 @@
           src="@/assets/images/mima128.png"
           alt="Self portrait in pixel-art by me"
         />
-        <p class="image-caption">Cheeky self portrait included.</p>
+        <p class="image-caption">Cheeky self portrait.</p>
       </div>
       <p>
         I am a computer science student, currently open for work opportunities
